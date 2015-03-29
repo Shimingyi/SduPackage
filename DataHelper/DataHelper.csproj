@@ -42,6 +42,7 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModel\Author.cs" />
     <Compile Include="DataModel\News.cs" />
     <Compile Include="DataModel\NewsBody.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
