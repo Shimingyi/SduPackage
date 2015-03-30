@@ -17,7 +17,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Assets\" />
     <Folder Include="$(MSBuildThisFileDirectory)ControlHelper\" />
     <Folder Include="$(MSBuildThisFileDirectory)FunctionHelper\" />
   </ItemGroup>
@@ -26,5 +25,28 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\HeadIconDemo\HeadIconBorder.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\HeadIconDemo\HeadIconBorder_green.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\HeadIconDemo\HeadIconDemo1.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\MyGradeIcon.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\MyClassIcon.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\MyCardIcon.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\MyLibraryIcon.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\next.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\searchClassroomIcon1.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\searchClassroomIcon.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\find_in.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\find_out.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\home_in.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\home_out.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\message_in.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\message_out.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\play.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\profile_in.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\profile_out.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\searchBusIcon.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\VideoBackground\BingWallpaper-2015-03-12.jpg" />
   </ItemGroup>
 </Project>

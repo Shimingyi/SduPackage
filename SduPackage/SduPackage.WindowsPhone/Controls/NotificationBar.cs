@@ -16,7 +16,7 @@ namespace SduPackage.Controls
 {
     public sealed class NotificationBar : Control
     {
-        private TextBlock notifyBlock;
+         private TextBlock notifyBlock;
         private Grid mainGrid;
         private Storyboard storyBoard;
 
@@ -24,6 +24,7 @@ namespace SduPackage.Controls
         {
             this.DefaultStyleKey = typeof(NotificationBar);
         }
+
         private void GetTextBlockControl()
         {
             if (this.notifyBlock == null)
@@ -31,18 +32,12 @@ namespace SduPackage.Controls
                 this.notifyBlock = this.GetTemplateChild("tb_Notify") as TextBlock;
             }
         }
+
         private void GetStoryBoardControl(string name)
         {
             if (this.storyBoard == null)
             {
                 this.storyBoard = this.GetTemplateChild(name) as Storyboard;
-            }
-        }
-        private void GetSummaryControl()
-        {
-            if (this.mainGrid == null)
-            {
-                this.mainGrid = this.GetTemplateChild("mainGrid") as Grid;
             }
         }
 

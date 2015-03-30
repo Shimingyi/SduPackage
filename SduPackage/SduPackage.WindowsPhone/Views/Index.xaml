@@ -1,0 +1,200 @@
+﻿<Page
+    x:Class="SduPackage.Views.Index"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SduPackage.Views"
+    xmlns:uc="using:SduPackage.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light">
+
+    <Page.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///StyleDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <uc:NotificationBar x:Name="NotifitionBar" Grid.ColumnSpan="99" Canvas.ZIndex="99"/>
+        <Grid Background="{StaticResource MyHeaderColor}" Height="70">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <uc:HeaderButton x:Name="headerHome" Grid.Column="0" Tapped="HeaderTapped" Tag="0" DefaultImage="ms-appx:///Assets/Image/Icon/home_out.png" SelectedImage="ms-appx:///Assets/Image/Icon/home_in.png" IsChecked="True"/>
+            <uc:HeaderButton x:Name="headerTodolist" Grid.Column="1" Tapped="HeaderTapped" Tag="1" DefaultImage="ms-appx:///Assets/Image/Icon/find_out.png" SelectedImage="ms-appx:///Assets/Image/Icon/find_in.png" IsChecked="False"/>
+            <uc:HeaderButton x:Name="headerBox" Grid.Column="2" Tapped="HeaderTapped" Tag="2" DefaultImage="ms-appx:///Assets/Image/Icon/profile_out.png" SelectedImage="ms-appx:///Assets/Image/Icon/profile_in.png" IsChecked="False"/>
+            <uc:HeaderButton x:Name="headerProfile" Grid.Column="3" Tapped="HeaderTapped" Tag="3" DefaultImage="ms-appx:///Assets/Image/Icon/message_out.png" SelectedImage="ms-appx:///Assets/Image/Icon/message_in.png" IsChecked="False"/>
+        </Grid>
+
+        <Pivot x:Name="pivot" Grid.Row="1" PivotItemLoaded="pivot_PivotItemLoaded" Margin="0,-13,0,0" >
+            <Pivot.Resources>
+                <Style TargetType="PivotItem">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </Pivot.Resources>
+            <PivotItem Margin="0">
+                <ScrollViewer>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border BorderThickness="0,0,0,1" BorderBrush="Gray">
+                            <Grid Margin="15,15,15,5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock  Text="关于做好李汝宽基金会海外学习奖学金评选工作的通知" FontSize="18" TextWrapping="Wrap"/>
+                                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,10,0,0">
+                                    <TextBlock Text="来源：" Foreground="Gray"/>
+                                    <TextBlock Text="学生在线" Foreground="Gray"/>
+                                </StackPanel>
+                                <TextBlock Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Right" Text="2015-03-24 21:48:04.0" Foreground="Gray"/>
+                            </Grid>
+                        </Border>
+                        <Border BorderThickness="0,0,0,1" Grid.Row="1" BorderBrush="Gray">
+                            <Grid Margin="15,15,15,5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock  Text="关于做好李汝宽基金会海外学习奖学金评选工作的通知" FontSize="18" TextWrapping="Wrap"/>
+                                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,10,0,0">
+                                    <TextBlock Text="来源：" Foreground="Gray"/>
+                                    <TextBlock Text="学生在线" Foreground="Gray"/>
+                                </StackPanel>
+                                <TextBlock Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Right" Text="2015-03-24 21:48:04.0" Foreground="Gray"/>
+                                <Image Width="70" Height="70" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.RowSpan="2" Source="ms-appx:///Assets/Image/HeadIconDemo/HeadIconDemo1.png" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Margin="0">
+                <Grid>
+                    
+                </Grid>
+            </PivotItem>
+            <PivotItem Margin="0">
+                <Grid Margin="0,20,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0" Height="150">
+                        <Image Width="100" Height="100" Source="ms-appx:///Assets/Image/Icon/searchBusIcon.png"/>
+                        <TextBlock Text="校车查询" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1" Height="150">
+                        <Image Width="100" Height="100" Source="ms-appx:///Assets/Image/Icon/searchClassroomIcon1.png"/>
+                        <TextBlock Text="自习室查询" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16"/>
+                    </Grid>
+                </Grid>
+            </PivotItem>
+            <PivotItem Margin="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="7*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Background="{StaticResource MyHeaderColor}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Width="100" Height="100" Source="ms-appx:///Assets/Image/HeadIconDemo/HeadIconBorder_green.png" Canvas.ZIndex="5"/>
+                        <Image Width="100" Height="100" Source="ms-appx:///Assets/Image/HeadIconDemo/HeadIconDemo1.png" />
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="史明镒" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,5"/>
+                            <StackPanel Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
+                                <TextBlock x:Name="NumVideo" Text="学号：" Foreground="White"/>
+                                <TextBlock Text="201300301197" Foreground="White"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border BorderThickness="1,0,0,1" BorderBrush="LightGray" Grid.Row="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="7*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Width="30" Height="30" Source="ms-appx:///Assets/Image/Icon/MyLibraryIcon.png" />
+                                <TextBlock Grid.Column="1" Text="我的图书馆" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0" FontSize="18"/>
+                                <Image Grid.Column="2" Width="30" Height="30" Source="ms-appx:///Assets/Image/Icon/next.png"/>
+                            </Grid>
+                        </Border>
+                        <Border BorderThickness="0,0,0,1" BorderBrush="LightGray" Grid.Row="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="7*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Width="30" Height="30" Source="ms-appx:///Assets/Image/Icon/MyCardIcon.png" />
+                                <TextBlock Grid.Column="1" Text="我的校园卡" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0" FontSize="18"/>
+                                <Image Grid.Column="2" Width="30" Height="30" Source="ms-appx:///Assets/Image/Icon/next.png"/>
+                            </Grid>
+                        </Border>
+                        <Border BorderThickness="0,0,0,1" BorderBrush="LightGray" Grid.Row="2">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="7*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Width="30" Height="30" Source="ms-appx:///Assets/Image/Icon/MyClassIcon.png" />
+                                <TextBlock Grid.Column="1" Text="我的课表" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0" FontSize="18"/>
+                                <Image Grid.Column="2" Width="30" Height="30" Source="ms-appx:///Assets/Image/Icon/next.png"/>
+                            </Grid>
+                        </Border>
+                        <Border BorderThickness="0,0,0,1" BorderBrush="LightGray" Grid.Row="3">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="7*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Width="30" Height="30" Source="ms-appx:///Assets/Image/Icon/MyGradeIcon.png" />
+                                <TextBlock Grid.Column="1" Text="我的绩点" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0" FontSize="18"/>
+                                <Image Grid.Column="2" Width="30" Height="30" Source="ms-appx:///Assets/Image/Icon/next.png"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+</Page>
