@@ -15,6 +15,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Functions\DoPost.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Group.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\News.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\NewsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)ControlHelper\" />

@@ -5,6 +5,12 @@
 
 
     <SolidColorBrush x:Key="MyHeaderColor" Color="#9c0c13"/>
-
-    
+    <CollectionViewSource x:Name="cv_items"
+                              IsSourceGrouped="True"
+                              ItemsPath="Items"
+                              Source="{Binding}">
+    </CollectionViewSource>
+    <Style TargetType="ListViewItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    </Style>
 </ResourceDictionary>

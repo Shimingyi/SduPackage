@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataHelper.DataModel
+namespace SduPackage.Model
 {
     public class News
     {
@@ -67,7 +67,7 @@ namespace DataHelper.DataModel
         /// 关键词
         /// </summary>
         public string keyWord { get; set; }
-       
+
 
     }
 }

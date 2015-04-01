@@ -42,54 +42,50 @@
                     <Setter Property="Margin" Value="0"/>
                 </Style>
             </Pivot.Resources>
-            <PivotItem Margin="0">
-                <ScrollViewer>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Border BorderThickness="0,0,0,1" BorderBrush="Gray">
-                            <Grid Margin="15,15,15,5">
+            <PivotItem Margin="10">
+                <ListView x:Name="newsListView" ItemsSource="{Binding Source={StaticResource cv_items}}">
+                    <ListView.GroupStyle>
+                        <GroupStyle >
+                            <!--分组的头部显示的模板，这里我们用背景色来高亮，文字绑定到Group.Name-->
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <Grid Background="LightGray" Width="300">
+                                        <TextBlock Text="{Binding Path=Name}" FontSize="20" HorizontalAlignment="Left"></TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock  Text="关于做好李汝宽基金会海外学习奖学金评选工作的通知" FontSize="18" TextWrapping="Wrap"/>
-                                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,10,0,0">
-                                    <TextBlock Text="来源：" Foreground="Gray"/>
-                                    <TextBlock Text="学生在线" Foreground="Gray"/>
-                                </StackPanel>
-                                <TextBlock Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Right" Text="2015-03-24 21:48:04.0" Foreground="Gray"/>
+                                <Border BorderThickness="0,0,0,1" BorderBrush="Gray">
+                                    <Grid Margin="0,15,15,5">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock  Text="{Binding Path=title}" FontSize="18" TextWrapping="Wrap"/>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,10,0,0">
+                                            <TextBlock Text="来源：" Foreground="Gray"/>
+                                            <TextBlock Text="{Binding Path=reporter}" Foreground="Gray"/>
+                                        </StackPanel>
+                                        <TextBlock Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Right" Text="{Binding Path=editTime}" Foreground="Gray"/>
+                                    </Grid>
+                                </Border>
                             </Grid>
-                        </Border>
-                        <Border BorderThickness="0,0,0,1" Grid.Row="1" BorderBrush="Gray">
-                            <Grid Margin="15,15,15,5">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="80"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock  Text="关于做好李汝宽基金会海外学习奖学金评选工作的通知" FontSize="18" TextWrapping="Wrap"/>
-                                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,10,0,0">
-                                    <TextBlock Text="来源：" Foreground="Gray"/>
-                                    <TextBlock Text="学生在线" Foreground="Gray"/>
-                                </StackPanel>
-                                <TextBlock Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Right" Text="2015-03-24 21:48:04.0" Foreground="Gray"/>
-                                <Image Width="70" Height="70" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.RowSpan="2" Source="ms-appx:///Assets/Image/HeadIconDemo/HeadIconDemo1.png" />
-                            </Grid>
-                        </Border>
-                    </Grid>
-                </ScrollViewer>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                    
             </PivotItem>
             <PivotItem Margin="0">
-                <Grid>
-                    
-                </Grid>
+                
             </PivotItem>
             <PivotItem Margin="0">
                 <Grid Margin="0,20,0,0">
@@ -197,4 +193,10 @@
             </PivotItem>
         </Pivot>
     </Grid>
+    
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Refresh" Click="AppBarButton_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>
