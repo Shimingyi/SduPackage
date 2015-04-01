@@ -23,7 +23,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <uc:NotificationBar x:Name="NotifitionBar" Grid.ColumnSpan="99" Canvas.ZIndex="99"/>
-        <Grid Background="{StaticResource MyHeaderColor}" Height="70">
+        <Grid Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Height="70">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="4*"/>
@@ -58,7 +58,7 @@
                     </ListView.GroupStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Tapped="ViewNewsBody">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
@@ -113,13 +113,16 @@
                         <RowDefinition Height="3*"/>
                         <RowDefinition Height="7*"/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="0" Background="{StaticResource MyHeaderColor}">
+                    <Grid Grid.Row="0" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Width="100" Height="100" Source="ms-appx:///Assets/Image/HeadIconDemo/HeadIconBorder_green.png" Canvas.ZIndex="5"/>
-                        <Image Width="100" Height="100" Source="ms-appx:///Assets/Image/HeadIconDemo/HeadIconDemo1.png" />
+                        <Ellipse Width="100" Height="100">
+                            <Ellipse.Fill>
+                                <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/Image/HeadIconDemo/HeadIconDemo1.png"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -195,8 +198,8 @@
     </Grid>
     
     <Page.BottomAppBar>
-        <CommandBar>
-            <AppBarButton Icon="Refresh" Click="AppBarButton_Click"/>
+        <CommandBar Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Foreground="White">
+            <AppBarButton Icon="Refresh" Click="refreshNews"/>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

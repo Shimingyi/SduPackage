@@ -6,9 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light">
 
-    <Grid>
-
+    <Grid Margin="4,10.333,16,9.667">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="NewsTitleTextBlock" Grid.Row="0" Text="这是一个标题" FontSize="30" TextWrapping="Wrap" FontWeight="Bold"/>
+        <TextBlock x:Name="NewsReporterTextBlock" Grid.Row="1" Text="记者：史明镒"/>
+        <TextBlock x:Name="NewsTimeTextBlock" Grid.Row="1" HorizontalAlignment="Right"/>
+        <TextBlock x:Name="NewsBodyTextBlock" Grid.Row="2" TextWrapping="Wrap" Visibility="Collapsed"/>
+        <ProgressRing x:Name="isDowning" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" IsActive="True"/>
     </Grid>
 </Page>
