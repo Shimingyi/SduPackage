@@ -98,7 +98,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Row="0" Grid.Column="0" Height="150">
+                    <Grid Grid.Row="0" Grid.Column="0" Height="150" Tapped="ToBusSearchView">
                         <Image Width="100" Height="100" Source="ms-appx:///Assets/Image/Icon/searchBusIcon.png"/>
                         <TextBlock Text="校车查询" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16"/>
                     </Grid>
