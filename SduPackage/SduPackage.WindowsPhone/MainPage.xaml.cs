@@ -64,7 +64,7 @@ namespace SduPackage
                 SaveFile("TheNewsFromSduOnline.txt", result);
             });
             //其他通知
-            http.StartPost("http://www.online.sdu.edu.cn/News2s/servlet/PassageListServlet", "id=0&page=1", result =>
+            http.StartPost("http://www.online.sdu.edu.cn/News2s/servlet/OtherListServlet", "id=11&page=1", result =>
             {
                 result = result.Substring(2, result.Length - 2);
                 SaveFile("TheNewsFromOthers.txt", result);

@@ -44,7 +44,6 @@ namespace SduPackage.ViewModel
         #region 方法
         public void LoadNews(int index)
         {
-            //downToFile(index);
             LoadFile(index);
         }
 
@@ -130,7 +129,7 @@ namespace SduPackage.ViewModel
                         //downNewsList(1, result);
                         SaveFile("TheNewsFromSduOnline.txt", result);
                     });
-                    http.StartPost("http://www.online.sdu.edu.cn/News2s/servlet/PassageListServlet", "id=0&page=1", result =>
+                    http.StartPost("http://www.online.sdu.edu.cn/News2s/servlet/OtherListServlet", "id=11&page=1", result =>
                     {
                         result = result.Substring(2,result.Length-2);
                         //downNewsList(2, result);
@@ -154,8 +153,8 @@ namespace SduPackage.ViewModel
         {
             News _news = new News();
             _news.blockId = Int32.Parse(jo["blockId"].ToString());
-            _news.pid = Int32.Parse(jo["blockId"].ToString());
-            _news.priorty = Int32.Parse(jo["blockId"].ToString());
+            _news.pid = Int32.Parse(jo["pid"].ToString());
+            _news.priorty = Int32.Parse(jo["priorty"].ToString());
             _news.title = jo["title"].ToString();
            // _news.content = jo["content"].ToString();
            // _news.addTime = jo["addTime"].ToString();
