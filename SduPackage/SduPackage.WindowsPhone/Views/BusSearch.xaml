@@ -11,12 +11,11 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="5*"/>
             <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
         <Grid>
-            <Image Source="ms-appx:///Assets/Image/VideoBackground/BingWallpaper-2015-03-12.jpg" />
+            <Image Source="ms-appx:///Assets/Image/VideoBackground/a1aba40f4bfbfbedba12e5937af0f736aec31f93.jpg" />
         </Grid>
         <Grid Grid.Row="2" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
             <Grid.RowDefinitions>
@@ -37,7 +36,7 @@
             
             </Border>
             <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,1,1,1" BorderBrush="White">
-
+                
             </Border>
             <Border Grid.Row="1" Grid.Column="1" BorderThickness="1,1,0,1" BorderBrush="White">
 
