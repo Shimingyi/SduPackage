@@ -34,7 +34,7 @@
                 </Grid>
             </Border>
             <Border Grid.Row="0" Grid.Column="1" BorderThickness="1,0,0,1" BorderBrush="White">
-
+            
             </Border>
             <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,1,1,1" BorderBrush="White">
 
@@ -50,6 +50,10 @@
             </Border>
         </Grid>
     </Grid>
-    
-   
+
+    <Page.BottomAppBar>
+        <CommandBar Foreground="White" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
+            <AppBarButton Icon="Setting" Label="设置"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>
