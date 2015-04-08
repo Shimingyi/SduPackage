@@ -51,7 +51,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\profile_in.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\profile_out.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\searchBusIcon.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\VideoBackground\a1aba40f4bfbfbedba12e5937af0f736aec31f93.jpg" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Image\VideoBackground\BingWallpaper-2015-03-12.jpg" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\VideoBackground\BusSearchTopImage.jpg" />
   </ItemGroup>
 </Project>

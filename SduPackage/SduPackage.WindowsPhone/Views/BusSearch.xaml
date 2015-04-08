@@ -13,11 +13,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="6*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="80"/>
 
         </Grid.RowDefinitions>
         <Grid>
-            <Image Source="ms-appx:///Assets/Image/VideoBackground/a1aba40f4bfbfbedba12e5937af0f736aec31f93.jpg" />
+            <Grid.Background>
+                <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/Image/VideoBackground/BusSearchTopImage.jpg"/>
+            </Grid.Background>
         </Grid>
         <Grid Grid.Row="1" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
             <Grid.RowDefinitions>
