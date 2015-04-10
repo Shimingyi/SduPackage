@@ -27,13 +27,95 @@ namespace SduPackage.Views
             this.InitializeComponent();
         }
 
-        /// <summary>
-        /// 在此页将要在 Frame 中显示时进行调用。
-        /// </summary>
-        /// <param name="e">描述如何访问此页的事件数据。
-        /// 此参数通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            var searchBusNumString = e.Parameter as string;
+            Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+            analysisNum(searchBusNumString);
         }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
+        }
+
+        #region 事件
+        public void analysisNum(string NumString)
+        {
+            string[] stringSeparators = new string[] { "to" };
+            string[] PlaceNum = NumString.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+            int startPlaceNum = Int32.Parse(PlaceNum[0]);
+            int endPlaceNum = Int32.Parse(PlaceNum[1]);
+            setStartPlace(startPlaceNum);
+            setEndPlace(endPlaceNum);
+
+        }
+
+        void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
+        {
+            e.Handled = true;
+            if (this.Frame.CanGoBack)
+            {
+                this.Frame.GoBack();
+            }
+        }
+        #endregion
+
+        #region 私有方法
+        private void setStartPlace(int i){
+            switch (i)
+            {
+                case 0:
+                    StartPlaceTextBlock.Text = "出发地";
+                    break;
+                case 1:
+                    StartPlaceTextBlock.Text = "中心校区";
+                    break;
+                case 2:
+                    StartPlaceTextBlock.Text = "洪家楼校区";
+                    break;
+                case 3:
+                    StartPlaceTextBlock.Text = "千佛山校区";
+                    break;
+                case 4:
+                    StartPlaceTextBlock.Text = "兴隆山校区";
+                    break;
+                case 5:
+                    StartPlaceTextBlock.Text = "软件园校区";
+                    break;
+                case 6:
+                    StartPlaceTextBlock.Text = "趵突泉校区";
+                    break;
+            }
+        }
+
+        private void setEndPlace(int i)
+        {
+            switch (i)
+            {
+                case 0:
+                    EndPlaceTextBlock.Text = "目的地";
+                    break;
+                case 1:
+                    EndPlaceTextBlock.Text = "中心校区";
+                    break;
+                case 2:
+                    EndPlaceTextBlock.Text = "洪家楼校区";
+                    break;
+                case 3:
+                    EndPlaceTextBlock.Text = "千佛山校区";
+                    break;
+                case 4:
+                    EndPlaceTextBlock.Text = "兴隆山校区";
+                    break;
+                case 5:
+                    EndPlaceTextBlock.Text = "软件园校区";
+                    break;
+                case 6:
+                    EndPlaceTextBlock.Text = "趵突泉校区";
+                    break;
+            }
+        }
+        #endregion
     }
 }
