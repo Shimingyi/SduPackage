@@ -1,0 +1,88 @@
+﻿<Page
+    x:Class="SduPackage.Views.BusSearch"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SduPackage.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light">
+
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="80"/>
+
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.Background>
+                <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/Image/VideoBackground/BusSearchTopImage.jpg"/>
+            </Grid.Background>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0,20,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="White" Tag="1" Tapped="PlaceButtonTap">
+                <StackPanel Orientation="Vertical">
+                    <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/eastNew.png" />
+                    <TextBlock Foreground="Black" Text="中心校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1" BorderThickness="1,0,1,1" BorderBrush="White" Tag="2">
+                <StackPanel Orientation="Vertical">
+                    <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/eastOld.png" />
+                    <TextBlock Foreground="Black" Text="洪家楼校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="0" Grid.Column="2" BorderThickness="1,0,0,1" BorderBrush="White" Tag="3">
+                <StackPanel Orientation="Vertical">
+                    <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/southOld.png" />
+                    <TextBlock Foreground="Black" Text="千佛山校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,1,1,0" BorderBrush="White" Tag="4">
+                <StackPanel Orientation="Vertical">
+                    <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/southNew.png" />
+                    <TextBlock Foreground="Black" Text="兴隆山校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" BorderThickness="1,1,1,0" BorderBrush="White" Tag="5">
+                <StackPanel Orientation="Vertical">
+                    <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/cs.png" />
+                    <TextBlock Foreground="Black" Text="软件园校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="2" BorderThickness="1,1,0,0" BorderBrush="White" Tag="6">
+                <StackPanel Orientation="Vertical">
+                    <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/history.png" />
+                    <TextBlock Foreground="Black" Text="趵突泉校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" x:Name="StartPlaceTextBlock" Text="出发地" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Gray"/>
+            <Image Grid.Column="1" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center" Source="ms-appx:///Assets/Image/Icon/20150408104632868_easyicon_net_512.png" />
+            <TextBlock Grid.Column="2" x:Name="EndPlaceTextBlock" Text="目的地" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Gray"/>
+        </Grid>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar Foreground="White" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" ClosedDisplayMode="Minimal">
+            <AppBarButton Icon="Setting" Label="设置"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>
