@@ -58,6 +58,11 @@ namespace SduPackage.Views
                 Frame.Navigate(typeof(Views.BusInformation),startPlaceNum+"to"+endPlaceNum);
             }
         }
+
+        private void ToBusSettingPage(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Views.BusSetting));
+        }
         #endregion
 
         #region 事件
@@ -138,6 +143,8 @@ namespace SduPackage.Views
         }
 
         #endregion
+
+        
 
     }
 }

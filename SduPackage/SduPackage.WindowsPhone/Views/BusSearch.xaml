@@ -82,7 +82,7 @@
 
     <Page.BottomAppBar>
         <CommandBar Foreground="White" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" ClosedDisplayMode="Minimal">
-            <AppBarButton Icon="Setting" Label="设置"/>
+            <AppBarButton Icon="Setting" Label="设置" Click="ToBusSettingPage"/>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

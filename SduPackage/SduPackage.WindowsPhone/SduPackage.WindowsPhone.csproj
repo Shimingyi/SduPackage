@@ -92,6 +92,9 @@
     <Compile Include="Views\BusSearch.xaml.cs">
       <DependentUpon>BusSearch.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BusSetting.xaml.cs">
+      <DependentUpon>BusSetting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ClassroomSearch.xaml.cs">
       <DependentUpon>ClassroomSearch.xaml</DependentUpon>
     </Compile>
@@ -129,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BusSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusSetting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
