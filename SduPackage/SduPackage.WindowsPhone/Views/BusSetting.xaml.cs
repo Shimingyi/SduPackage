@@ -72,8 +72,10 @@ namespace SduPackage.Views
                 BudDBTextBlock.Text = BusDBSummary_now;
             }
         }
+        #endregion
 
-        public async void getLastSummary(string nowSummary,object sender)
+        #region 私有事件
+        private async void getLastSummary(string nowSummary, object sender)
         {
             string result = null;
             HttpClient client = new HttpClient();
@@ -93,7 +95,7 @@ namespace SduPackage.Views
 
                 if (lastSummary != nowSummary)
                 {
-                    NotificationText.Text = ("有一项"+lastSummary+"版本的数据库可以下载");
+                    NotificationText.Text = ("有一项" + lastSummary + "版本的数据库可以下载");
                     Windows.UI.Xaml.Controls.Primitives.FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
                 }
                 else
@@ -101,33 +103,33 @@ namespace SduPackage.Views
                     NoNewBusDB.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 }
             }
-            catch (Exception e )
+            catch (Exception e)
             {
                 NotifitionBar.ShowMessage("网络连接情况不理想 >O<");
             }
         }
 
-        public async void downLoadFile()
+        
+
+        private async void downLoadFile()
         {
             IBuffer buffer;
             HttpClient client = new HttpClient();
             try
             {
                 buffer = await client.GetBufferAsync(new Uri(lastUrl));
-                SaveFile("bus.db",buffer);
+                SaveFile("bus.db", buffer);
                 localSettings.Values["BusDBSummary"] = lastSummary;
                 System.Diagnostics.Debug.WriteLine("公交车数据库完成下载");
                 BudDBTextBlock.Text = lastSummary;
-                Change_StatuBar("下载完成",1);
+                Change_StatuBar("下载完成", 1);
             }
-            catch (AggregateException e)
+            catch (Exception e)
             {
                 NotifitionBar.ShowMessage("下载失败 >O<");
             }
         } 
-        #endregion
 
-        #region 私有事件
         private async void SaveFile(string FileName, string result)
         {
             Windows.Storage.StorageFile tempFile = await localFolder.CreateFileAsync(FileName, Windows.Storage.CreationCollisionOption.ReplaceExisting);
