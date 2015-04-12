@@ -10,19 +10,26 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light">
     
     <Page.Resources>
-        <Flyout x:Key="NotificationFlyout">
-            <Grid>
-                <StackPanel Orientation="Vertical">
-                    <TextBlock x:Name="NotificationText"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="2*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="现在下载"/>
-                        <Button Grid.Column="1" Content="稍后下载"/>
-                    </Grid>
-                </StackPanel>
+        <Flyout x:Key="NotificationFlyout" x:Name="NotificationFlyout">
+            <Grid Height="auto" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
+                <Grid  Margin="20" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="NotificationText" Grid.Row="0" Grid.ColumnSpan="2"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Foreground="White" FontSize="16" TextWrapping="Wrap"/>
+                    <Button Grid.Row="1" Grid.Column="0" Content="现在下载" 
+                                Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" 
+                                BorderBrush="White" Foreground="White"
+                                HorizontalAlignment="Stretch" Margin="0,0,10,0"
+                                Click="DownloadBudDB"/>
+                </Grid>
             </Grid>
         </Flyout>
     </Page.Resources>
@@ -33,6 +40,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <uc:NotificationBar x:Name="NotifitionBar" Grid.ColumnSpan="99" Canvas.ZIndex="99"/>
+        
         <Grid Grid.Row="0" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
             <TextBlock Text="设置" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0"/>
         </Grid>
@@ -53,7 +61,16 @@
                 </StackPanel>
                 <ToggleSwitch Grid.Row="1" Header="开启数据库自动更新"/>
             </Grid>
-            <Button Grid.Row="2" Height="60" Width="auto" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="10,40" Content="查找可用更新" FontSize="15" Click="CheckSQLUpdate" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Foreground="{ThemeResource ButtonPressedForegroundThemeBrush}"/>
+            <TextBlock x:Name="NoNewBusDB" Grid.Row="2" Visibility="Collapsed"
+                       VerticalAlignment="Bottom" Margin="10,0,0,100" 
+                       FontSize="14" Text="没有可用更新"/>
+            <Button Grid.Row="2" Height="60" Width="auto" BorderThickness="0" 
+                    VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                    Margin="10,40" Click="CheckSQLUpdate" 
+                    Content="查找可用更新" FontSize="15" 
+                    FlyoutBase.AttachedFlyout="{StaticResource NotificationFlyout}"
+                    Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" 
+                    Foreground="{ThemeResource ButtonPressedForegroundThemeBrush}"/>
         </Grid>
     </Grid>
 </Page>

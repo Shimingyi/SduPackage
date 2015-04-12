@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
 namespace SduPackage.Views
 {
@@ -24,6 +13,7 @@ namespace SduPackage.Views
     {
         int count = 0;
         int startPlaceNum, endPlaceNum;
+        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         public BusSearch()
         {
@@ -43,19 +33,24 @@ namespace SduPackage.Views
         #region 页面点击事件
         private void PlaceButtonTap(object sender, TappedRoutedEventArgs e)
         {
-            count++;
-            var choosePlaceBorder = sender as Border;
-            int choosePlaceNum = Int32.Parse((string)choosePlaceBorder.Tag);
-            if ((count % 2) == 1)
+            if (CheckBusDB())
             {
-                setStartPlace(choosePlaceNum);
-                startPlaceNum = choosePlaceNum;
-            }
-            else
-            {
-                //setEndPlace(choosePlaceNum);
-                endPlaceNum = choosePlaceNum;
-                Frame.Navigate(typeof(Views.BusInformation),startPlaceNum+"to"+endPlaceNum);
+                count++;
+                var choosePlaceBorder = sender as Border;
+                int choosePlaceNum = Int32.Parse((string)choosePlaceBorder.Tag);
+                if ((count % 2) == 1)
+                {
+                    setStartPlace(choosePlaceNum);
+                    startPlaceNum = choosePlaceNum;
+                }
+                else
+                {
+                    endPlaceNum = choosePlaceNum;
+                    if (endPlaceNum != startPlaceNum)
+                        Frame.Navigate(typeof(Views.BusInformation), startPlaceNum + "to" + endPlaceNum);
+                    else
+                        NotifitionBar.ShowMessage("原地绕圈不需要校车 >O<");
+                }
             }
         }
 
@@ -66,6 +61,8 @@ namespace SduPackage.Views
         #endregion
 
         #region 事件
+        
+
         void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
         {
             e.Handled = true;
@@ -77,6 +74,22 @@ namespace SduPackage.Views
         #endregion
 
         #region 私有事件
+        private bool CheckBusDB()
+        {
+            if (localSettings.Values.ContainsKey("BusDBSummary"))
+            {
+                return true;
+            }
+            else
+            {
+                NotifitionBar.ShowMessage("还未下载数据库 >O<");
+                return false;
+            }
+                
+        }
+        #endregion
+
+        #region 状态改变事件
         private void ResetPage()
         {
             setStartPlace(0);
