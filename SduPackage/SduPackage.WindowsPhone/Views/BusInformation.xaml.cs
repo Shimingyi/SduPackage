@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SduPackage.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,12 @@ namespace SduPackage.Views
     /// </summary>
     public sealed partial class BusInformation : Page
     {
+        BusViewModel _busViewModel;
+
         public BusInformation()
         {
             this.InitializeComponent();
+            _busViewModel = new BusViewModel();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -49,6 +53,7 @@ namespace SduPackage.Views
             setStartPlace(startPlaceNum);
             setEndPlace(endPlaceNum);
 
+            _busViewModel.SearchBus(startPlaceNum, endPlaceNum);
         }
 
         void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)

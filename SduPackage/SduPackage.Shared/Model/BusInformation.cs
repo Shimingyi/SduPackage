@@ -27,5 +27,7 @@ namespace SduPackage.Model
         public string bus_type { get; set; }
 
         public string remark { get; set; }
+      
+
     }
 }

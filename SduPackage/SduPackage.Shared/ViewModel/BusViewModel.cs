@@ -1,4 +1,5 @@
-﻿using SduPackage.Model;
+﻿using SduPackage.Functions;
+using SduPackage.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +21,8 @@ namespace SduPackage.ViewModel
         string lastSummary;
         int lastSize;
         string lastUrl;
+
+        BusSqlite _busSqlite;
         #endregion
 
         #region 属性
@@ -35,22 +38,37 @@ namespace SduPackage.ViewModel
         }
 
         #endregion
-        
+
+        #region 事件
+        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
         #region 构造方法
         public BusViewModel()
         {
-
+            _busSqlite = new BusSqlite();
+            this.WorkDayBuses = new ObservableCollection<BusInformation>();
+            this.WeekendBuses = new ObservableCollection<BusInformation>();
+            this.RaisePropertyChanged("WorkDayBuses");
+            this.RaisePropertyChanged("WeekendBuses");
         }
         #endregion
         
-        #region 事件
-        
-        #endregion
-
         #region 方法
-        public void SqlParse()
+        public void SearchBus(int startNum, int endNum)
         {
-
+            List<BusInformation> busInformations = _busSqlite.SearchBus(startNum, endNum);
+            for (int i = 0; i < busInformations.Count;i++ )
+            {
+                if (busInformations[i].bus_type == "1")
+                {
+                    WorkDayBuses.Add(busInformations[i]);
+                }
+                else
+                {
+                    WeekendBuses.Add(busInformations[i]);
+                }
+            }
         }
 
         public void UpdataSummary(){
@@ -119,6 +137,14 @@ namespace SduPackage.ViewModel
         {
             Windows.Storage.StorageFile tempFile = await localFolder.CreateFileAsync(FileName, Windows.Storage.CreationCollisionOption.ReplaceExisting);
             await Windows.Storage.FileIO.WriteBufferAsync(tempFile, buffer);
+        }
+
+        private void RaisePropertyChanged(String propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
         #endregion
     }

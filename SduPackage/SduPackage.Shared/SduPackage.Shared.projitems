@@ -15,14 +15,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Functions\BusSqlite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Functions\DoPost.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\BusInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Group.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\ID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\News.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SQLite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SQLiteAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BusViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\NewsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)ControlHelper\" />
-    <Folder Include="$(MSBuildThisFileDirectory)FunctionHelper\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)StyleDictionary.xaml">
