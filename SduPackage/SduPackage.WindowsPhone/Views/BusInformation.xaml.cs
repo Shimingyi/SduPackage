@@ -122,5 +122,13 @@ namespace SduPackage.Views
             }
         }
         #endregion
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (informationGrid.Visibility == Windows.UI.Xaml.Visibility.Collapsed)
+                informationGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            else
+                informationGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
     }
 }
