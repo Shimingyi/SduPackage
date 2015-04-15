@@ -47,7 +47,7 @@ namespace SduPackage.Functions
             NumToCampus[3] = "千佛山校区";
             NumToCampus[4] = "兴隆山校区";
             NumToCampus[5] = "软件园校区";
-            NumToCampus[6] = "兴隆山校区";
+            NumToCampus[6] = "趵突泉校区";
         }
 
         private SQLiteConnection GetConn()
@@ -62,7 +62,7 @@ namespace SduPackage.Functions
             DateTime now = DateTime.Now;
             int nowNum = (now.Month * 100 + now.Day);
 
-            if ( (nowNum > 1008)&&(nowNum < 430))
+            if ( (nowNum > 1008)||(nowNum < 430))
             {
                 isSummer = false;
             }
@@ -76,13 +76,19 @@ namespace SduPackage.Functions
 
             //string sql = ("select * from search_table, summer_time where search_table.id = summer_time.id and search_table.id in(select id from search_table where RecNo = '1')");
             //string sql = ("select * from search_table, "+TableName+" where search_table.id ="+TableName+".id and search_table.id in (select id from search_table where from_ = "+NumToCampus[startNum]+" and to_ = "+NumToCampus[endNum]+")");
-            string sql = ("select id from search_table where from_ = '"+NumToCampus[startNum]+"' and to_ = '"+NumToCampus[endNum]+"'");
+            string sql;
+            if (endNum == 4)
+            {
+                sql = ("select id from search_table where from_ = '" + NumToCampus[startNum] + "' and( to_ = '" + NumToCampus[endNum] + "'" + " or to_ = '南山小区')");
+            }
+            else
+                sql = ("select id from search_table where from_ = '" + NumToCampus[startNum] + "' and to_ = '" + NumToCampus[endNum] + "'");
             cmd.CommandText = sql;
             List<ID> busIdSet = cmd.ExecuteQuery<ID>();
 
-            for (int i = 0; i < busIdSet.Count;i++ )
+            for (int i = 0; i < busIdSet.Count; i++)
             {
-                sql = ("select * from "+TableName+" where id = " + busIdSet[i].id);
+                sql = ("select * from " + TableName + " where id = " + busIdSet[i].id);
                 cmd.CommandText = sql;
                 List<BusInformation> one = cmd.ExecuteQuery<BusInformation>();
                 _BusInformations.Add(one[0]);

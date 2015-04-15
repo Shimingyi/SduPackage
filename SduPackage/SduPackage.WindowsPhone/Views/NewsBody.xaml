@@ -18,7 +18,7 @@
         <TextBlock x:Name="NewsReporterTextBlock" Grid.Row="1" Text="记者：史明镒"/>
         <TextBlock x:Name="NewsTimeTextBlock" Grid.Row="1" HorizontalAlignment="Right"/>
         <ScrollViewer Grid.Row="2">
-            <TextBlock x:Name="NewsBodyTextBlock" Grid.Row="2" TextWrapping="Wrap" Visibility="Collapsed" FontSize="18" Text="aaaaaaaaa"/>
+            <WebView x:Name="NewsBodyWebView"></WebView>
         </ScrollViewer>
         <ProgressRing x:Name="isDowning" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" IsActive="True"/>
     </Grid>

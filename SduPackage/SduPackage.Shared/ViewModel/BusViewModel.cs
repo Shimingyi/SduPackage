@@ -46,6 +46,7 @@ namespace SduPackage.ViewModel
         #region 构造方法
         public BusViewModel()
         {
+            LoadViewModel();
             _busSqlite = new BusSqlite();
             this.WorkDayBuses = new ObservableCollection<BusInformation>();
             this.WeekendBuses = new ObservableCollection<BusInformation>();
@@ -55,18 +56,49 @@ namespace SduPackage.ViewModel
         #endregion
         
         #region 方法
+        public void LoadViewModel()
+        {
+            if (localSettings.Values.ContainsKey("BusDBSummary"))
+            {
+                nowSummary = localSettings.Values["BusDBSummary"].ToString();
+            }
+        }
+
         public void SearchBus(int startNum, int endNum)
         {
             List<BusInformation> busInformations = _busSqlite.SearchBus(startNum, endNum);
-            for (int i = 0; i < busInformations.Count;i++ )
+            int _count = busInformations.Count;
+            int[] BusNum = new int[_count];
+            int[] sort = new int[_count];
+            for (int i = 0; i < _count; i++)
             {
-                if (busInformations[i].bus_type == "1")
+                BusNum[i] = timeStringToInt(busInformations[i].start_time);
+            }
+            for (int i = 0; i < _count; i++)
+            {
+                int rank = 0;
+                for (int j = 0; j < _count; j++)
                 {
-                    WorkDayBuses.Add(busInformations[i]);
+                    if (BusNum[i] > BusNum[j])
+                        rank++;
                 }
-                else
+                sort[i] = rank;
+            }
+            for (int i = 0; i < _count; i++)
+            {
+                for (int j = 0; j < _count; j++)
                 {
-                    WeekendBuses.Add(busInformations[i]);
+                    if (i == sort[j])
+                    {
+                        if (busInformations[j].bus_type == "1")
+                        {
+                            WorkDayBuses.Add(busInformations[j]);
+                        }
+                        else
+                        {
+                            WeekendBuses.Add(busInformations[j]);
+                        }
+                    }
                 }
             }
         }
@@ -108,6 +140,15 @@ namespace SduPackage.ViewModel
             {
                 System.Diagnostics.Debug.WriteLine("获取数据库信息时出错");
             }
+        }
+
+        private int timeStringToInt(string _time)
+        {
+            int result = 0;
+            string[] stringSeparators = new string[] { ":" };
+            string[] PlaceNum = _time.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+            result = (60 * (Int32.Parse(PlaceNum[0])) + (Int32.Parse(PlaceNum[1])));
+            return result;
         }
 
         private async void downLoadFile()

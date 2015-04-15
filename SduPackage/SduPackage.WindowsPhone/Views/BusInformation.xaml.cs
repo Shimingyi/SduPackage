@@ -1,4 +1,5 @@
-﻿using SduPackage.ViewModel;
+﻿using SduPackage.Controls;
+using SduPackage.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,7 +44,7 @@ namespace SduPackage.Views
             Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
         }
 
-        #region 事件
+        #region 方法
         public void analysisNum(string NumString)
         {
             string[] stringSeparators = new string[] { "to" };
@@ -54,6 +55,7 @@ namespace SduPackage.Views
             setEndPlace(endPlaceNum);
 
             _busViewModel.SearchBus(startPlaceNum, endPlaceNum);
+            reflesh();
         }
 
         void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
@@ -63,6 +65,12 @@ namespace SduPackage.Views
             {
                 this.Frame.GoBack();
             }
+        }
+
+        public void reflesh()
+        {
+            WorkDayListView.ItemsSource = _busViewModel.WorkDayBuses;
+            WeekendListView.ItemsSource = _busViewModel.WeekendBuses;
         }
         #endregion
 
@@ -125,10 +133,30 @@ namespace SduPackage.Views
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            ListViewItem listView = sender as ListViewItem;
+
+            /*
             if (informationGrid.Visibility == Windows.UI.Xaml.Visibility.Collapsed)
                 informationGrid.Visibility = Windows.UI.Xaml.Visibility.Visible;
             else
                 informationGrid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+             */
+        }
+
+        private void MoreInformationButton(object sender, TappedRoutedEventArgs e)
+        {
+            
+                BusControl item = sender as BusControl;
+                if (item.MoreInformationVisible == Windows.UI.Xaml.Visibility.Visible)
+                {
+                    item.MoreInformationVisible = Windows.UI.Xaml.Visibility.Collapsed;
+                }
+                else
+                {
+                    item.MoreInformationVisible = Windows.UI.Xaml.Visibility.Visible;
+                }
+            
+            
         }
     }
 }

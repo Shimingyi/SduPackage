@@ -65,9 +65,10 @@ namespace SduPackage.Views
                 {
                     Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
-                        NewsBodyTextBlock.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                        //NewsBodyTextBlock.Visibility = Windows.UI.Xaml.Visibility.Visible;
                         isDowning.IsActive = false;
-                        NewsBodyTextBlock.Text = result;
+                        NewsBodyWebView.NavigateToString("<html><body>"+result+"</body></html>");
+                        //NewsBodyTextBlock.Text = result;
                     });
                 });
             }
@@ -79,9 +80,10 @@ namespace SduPackage.Views
                 {
                     Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
-                        NewsBodyTextBlock.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                        //NewsBodyTextBlock.Visibility = Windows.UI.Xaml.Visibility.Visible;
                         isDowning.IsActive = false;
-                        NewsBodyTextBlock.Text = result;
+                        NewsBodyWebView.NavigateToString("<html><body>" + result + "</body></html>");
+                        //NewsBodyTextBlock.Text = result;
                     });
                 });
             }            
