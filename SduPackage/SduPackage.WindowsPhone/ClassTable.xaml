@@ -14,8 +14,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        
         <Grid Grid.Row="0" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
-            <TextBlock Text="设置" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0"/>
+            <TextBlock Text="课表" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0"/>
         </Grid>
         <Grid Grid.Row="1" Margin="20">
             

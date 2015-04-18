@@ -17,9 +17,11 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Functions\BusSqlite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Functions\DoPost.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\BookInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BusInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\ID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\News.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLiteAsync.cs" />
