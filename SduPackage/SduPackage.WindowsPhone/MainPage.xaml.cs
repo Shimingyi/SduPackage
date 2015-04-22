@@ -26,7 +26,6 @@ namespace SduPackage
     {
         private Windows.Storage.StorageFolder _localFolder;
 
-
         public MainPage()
         {
             this.InitializeComponent();

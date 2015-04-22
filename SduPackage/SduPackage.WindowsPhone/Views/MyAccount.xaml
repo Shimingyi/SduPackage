@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="SduPackage.Views.MyAccount"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SduPackage.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
+            <TextBlock x:Name="PageTitle" Text="我的账号" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0"/>
+        </Grid>
+        
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="校园卡账号"/>
+                <TextBox x:Name="CardUsername" Grid.Row="1" PlaceholderText="校园卡六位账号"/>
+                <PasswordBox x:Name="CardPassword" Grid.Row="2" Margin="0,0,0,20"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="选课系统账号"/>
+                <TextBox x:Name="LibraryUsername" Grid.Row="1" PlaceholderText="学号"/>
+                <PasswordBox x:Name="LibraryPassword" Grid.Row="2" Margin="0,0,0,20"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

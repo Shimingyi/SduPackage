@@ -17,6 +17,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Functions\BusSqlite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Functions\DoPost.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Functions\MyException\ErrorAccountException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BookInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BusInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Group.cs" />

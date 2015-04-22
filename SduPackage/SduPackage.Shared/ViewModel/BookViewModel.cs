@@ -1,6 +1,7 @@
 using Newtonsoft.Json.Linq;
 using SduPackage.Funcitons;
 using SduPackage.Functions;
+using SduPackage.Functions.MyException;
 using SduPackage.Model;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace SduPackage.ViewModel{
     	#region 构造方法
         public BookViewModel(int index)
         {
+            BookGroup = new ObservableCollection<BusInformation>();
             RaisePropertyChanged("BookGroup");
             LoadBookGroup(index);
         }
@@ -58,10 +60,48 @@ namespace SduPackage.ViewModel{
     	#endregion
 
     	#region 私有方法
-        private void downToFile(int index){
+        public void downToFile(int index)
+        {
+            /*
+            try
+            {
+                string username = _localSettings.Values["CardUsername"].ToString();
+                string password = _localSettings.Values["CardPassword"].ToString();
+                HttpClient httpclient = new HttpClient();
+                string posturl = "http://202.194.14.195:8080/curriculumlib/lib";
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, new Uri(posturl));
+                HttpFormUrlEncodedContent postDate = new HttpFormUrlEncodedContent(
+                    new List<KeyValuePair<string, string>>
+                    {
+                        new KeyValuePair<string,string>("requesttype","0"),
+                        new KeyValuePair<string,string>("username",username),
+                        new KeyValuePair<string,string>("password",password),
+                    }
+                );
+                request.Content = postDate;
+                HttpResponseMessage response = await httpclient.SendRequestAsync(request);
+                string result = await response.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine(result);
+                if (result.IndexOf("错误") > 0)
+                {
+                    throw new ErrorAccountException();
+                }
+                else
+                {
+                    addToGroup(result);
+                    SaveFile("MyLibraryFile.txt", result);
+                }
+                
+            }
+            catch (ErrorAccountException args)
+            {
+                throw args;
+            }
+            */
+            
             var http = new DoPost();
-            string username = _localSettings.Containers["LibraryUsername"].ToString();
-            string password = _localSettings.Containers["LibraryPassword"].ToString();
+            string username = _localSettings.Values["CardUsername"].ToString();
+            string password = _localSettings.Values["CardPassword"].ToString();
             switch(index){
                 case 1:
                     string url = ("http://202.194.14.195:8080/curriculumlib/lib");
@@ -78,13 +118,23 @@ namespace SduPackage.ViewModel{
                 case 3:
                     break;
             }
+            
         }
 
         private void addToGroup(string result)
         {
-            JArray ja = JArray.Parse(result);
+            try
+            {
+                JArray ja = JArray.Parse(result);
 
+            }
+            catch (Newtonsoft.Json.JsonReaderException e)
+            {
+                System.Diagnostics.Debug.WriteLine("JSON格式错误");
+            }
         }
+
+
 
         private async void SaveFile(string FileName, string result)
         {

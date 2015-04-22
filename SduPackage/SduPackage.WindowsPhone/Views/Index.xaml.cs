@@ -25,6 +25,9 @@ namespace SduPackage.Views
     public sealed partial class Index : Page
     {
         #region 字段
+        Windows.Storage.ApplicationDataContainer _localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        Windows.Storage.StorageFolder _localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+
         NewsViewModel _newsViewModel;
         DispatcherTimer dt = new DispatcherTimer();
         bool IsExit = false;
@@ -93,9 +96,19 @@ namespace SduPackage.Views
             }
         }
 
+        private void ToMyAccount(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Views.MyAccount));
+        }
+
         private void ToMyLibrary(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Library));
+            if (_localSettings.Values.ContainsKey("CardUsername"))
+            {
+                Frame.Navigate(typeof(Library));
+            }
+            else
+                NotifitionBar.ShowMessage("请先前往“我的账号”设置账号 >O<");
         }
         #endregion
 
@@ -166,24 +179,55 @@ namespace SduPackage.Views
                     headerTodolist.IsChecked = false;
                     headerBox.IsChecked = false;
                     headerProfile.IsChecked = false;
+                    AppBarChange(0);
                     break;
                 case 1:
                     headerHome.IsChecked = false;
                     headerTodolist.IsChecked = true;
                     headerBox.IsChecked = false;
                     headerProfile.IsChecked = false;
+                    AppBarChange(1);
                     break;
                 case 2:
                     headerHome.IsChecked = false;
                     headerTodolist.IsChecked = false;
                     headerBox.IsChecked = true;
                     headerProfile.IsChecked = false;
+                    AppBarChange(2);
                     break;
                 case 3:
                     headerHome.IsChecked = false;
                     headerTodolist.IsChecked = false;
                     headerBox.IsChecked = false;
                     headerProfile.IsChecked = true;
+                    AppBarChange(3);
+                    break;
+            }
+        }
+
+        private void AppBarChange(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    IndexAppBar.CompositeMode = ElementCompositeMode.Inherit;
+                    refreshAppBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    myAccountAppBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    break;
+                case 1:
+                    IndexAppBar.CompositeMode = ElementCompositeMode.MinBlend;
+                    refreshAppBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    myAccountAppBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    break;
+                case 2:
+                    IndexAppBar.CompositeMode = ElementCompositeMode.MinBlend;
+                    refreshAppBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    myAccountAppBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    break;
+                case 3:
+                    IndexAppBar.CompositeMode = ElementCompositeMode.Inherit;
+                    refreshAppBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    myAccountAppBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     break;
             }
         }

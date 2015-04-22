@@ -199,8 +199,9 @@
     </Grid>
     
     <Page.BottomAppBar>
-        <CommandBar Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Foreground="White">
-            <AppBarButton Icon="Refresh" Click="refreshNews"/>
+        <CommandBar x:Name="IndexAppBar" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Foreground="White">
+            <AppBarButton x:Name="refreshAppBar" Icon="Refresh" Click="refreshNews"/>
+            <AppBarButton x:Name="myAccountAppBar" Icon="Account" Click="ToMyAccount"/>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

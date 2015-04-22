@@ -80,7 +80,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ClassTable.xaml.cs">
+    <Compile Include="Views\ClassTable.xaml.cs">
       <DependentUpon>ClassTable.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\BusControl.cs" />
@@ -108,6 +108,9 @@
     <Compile Include="Views\Library.xaml.cs">
       <DependentUpon>Library.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MyAccount.xaml.cs">
+      <DependentUpon>MyAccount.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NewsBody.xaml.cs">
       <DependentUpon>NewsBody.xaml</DependentUpon>
     </Compile>
@@ -126,7 +129,7 @@
     <Content Include="Assets\WideLogo.scale-240.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ClassTable.xaml">
+    <Page Include="Views\ClassTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -159,6 +162,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Library.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyAccount.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
