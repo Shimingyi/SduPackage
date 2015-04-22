@@ -144,7 +144,7 @@
                             <RowDefinition Height="60"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border BorderThickness="1,0,0,1" BorderBrush="LightGray" Grid.Row="0">
+                        <Border BorderThickness="1,0,0,1" BorderBrush="LightGray" Grid.Row="0" Tapped="ToMyLibrary">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*"/>

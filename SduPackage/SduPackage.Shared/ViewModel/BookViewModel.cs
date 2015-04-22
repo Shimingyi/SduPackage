@@ -1,3 +1,5 @@
+using Newtonsoft.Json.Linq;
+using SduPackage.Funcitons;
 using SduPackage.Functions;
 using SduPackage.Model;
 using System;
@@ -34,6 +36,7 @@ namespace SduPackage.ViewModel{
         public BookViewModel(int index)
         {
             RaisePropertyChanged("BookGroup");
+            LoadBookGroup(index);
         }
     	#endregion
 
@@ -56,8 +59,19 @@ namespace SduPackage.ViewModel{
 
     	#region 私有方法
         private void downToFile(int index){
+            var http = new DoPost();
+            string username = _localSettings.Containers["LibraryUsername"].ToString();
+            string password = _localSettings.Containers["LibraryPassword"].ToString();
             switch(index){
                 case 1:
+                    string url = ("http://202.194.14.195:8080/curriculumlib/lib");
+                    string postContent = string.Format("requesttype=0&username={0}&password={1}", username, password);
+                    http.StartPost(url, postContent, result =>
+                    {
+                        System.Diagnostics.Debug.WriteLine(result);
+                        addToGroup(result);
+                        SaveFile("MyLibraryFile.txt", result);
+                    });
                     break;
                 case 2:
                     break;
@@ -68,6 +82,7 @@ namespace SduPackage.ViewModel{
 
         private void addToGroup(string result)
         {
+            JArray ja = JArray.Parse(result);
 
         }
 

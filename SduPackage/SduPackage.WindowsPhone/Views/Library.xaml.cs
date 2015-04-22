@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SduPackage.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,12 @@ namespace SduPackage.Views
     /// </summary>
     public sealed partial class Library : Page
     {
+        BookViewModel _bookViewModel;
+        
         public Library()
         {
             this.InitializeComponent();
+            _bookViewModel = new BookViewModel(1);
         }
 
         /// <summary>
@@ -34,6 +38,7 @@ namespace SduPackage.Views
         /// 此参数通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+
         }
     }
 }

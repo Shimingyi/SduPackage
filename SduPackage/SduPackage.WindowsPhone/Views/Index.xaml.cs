@@ -92,6 +92,11 @@ namespace SduPackage.Views
                 OnHeaderChanged(pivot.SelectedIndex);
             }
         }
+
+        private void ToMyLibrary(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Library));
+        }
         #endregion
 
         #region 自定义事件
@@ -183,6 +188,8 @@ namespace SduPackage.Views
             }
         }
         #endregion
+
+        
 
         
 
