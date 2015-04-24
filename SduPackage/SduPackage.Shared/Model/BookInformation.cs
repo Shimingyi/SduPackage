@@ -9,6 +9,7 @@ namespace SduPackage.Model
         //Book user information
         public string b_id { get; set; }
         public string b_title { get; set; }
+        public string b_autor { get; set; }
         public string b_data { get; set; }
 
 

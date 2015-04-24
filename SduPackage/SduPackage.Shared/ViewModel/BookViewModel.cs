@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using System.Xml.Linq;
+using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.Web.Http;
 
@@ -22,7 +23,7 @@ namespace SduPackage.ViewModel{
     	#endregion
 
     	#region 属性
-        public ObservableCollection<BusInformation> BookGroup
+        public ObservableCollection<BookInformation> BookGroup
         {
             get;
             private set;
@@ -36,16 +37,37 @@ namespace SduPackage.ViewModel{
     	#region 构造方法
         public BookViewModel(int index)
         {
-            BookGroup = new ObservableCollection<BusInformation>();
-            RaisePropertyChanged("BookGroup");
-            LoadBookGroup(index);
+            this.BookGroup = new ObservableCollection<BookInformation>();
+            this.RaisePropertyChanged("BookGroup");
+            LoadViewModel(index);
         }
     	#endregion
 
     	#region 方法
-        public void LoadBookGroup(int index)
+        public void LoadViewModel(int index)
         {
             downToFile(index);
+        }
+
+        public async void LoadFile(int index)
+        {
+            switch (index)
+            {
+                case 1:
+                    try
+                    {
+                        StorageFile onlineNews = await _localFolder.GetFileAsync("MyLibraryFile.txt");
+                        string timestamp = await FileIO.ReadTextAsync(onlineNews);
+                        addToGroup(timestamp);
+                    }
+                    catch (System.IO.FileNotFoundException e)
+                    {
+                        System.Diagnostics.Debug.WriteLine("First USE");
+                    }
+
+                    break;
+
+            }
         }
 
         public void ContinueBook()
@@ -60,9 +82,8 @@ namespace SduPackage.ViewModel{
     	#endregion
 
     	#region 私有方法
-        public void downToFile(int index)
+        public async void downToFile(int index)
         {
-            /*
             try
             {
                 string username = _localSettings.Values["CardUsername"].ToString();
@@ -91,42 +112,25 @@ namespace SduPackage.ViewModel{
                     addToGroup(result);
                     SaveFile("MyLibraryFile.txt", result);
                 }
-                
             }
             catch (ErrorAccountException args)
             {
-                throw args;
+                
             }
-            */
-            
-            var http = new DoPost();
-            string username = _localSettings.Values["CardUsername"].ToString();
-            string password = _localSettings.Values["CardPassword"].ToString();
-            switch(index){
-                case 1:
-                    string url = ("http://202.194.14.195:8080/curriculumlib/lib");
-                    string postContent = string.Format("requesttype=0&username={0}&password={1}", username, password);
-                    http.StartPost(url, postContent, result =>
-                    {
-                        System.Diagnostics.Debug.WriteLine(result);
-                        addToGroup(result);
-                        SaveFile("MyLibraryFile.txt", result);
-                    });
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-            }
-            
         }
 
         private void addToGroup(string result)
         {
             try
             {
+                
                 JArray ja = JArray.Parse(result);
-
+                for (int i = 0; i < ja.Count; i++)
+                {
+                    JObject jo = ja[i] as JObject;
+                    BookGroup.Add(JsonToBook(jo));
+                }
+                
             }
             catch (Newtonsoft.Json.JsonReaderException e)
             {
@@ -134,7 +138,17 @@ namespace SduPackage.ViewModel{
             }
         }
 
+        private BookInformation JsonToBook(JObject jo)
+        {
+            BookInformation _bookInformation = new BookInformation();
 
+            _bookInformation.b_id = jo["id"].ToString();
+            string[] shuzu = jo["title"].ToString().Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
+            _bookInformation.b_title = shuzu[0];
+            _bookInformation.b_autor = shuzu[1];
+            _bookInformation.b_data = jo["date"].ToString();
+            return _bookInformation;
+        }
 
         private async void SaveFile(string FileName, string result)
         {

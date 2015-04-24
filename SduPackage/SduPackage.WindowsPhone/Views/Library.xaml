@@ -9,15 +9,77 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light">
 
+    <Page.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///StyleDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-
         <Grid Grid.Row="0" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
             <TextBlock x:Name="PageTitle" Text="我的图书馆" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0"/>
         </Grid>
+        <Grid Grid.Row="1">
+            <Grid Height="auto" Margin="20">
+                <ListView                                 
+                        SelectionMode="None"
+                        IsItemClickEnabled="True"                       
+                        ItemsSource="{Binding BookGroup}"
+                        ContinuumNavigationTransitionInfo.ExitElementContainer="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="10"/>
+                                </Grid.RowDefinitions>
+                                <Border Grid.Column="0" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Width="10" VerticalAlignment="Stretch"/>
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Foreground="Black" Text="{Binding b_title}" TextWrapping="Wrap" Style="{ThemeResource ListViewItemTextBlockStyle}" Margin="10,0" FontSize="20"/>
+                                    <TextBlock Grid.Row="1" Foreground="Black" Text="{Binding b_autor}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Row="2" Foreground="Black" Text="{Binding b_data}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" HorizontalAlignment="Right"/>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
     </Grid>
+    <Page.BottomAppBar>
+        <CommandBar Name="AppBar" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Foreground="White" ClosedDisplayMode="Compact">
+            <AppBarButton Name="search" Visibility="Visible" Icon="Find"  Label="搜索">
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <Grid Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Height="150">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBox Grid.Row="1" Name="key_search" Header="图书关键词" BorderThickness="0" Margin="20,0" VerticalAlignment="Bottom"/>
+                            <Button Grid.Row="2" Margin="20,0" Content="搜索" BorderBrush="White" Foreground="White" VerticalAlignment="Bottom" Click="Search"/>
+                        </Grid>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

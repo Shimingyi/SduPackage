@@ -29,6 +29,8 @@ namespace SduPackage.Views
         public Library()
         {
             this.InitializeComponent();
+            this._bookViewModel = new BookViewModel(1);
+            this.DataContext = _bookViewModel;
             
         }
 
@@ -40,20 +42,20 @@ namespace SduPackage.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
-            LoadBook();
+            
         }
 
         #region 页面事件
-        
+        private void Search(object sender, RoutedEventArgs e)
+        {
+           
+        }
         #endregion
 
         #region 方法
-        public void LoadBook()
+        public async void LoadBook()
         {
-            Change_StatuBar("正在登录......",0);
-            checkAccount();
-            _bookViewModel = new BookViewModel(1);
-          
+            
         }
 
         void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
@@ -69,39 +71,18 @@ namespace SduPackage.Views
         #region 私有方法
         private void checkAccount()
         {
-            var http = new SduPackage.Funcitons.DoPost();
-            string username = _localSettings.Values["CardUsername"].ToString();
-            string password = _localSettings.Values["CardPassword"].ToString();
-            string url = ("http://202.194.14.195:8080/curriculumlib/lib");
-            string postContent = string.Format("requesttype=0&username={0}&password={1}", username, password);
-            http.StartPost(url, postContent, result =>
-            {
-                System.Diagnostics.Debug.WriteLine(result);
-                
-                if (result.IndexOf("错误")>0)
-                {
-                    Change_StatuBar("登录失败，请检查你的账号密码", 0);
-                }
-                else
-                {
-                    Change_StatuBar("口袋山大", 0);
-                }
-            });
+            
         }
 
         private async void Change_StatuBar(string str, double process)
         {
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                Windows.UI.ViewManagement.StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
-                statusBar.BackgroundColor = (Resources["ButtonPressedBackgroundThemeBrush"] as SolidColorBrush).Color;
-                statusBar.ForegroundColor = Windows.UI.Colors.White;
-                statusBar.BackgroundOpacity = 1;
-                statusBar.ProgressIndicator.Text = str;
-                statusBar.ProgressIndicator.ProgressValue = process;
-                statusBar.ProgressIndicator.ShowAsync();
-            });
-            
+            Windows.UI.ViewManagement.StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+            statusBar.BackgroundColor = Windows.UI.Colors.Green;
+            statusBar.ForegroundColor = Windows.UI.Colors.White;
+            statusBar.BackgroundOpacity = 1;
+            statusBar.ProgressIndicator.Text = str;
+            statusBar.ProgressIndicator.ProgressValue = process;
+            await statusBar.ProgressIndicator.ShowAsync();
         }
         #endregion
     }
