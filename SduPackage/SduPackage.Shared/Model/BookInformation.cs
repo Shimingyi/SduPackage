@@ -16,7 +16,7 @@ namespace SduPackage.Model
         //Book search information
         public string b_total { get; set; }
         public string b_detailurl { get; set; }
-        public string b_number { get; set; }
+        public string b_booknumber { get; set; }
         public string b_canborrow { get; set; }
 
         //Book browse state

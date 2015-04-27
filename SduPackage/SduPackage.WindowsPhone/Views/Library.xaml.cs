@@ -42,21 +42,17 @@ namespace SduPackage.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
-            
         }
 
         #region 页面事件
         private void Search(object sender, RoutedEventArgs e)
         {
-           
+            this.Frame.Navigate(typeof(Views.LibrarySearch), key_search.Text);
         }
         #endregion
 
         #region 方法
-        public async void LoadBook()
-        {
-            
-        }
+        
 
         void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
         {

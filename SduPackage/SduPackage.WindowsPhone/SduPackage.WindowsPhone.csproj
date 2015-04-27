@@ -17,7 +17,7 @@
     <SynthesizeLinkMetadata>true</SynthesizeLinkMetadata>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>ARM</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -108,6 +108,9 @@
     <Compile Include="Views\Library.xaml.cs">
       <DependentUpon>Library.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LibrarySearch.xaml.cs">
+      <DependentUpon>LibrarySearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MyAccount.xaml.cs">
       <DependentUpon>MyAccount.xaml</DependentUpon>
     </Compile>
@@ -162,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Library.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LibrarySearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
