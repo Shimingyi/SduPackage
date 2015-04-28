@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -29,8 +30,8 @@ namespace SduPackage.Views
         public Library()
         {
             this.InitializeComponent();
-            this._bookViewModel = new BookViewModel(1);
-            this.DataContext = _bookViewModel;
+            
+            LoadPage();
             
         }
 
@@ -52,7 +53,19 @@ namespace SduPackage.Views
         #endregion
 
         #region 方法
-        
+        private void LoadPage()
+        {
+            Change_StatuBar("正在登录......",0);
+            this._bookViewModel = new BookViewModel();
+            this.DataContext = _bookViewModel;
+            Change_StatuBar("口袋山大", 0);
+        }
+
+        void FinishLoad()
+        {
+            Change_StatuBar("口袋山大", 0);
+            this.DataContext = _bookViewModel;
+        }
 
         void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
         {
@@ -73,7 +86,7 @@ namespace SduPackage.Views
         private async void Change_StatuBar(string str, double process)
         {
             Windows.UI.ViewManagement.StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
-            statusBar.BackgroundColor = Windows.UI.Colors.Green;
+            statusBar.BackgroundColor = (Resources["ButtonPressedBackgroundThemeBrush"] as SolidColorBrush).Color;
             statusBar.ForegroundColor = Windows.UI.Colors.White;
             statusBar.BackgroundOpacity = 1;
             statusBar.ProgressIndicator.Text = str;

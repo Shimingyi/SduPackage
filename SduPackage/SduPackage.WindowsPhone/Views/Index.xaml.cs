@@ -231,14 +231,6 @@ namespace SduPackage.Views
                     break;
             }
         }
-        #endregion
-
-        
-
-        
-
-        
-
-        
+        #endregion        
     }
 }

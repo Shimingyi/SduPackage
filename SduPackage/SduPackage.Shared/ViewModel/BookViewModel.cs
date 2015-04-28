@@ -11,6 +11,7 @@ using System.Text;
 using System.Xml.Linq;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.UI.Xaml.Controls;
 using Windows.Web.Http;
 
 namespace SduPackage.ViewModel{
@@ -34,28 +35,24 @@ namespace SduPackage.ViewModel{
     	#endregion
 
     	#region 构造方法
-        public BookViewModel(int index)
+        public BookViewModel()
         {
             this.BookGroup = new ObservableCollection<BookInformation>();
             this.RaisePropertyChanged("BookGroup");
-            LoadViewModel(index);
+            LoadViewModel();
         }
     	#endregion
 
     	#region 方法
-        public void LoadViewModel(int index)
+
+        public void LoadViewModel()
         {
-            downToFile(index);
+            downToFile();
         }
 
         public void SearchBook(string keywords)
         {
             SearchByPost(keywords);
-        }
-
-        public void ContinueBook()
-        {
-
         }
 
         public void ClearGroup()
@@ -65,69 +62,38 @@ namespace SduPackage.ViewModel{
     	#endregion
 
     	#region 私有方法
-        public async void downToFile(int index)
+        private async void downToFile()
         {
-            switch (index)
+            try
             {
-                case 1:
-                    try
-                    {
-                        string username = _localSettings.Values["CardUsername"].ToString();
-                        string password = _localSettings.Values["CardPassword"].ToString();
-                        HttpClient httpclient = new HttpClient();
-                        string posturl = "http://202.194.14.195:8080/curriculumlib/lib";
-                        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, new Uri(posturl));
-                        HttpFormUrlEncodedContent postDate = new HttpFormUrlEncodedContent(
-                            new List<KeyValuePair<string, string>>
+                string username = _localSettings.Values["CardUsername"].ToString();
+                string password = _localSettings.Values["CardPassword"].ToString();
+                HttpClient httpclient = new HttpClient();
+                string posturl = "http://202.194.14.195:8080/curriculumlib/lib";
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, new Uri(posturl));
+                HttpFormUrlEncodedContent postDate = new HttpFormUrlEncodedContent(
+                    new List<KeyValuePair<string, string>>
                     {
                         new KeyValuePair<string,string>("requesttype","0"),
                         new KeyValuePair<string,string>("username",username),
                         new KeyValuePair<string,string>("password",password),
                     }
-                        );
-                        request.Content = postDate;
-                        HttpResponseMessage response = await httpclient.SendRequestAsync(request);
-                        string result = await response.Content.ReadAsStringAsync();
-                        System.Diagnostics.Debug.WriteLine(result);
-                        if (result.IndexOf("错误") > 0)
-                        {
-                            throw new ErrorAccountException();
-                        }
-                        else
-                        {
-                            addToGroup(result,1);
-                            SaveFile("MyLibraryFile.txt", result);
-                        }
-                    }
-                    catch (ErrorAccountException args)
-                    {
-
-                    }
-                    break;
-                case 2:
-                    
-                    break;
-                case 3:
-                    break;
+                );
+                request.Content = postDate;
+                HttpResponseMessage response = await httpclient.SendRequestAsync(request);
+                string result = await response.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine(result);
+                if (result.IndexOf("错误") > 0)
+                {
+                    throw new ErrorAccountException();
+                }
+                else
+                {
+                    addToGroup(result, 1);
+                }
             }
-            
-        }
-
-        private async void LoadFile(int index)
-        {
-            switch (index)
+            catch (ErrorAccountException args)
             {
-                case 1:
-                    try
-                    {
-                        StorageFile onlineNews = await _localFolder.GetFileAsync("MyLibraryFile.txt");
-                        string timestamp = await FileIO.ReadTextAsync(onlineNews);
-                    }
-                    catch (System.IO.FileNotFoundException e)
-                    {
-                        System.Diagnostics.Debug.WriteLine("First USE");
-                    }
-                    break;
 
             }
         }
@@ -172,6 +138,7 @@ namespace SduPackage.ViewModel{
                             JObject jo = ja[i] as JObject;
                             BookGroup.Add(JsonToBook(jo));
                         }
+                        System.Diagnostics.Debug.WriteLine("添加完毕");
                         break;
                     case 2:
                         for (int i = 0; i < ja.Count-1; i++)

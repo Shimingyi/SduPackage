@@ -18,7 +18,7 @@ namespace SduPackage.Views
         public LibrarySearch()
         {
             this.InitializeComponent();
-            _bookViewModel = new BookViewModel(2);
+            _bookViewModel = new BookViewModel();
             this.DataContext = _bookViewModel;
         }
 
@@ -32,7 +32,7 @@ namespace SduPackage.Views
             Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
             string keyword = e.Parameter as string;
             System.Diagnostics.Debug.WriteLine("Input:" + keyword);
-            _bookViewModel = new BookViewModel(2);
+            _bookViewModel = new BookViewModel();
             _bookViewModel.SearchBook(keyword);
             this.DataContext = _bookViewModel;
 
