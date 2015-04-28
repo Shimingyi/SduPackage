@@ -43,8 +43,8 @@
                         ItemsSource="{Binding BookGroup}"
                         ContinuumNavigationTransitionInfo.ExitElementContainer="True">
                     <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
+                        <DataTemplate >
+                            <Grid Tapped="ViewBookInformation">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="10"/>
                                     <ColumnDefinition Width="*"/>
@@ -84,6 +84,7 @@
     </Grid>
     <Page.BottomAppBar>
         <CommandBar Name="AppBar" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Foreground="White" ClosedDisplayMode="Compact">
+            <AppBarButton Icon="Back" Label="上一页" Click="LastPage" />
             <AppBarButton Name="search" Visibility="Visible" Icon="Find"  Label="搜索">
                 <AppBarButton.Flyout>
                     <Flyout>
@@ -99,7 +100,7 @@
                     </Flyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
-
+            <AppBarButton Icon="Forward" Label="下一页" Click="NextPage"/>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

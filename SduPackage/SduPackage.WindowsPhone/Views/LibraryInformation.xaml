@@ -1,0 +1,86 @@
+﻿<Page
+    x:Class="SduPackage.Views.LibraryInformation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SduPackage.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light">
+
+    <Page.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///StyleDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <SlideNavigationTransitionInfo  />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ProgressRing x:Name="isDowning" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" IsActive="True"/>
+
+        <Grid Grid.Row="0" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
+            <TextBlock x:Name="PageTitle" Text="借阅详情" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Name="Title" Foreground="Black" FontSize="24" AllowDrop="True" TextWrapping="Wrap" Margin="0,0,0,10"/>
+            <ListView   
+                        Grid.Row="1"
+                        SelectionMode="None"
+                        IsItemClickEnabled="True"
+                        ItemsSource="{Binding BookGroup}"
+                    >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="10"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Column="0" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Width="10" VerticalAlignment="Stretch"/>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <TextBlock Foreground="Black" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" HorizontalAlignment="Right"/>
+                                    <TextBlock Foreground="Black" Text="{Binding b_location}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <TextBlock Foreground="Black" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" HorizontalAlignment="Right"/>
+                                    <TextBlock Foreground="Black" Text="{Binding b_state}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        
+    </Grid>
+</Page>

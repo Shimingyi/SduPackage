@@ -20,6 +20,8 @@ namespace SduPackage.ViewModel{
     	#region 字段
     	Windows.Storage.ApplicationDataContainer _localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         Windows.Storage.StorageFolder _localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+        public int pageCount;
+        int nowPage=1;
     	#endregion
 
     	#region 属性
@@ -39,7 +41,6 @@ namespace SduPackage.ViewModel{
         {
             this.BookGroup = new ObservableCollection<BookInformation>();
             this.RaisePropertyChanged("BookGroup");
-            LoadViewModel();
         }
     	#endregion
 
@@ -55,9 +56,28 @@ namespace SduPackage.ViewModel{
             SearchByPost(keywords);
         }
 
-        public void ClearGroup()
+        public void NextBook()
         {
+            if(nowPage >= 1){
+                BookGroup.Clear();
+                nowPage++;
+                SearchPage(nowPage);
+            }
+        }
 
+        public void LastBook()
+        {
+            if (nowPage > pageCount)
+            {
+                BookGroup.Clear();
+                nowPage--;
+                SearchPage(nowPage);
+            }
+        }
+
+        public void GetInformation(string result)
+        {
+            addToGroup(result,4);
         }
     	#endregion
 
@@ -125,6 +145,35 @@ namespace SduPackage.ViewModel{
             }
         }
 
+        private async void SearchPage(int page)
+        {
+            System.Diagnostics.Debug.WriteLine("正在搜索" + page + "page");
+            try
+            {
+                HttpClient httpclient = new HttpClient();
+                string posturl = "http://202.194.14.195:8080/curriculumlib/lib";
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, new Uri(posturl));
+                HttpFormUrlEncodedContent postDate = new HttpFormUrlEncodedContent(
+                    new List<KeyValuePair<string, string>>
+                    {
+                        new KeyValuePair<string,string>("requesttype","4"),
+                        new KeyValuePair<string,string>("page",page.ToString()),
+                    }
+                );
+                request.Content = postDate;
+                HttpResponseMessage response = await httpclient.SendRequestAsync(request);
+                string result = await response.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine(result);
+                addToGroup(result, 3);
+            }
+            catch (ErrorAccountException args)
+            {
+
+            }
+        }
+
+        
+
         private void addToGroup(string result,int index)
         {
             try
@@ -145,6 +194,22 @@ namespace SduPackage.ViewModel{
                         {
                             JObject jo = ja[i] as JObject;
                             BookGroup.Add(JsonToSearch(jo));
+                        }
+                        JObject PageJo = ja[ja.Count - 1] as JObject;
+                        pageCount = Int32.Parse(PageJo["pages"].ToString());
+                        break;
+                    case 3:
+                        for (int i = 0; i < ja.Count ; i++)
+                        {
+                            JObject jo = ja[i] as JObject;
+                            BookGroup.Add(JsonToSearch(jo));
+                        }
+                        break;
+                    case 4:
+                        for (int i = 0; i < ja.Count ; i++)
+                        {
+                            JObject jo = ja[i] as JObject;
+                            BookGroup.Add(JsonToInformation(jo));
                         }
                         break;
                 }                
@@ -175,6 +240,15 @@ namespace SduPackage.ViewModel{
             _bookInformation.b_detailurl = jo["detailurl"].ToString();
             _bookInformation.b_booknumber = jo["booknumber"].ToString();
             _bookInformation.b_canborrow = jo["canborrow"].ToString();
+
+            return _bookInformation;
+        }
+
+        private BookInformation JsonToInformation(JObject jo)
+        {
+            BookInformation _bookInformation = new BookInformation();
+            _bookInformation.b_location = jo["location"].ToString();
+            _bookInformation.b_state = jo["state"].ToString();
 
             return _bookInformation;
         }

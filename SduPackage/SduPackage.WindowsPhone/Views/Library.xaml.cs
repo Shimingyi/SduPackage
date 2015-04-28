@@ -57,6 +57,7 @@ namespace SduPackage.Views
         {
             Change_StatuBar("正在登录......",0);
             this._bookViewModel = new BookViewModel();
+            _bookViewModel.LoadViewModel();
             this.DataContext = _bookViewModel;
             Change_StatuBar("口袋山大", 0);
         }

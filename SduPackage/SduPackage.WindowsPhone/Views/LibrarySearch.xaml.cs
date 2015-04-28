@@ -1,4 +1,5 @@
-﻿using SduPackage.ViewModel;
+﻿using SduPackage.Model;
+using SduPackage.ViewModel;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -14,12 +15,10 @@ namespace SduPackage.Views
     {
         BookViewModel _bookViewModel;
 
-
         public LibrarySearch()
         {
             this.InitializeComponent();
-            _bookViewModel = new BookViewModel();
-            this.DataContext = _bookViewModel;
+           
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -31,11 +30,9 @@ namespace SduPackage.Views
         {
             Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
             string keyword = e.Parameter as string;
-            System.Diagnostics.Debug.WriteLine("Input:" + keyword);
             _bookViewModel = new BookViewModel();
             _bookViewModel.SearchBook(keyword);
             this.DataContext = _bookViewModel;
-
         }
 
         void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
@@ -47,10 +44,32 @@ namespace SduPackage.Views
             }
         }
 
+        private void ViewBookInformation(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            Grid grid = sender as Grid;
+            BookInformation _book = grid.DataContext as BookInformation;
+            Frame.Navigate(typeof(Views.LibraryInformation), _book);
+        }
+
         private void Search(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             _bookViewModel.SearchBook(key_search.Text);
+            this.DataContext = _bookViewModel;
         }
+
+        private void LastPage(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            _bookViewModel.LastBook();
+            this.DataContext = _bookViewModel;
+        }
+
+        private void NextPage(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            _bookViewModel.NextBook();
+            this.DataContext = _bookViewModel;
+        }
+
+        
 
 
 

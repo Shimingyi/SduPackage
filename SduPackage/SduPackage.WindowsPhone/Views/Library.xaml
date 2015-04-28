@@ -54,7 +54,7 @@
                                     <TextBlock Grid.Row="0" Foreground="Black" Text="{Binding b_title}" TextWrapping="Wrap" Style="{ThemeResource ListViewItemTextBlockStyle}" Margin="10,0" FontSize="20"/>
                                     <TextBlock Grid.Row="1" Foreground="Black" Text="{Binding b_autor}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" HorizontalAlignment="Right"/>
                                     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <TextBlock Foreground="Black" Text="应还日期" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" />
+                                        <TextBlock Foreground="Black" Text="应还日期:" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" />
                                         <TextBlock Foreground="Black" Text="{Binding b_data}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" />
 
                                     </StackPanel>
