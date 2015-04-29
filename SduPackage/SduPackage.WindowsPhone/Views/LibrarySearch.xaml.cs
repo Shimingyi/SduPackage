@@ -18,7 +18,8 @@ namespace SduPackage.Views
         public LibrarySearch()
         {
             this.InitializeComponent();
-           
+            _bookViewModel = new BookViewModel();
+            this.DataContext = _bookViewModel;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -30,9 +31,7 @@ namespace SduPackage.Views
         {
             Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
             string keyword = e.Parameter as string;
-            _bookViewModel = new BookViewModel();
             _bookViewModel.SearchBook(keyword);
-            this.DataContext = _bookViewModel;
         }
 
         void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)

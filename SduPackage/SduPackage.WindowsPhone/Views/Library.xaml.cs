@@ -30,9 +30,7 @@ namespace SduPackage.Views
         public Library()
         {
             this.InitializeComponent();
-            
-            LoadPage();
-            
+            LoadPage();            
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
