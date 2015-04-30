@@ -95,7 +95,7 @@ namespace SduPackage.ViewModel
                     for (int i = 0; i < 10; i++)
                     {
                         JObject jo = ja[i] as JObject;
-                        OneGroup.Items.Add(jsonToNews(jo));
+                        OneGroup.NewsItems.Add(jsonToNews(jo));
                     }
                     NewsGroups.Add(OneGroup);
                     break;
@@ -109,7 +109,7 @@ namespace SduPackage.ViewModel
                     for (int i = 0; i < 10; i++)
                     {
                         JObject jo = ja[i] as JObject;
-                        TwoGroup.Items.Add(jsonToNews(jo));
+                        TwoGroup.NewsItems.Add(jsonToNews(jo));
                     }
                     NewsGroups.Add(TwoGroup);
                     break;

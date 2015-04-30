@@ -33,11 +33,6 @@ namespace SduPackage
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
 
-        /// <summary>
-        /// 在此页将要在 Frame 中显示时进行调用。
-        /// </summary>
-        /// <param name="e">描述如何访问此页的事件数据。
-        /// 此参数通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.Frame.Navigate(typeof(Views.Index));
@@ -68,7 +63,16 @@ namespace SduPackage
                 result = result.Substring(2, result.Length - 2);
                 SaveFile("TheNewsFromOthers.txt", result);
             });
-            
+            //个人信息
+            http.StartPost("http://202.194.14.195:8080/CurriculumServer/login12", "Re_Type=Import_Course&user_name=201300301197&password=641806", result =>
+            {
+                result = result.Substring(2, result.Length - 2);
+                string[] stringSeparators = new string[] { "学生在线课程格子" };
+                string[] temp = result.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                SaveFile("TheInformationFile.txt",temp[1]);
+                SaveFile("TheCourseFile.txt", temp[2]);
+                SaveFile("TheGradeFile.txt", temp[3]);
+            });
         }
 
         private async void SaveFile(string FileName, string result)

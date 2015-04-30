@@ -20,7 +20,13 @@ namespace SduPackage.Model
             }
         }
 
-        public ObservableCollection<News> Items
+        public ObservableCollection<News> NewsItems
+        {
+            get;
+            private set;
+        }
+
+        public ObservableCollection<MyPoint> GradeItems
         {
             get;
             private set;
@@ -28,7 +34,8 @@ namespace SduPackage.Model
 
         public Group()
         {
-            this.Items = new ObservableCollection<News>();
+            this.NewsItems = new ObservableCollection<News>();
+            this.GradeItems = new ObservableCollection<MyPoint>();
         }
     }
 }

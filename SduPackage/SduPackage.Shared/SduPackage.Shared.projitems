@@ -22,13 +22,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\BusInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\ID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\MyClass.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\MyInformation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\MyPoint.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\News.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLiteAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BookViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BusViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ClassViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GradeViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\NewsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)ControlHelper\" />
