@@ -37,7 +37,7 @@
             <TextBlock x:Name="PageTitle" Text="图书搜索结果" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0"/>
         </Grid>
         <Grid Grid.Row="1">
-            <Grid Height="auto" Margin="20">
+            <Grid Height="auto" Margin="10">
                 <ListView
                         SelectionMode="None"
                         IsItemClickEnabled="True"                       
@@ -62,7 +62,7 @@
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Foreground="Black" Text="{Binding b_title}" TextWrapping="Wrap" Style="{ThemeResource ListViewItemTextBlockStyle}" Margin="10,0" FontSize="20"/>
+                                    <TextBlock Grid.Row="0" Foreground="Black" Text="{Binding b_title}" TextWrapping="Wrap" Style="{ThemeResource ListViewItemTextBlockStyle}" Margin="10,0" FontSize="18"/>
                                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
                                         <TextBlock Foreground="Black" Text="馆藏复本：" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" HorizontalAlignment="Right"/>
                                         <TextBlock Foreground="Black" Text="{Binding b_total}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" HorizontalAlignment="Right"/>

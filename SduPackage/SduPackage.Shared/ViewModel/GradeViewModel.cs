@@ -10,7 +10,7 @@ namespace SduPackage.ViewModel
     public class GradeViewModel : INotifyPropertyChanged
     {
         #region 字段
-        private Windows.Storage.StorageFolder _localFolder;
+        private Windows.Storage.StorageFolder _localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
         #endregion
 
         #region 属性
@@ -30,14 +30,14 @@ namespace SduPackage.ViewModel
         {
             GradeGroups = new System.Collections.ObjectModel.ObservableCollection<Group>();
             this.RaisePropertyChanged("GradeGroups");
-
+            LoadFile();
         }
         #endregion
 
         #region 方法
         public void LoadFile()
         {
-            OpenFile("TheInformationFile.txt");
+            OpenFile("TheGradeFile.txt");
         }
         #endregion
 
@@ -51,29 +51,26 @@ namespace SduPackage.ViewModel
 
         private void FileTxtToGroup(string result)
         {
-            JArray ja = JArray.Parse(result);
-            Group tempGroup = new Group();
-            int AgoYear = 0, AgoSemester = 0;
-            int nowYear = 0, nowSemester = 0;
-            int count = 0;
-            for (int i = 0; i < ja.Count; i++)
+            string[] stringSeparators = new string[] { "学生在线课程格子" };
+            string[] temp = result.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 2; i < 12; i++)
             {
-                JObject jo = ja[i] as JObject;
-                AgoYear =Int32.Parse(jo["classYear"].ToString());
-                AgoSemester = Int32.Parse(jo["semester"].ToString());
-                if ((nowYear != AgoYear) || (nowSemester != AgoSemester))
+                result = temp[i];
+                result = result.Substring(1, result.Length - 2);
+                if (!((result=="[]") || (result=="null")))
                 {
-                    if (tempGroup.GradeItems.Count != 0)
+                    JArray ja = JArray.Parse(result);
+                    JObject jo = ja[0] as JObject;
+                    Group tempGroup = new Group
                     {
-                        GradeGroups.Add(tempGroup);
-                        tempGroup = new Group();
+                        Name = (jo["classYear"] + "学年" + jo["semester"] + "学期")
+                    };
+                    for (int j = 0; j < ja.Count; j++)
+                    {
+                        JObject tempJo = ja[j] as JObject;
+                        tempGroup.GradeItems.Add(JsonToGrade(tempJo));
                     }
-                    tempGroup.Name = (nowYear + "学年" + nowSemester + "学期");
-                    tempGroup.GradeItems.Add(JsonToGrade(jo));
-                }
-                else
-                {
-                    tempGroup.GradeItems.Add(JsonToGrade(jo));
+                    GradeGroups.Add(tempGroup);
                 }
             }
         }

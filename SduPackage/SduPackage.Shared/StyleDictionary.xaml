@@ -10,6 +10,11 @@
                               ItemsPath="NewsItems"
                               Source="{Binding}">
     </CollectionViewSource>
+    <CollectionViewSource x:Name="grade_items"
+                              IsSourceGrouped="True"
+                              ItemsPath="GradeItems"
+                              Source="{Binding}">
+    </CollectionViewSource>
     <Style TargetType="ListViewItem">
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>

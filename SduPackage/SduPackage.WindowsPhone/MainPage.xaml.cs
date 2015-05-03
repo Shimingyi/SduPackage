@@ -37,6 +37,7 @@ namespace SduPackage
         {
             this.Frame.Navigate(typeof(Views.Index));
             downToFile();
+            /*
             ThreadPoolTimer.CreateTimer(async t =>
             {
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
@@ -46,6 +47,7 @@ namespace SduPackage
                 });
 
             }, TimeSpan.FromSeconds(2));
+             */
         }
 
         private void downToFile()
@@ -64,14 +66,15 @@ namespace SduPackage
                 SaveFile("TheNewsFromOthers.txt", result);
             });
             //个人信息
-            http.StartPost("http://202.194.14.195:8080/CurriculumServer/login12", "Re_Type=Import_Course&user_name=201300301197&password=641806", result =>
+            http.StartPost("http://202.194.14.195:8080/CurriculumServer/login", "Re_Type=Import_Course&user_name=201300301197&password=641806", result =>
             {
                 result = result.Substring(2, result.Length - 2);
+                System.Diagnostics.Debug.WriteLine(result);
                 string[] stringSeparators = new string[] { "学生在线课程格子" };
                 string[] temp = result.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                 SaveFile("TheInformationFile.txt",temp[1]);
                 SaveFile("TheCourseFile.txt", temp[2]);
-                SaveFile("TheGradeFile.txt", temp[3]);
+                SaveFile("TheGradeFile.txt", result);
             });
         }
 
@@ -79,6 +82,13 @@ namespace SduPackage
         {
             Windows.Storage.StorageFile tempFile = await _localFolder.CreateFileAsync(FileName, Windows.Storage.CreationCollisionOption.ReplaceExisting);
             await Windows.Storage.FileIO.WriteTextAsync(tempFile, result);
+            if (FileName == "TheGradeFile.txt")
+            {
+                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    Frame.Navigate(typeof(Views.Index));
+                });
+            }
         }
 
     }

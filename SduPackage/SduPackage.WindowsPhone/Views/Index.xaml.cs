@@ -43,7 +43,6 @@ namespace SduPackage.Views
             _newsViewModel = new NewsViewModel(1);
             var groups = new System.Collections.ObjectModel.ObservableCollection<Group>();
 
-
             this.DataContext = _newsViewModel.NewsGroups;
 ;
         }
@@ -109,6 +108,19 @@ namespace SduPackage.Views
             }
             else
                 NotifitionBar.ShowMessage("请先前往“我的账号”设置账号 >O<");
+        }
+
+        private void ToMyGrade(object sender, TappedRoutedEventArgs e)
+        {
+            /*
+             if (_localSettings.Values.ContainsKey("StuUsername"))
+            {
+                Frame.Navigate(typeof(Library));
+            }
+            else
+                NotifitionBar.ShowMessage("请先前往“我的账号”设置账号 >O<");
+             */
+            Frame.Navigate(typeof(UserCourse));
         }
         #endregion
 
@@ -232,5 +244,7 @@ namespace SduPackage.Views
             }
         }
         #endregion        
+
+        
     }
 }
