@@ -26,5 +26,10 @@ namespace SduPackage.Model
         /// The time of this class
         /// </summary>
         public int classDayOfTime { get; set; }
+
+        /// <summary>
+        /// The week count of this class
+        /// </summary>
+        public string classDayOfSemester { get; set; }
     }
 }

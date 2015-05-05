@@ -6,16 +6,103 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light">
+    RequestedTheme="Dark"
+    Background="White">
 
     <Page.Resources>
         <ResourceDictionary >
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///StyleDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <Thickness x:Key="PhoneBorderThickness">2.5</Thickness>
+            <FontFamily x:Key="PhoneFontFamilyNormal">Segoe WP</FontFamily>
+            <FontWeight x:Key="PhoneButtonFontWeight">Semibold</FontWeight>
+            <x:Double x:Key="TextStyleLargeFontSize">18.14</x:Double>
+            <x:Double x:Key="PhoneButtonMinHeight">100</x:Double>
+            <x:Double x:Key="PhoneButtonMinWidth">20</x:Double>
+            <Thickness x:Key="PhoneTouchTargetOverhang">0.1</Thickness>
+            <SolidColorBrush x:Key="ButtonDisabledBackgroundThemeBrush" Color="Transparent"/>
+            <Style x:Key="Button_course" TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="#FF579ED2"/>
+                <Setter Property="Foreground" Value="{ThemeResource PhoneForegroundBrush}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="FontFamily" Value="{ThemeResource PhoneFontFamilyNormal}"/>
+                <Setter Property="FontWeight" Value="{ThemeResource PhoneButtonFontWeight}"/>
+                <Setter Property="FontSize" Value="{ThemeResource TextStyleLargeFontSize}"/>
+                <Setter Property="Padding" Value="9.5,0"/>
+                <Setter Property="Width" Value="100"/>
+                <Setter Property="MinHeight" Value="{ThemeResource PhoneButtonMinHeight}"/>
+                <Setter Property="MinWidth" Value="{ThemeResource PhoneButtonMinWidth}"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid x:Name="Grid" Background="Transparent">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition From="Pressed" To="PointerOver">
+                                                <Storyboard>
+                                                    <PointerUpThemeAnimation Storyboard.TargetName="Grid"/>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition From="PointerOver" To="Normal">
+                                                <Storyboard>
+                                                    <PointerUpThemeAnimation Storyboard.TargetName="Grid"/>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition From="Pressed" To="Normal">
+                                                <Storyboard>
+                                                    <PointerUpThemeAnimation Storyboard.TargetName="Grid"/>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="PointerOver"/>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <PointerDownThemeAnimation Storyboard.TargetName="Grid"/>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonPressedForegroundThemeBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonPressedBackgroundThemeBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledForegroundThemeBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="Border">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBorderThemeBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBackgroundThemeBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="0,0">
+                                    <ContentPresenter x:Name="ContentPresenter"  AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding ContentTemplate}"  Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Left" Margin="5,0">
+                                        <ContentPresenter.Content>
+                                            <TextBlock Width="40" FontSize="12" Height="95" TextWrapping="Wrap" Text="{TemplateBinding Content}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                                        </ContentPresenter.Content>
+                                    </ContentPresenter>
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
+        
     </Page.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
@@ -24,9 +111,111 @@
         <Grid Grid.Row="0" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
             <TextBlock x:Name="PageTitle" Text="我的课表" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0"/>
         </Grid>
-        
+
         <Grid Grid.Row="1">
-            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="8*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Button Grid.Column="1" Content="周一" Foreground="#FF579ED2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Button Grid.Column="2" Content="周二" Foreground="#FF579ED2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Button Grid.Column="3" Content="周三" Foreground="#FF579ED2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Button Grid.Column="4" Content="周四" Foreground="#FF579ED2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Button Grid.Column="5" Content="周五" Foreground="#FF579ED2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Button Grid.Column="6" Content="周六" Foreground="#FF579ED2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Button Grid.Column="7" Content="周七" Foreground="#FF579ED2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <ScrollViewer Grid.Row="1" Grid.ColumnSpan="8">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="8*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <Button Foreground="Black" Content="  1" Style="{StaticResource Button_course}" />
+                        <Button Foreground="Black" Content="  2" Style="{StaticResource Button_course}" />
+                        <Button Foreground="Black" Content="  3" Style="{StaticResource Button_course}" />
+                        <Button Foreground="Black" Content="  4" Style="{StaticResource Button_course}" />
+                        <Button Foreground="Black" Content="  5" Style="{StaticResource Button_course}" />
+                        <Button Foreground="Black" Content="  6" Style="{StaticResource Button_course}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <Button Foreground="Black" Name="Monday1" Content=" " Style="{StaticResource Button_course}"/>
+                        <Button Foreground="Black" Name="Monday2" Content=" " Style="{StaticResource Button_course}"/>
+                        <Button Foreground="Black" Name="Monday3" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Monday4" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Monday5" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Monday6" Content=" " Style="{StaticResource Button_course}"   />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Left">
+                        <Button Foreground="Black" Name="Tuesday1" Content=" " Style="{StaticResource Button_course}"  />
+                        <Button Foreground="Black" Name="Tuesday2" Content=" " Style="{StaticResource Button_course}"  />
+                        <Button Foreground="Black" Name="Tuesday3" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Tuesday4" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Tuesday5" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Tuesday6" Content=" " Style="{StaticResource Button_course}"  />
+                    </StackPanel>
+                    <StackPanel Grid.Column="3" HorizontalAlignment="Left">
+                        <Button Foreground="Black" Name="Wednesday1" Content=" " Style="{StaticResource Button_course}"  />
+                        <Button Foreground="Black" Name="Wednesday2" Content=" " Style="{StaticResource Button_course}"  />
+                        <Button Foreground="Black" Name="Wednesday3" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Wednesday4" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Wednesday5" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Wednesday6" Content=" " Style="{StaticResource Button_course}"   />
+                    </StackPanel>
+                    <StackPanel Grid.Column="4" HorizontalAlignment="Left">
+
+                        <Button Foreground="Black" Name="Thursday1" Content=" " Style="{StaticResource Button_course}"  />
+                        <Button Foreground="Black" Name="Thursday2" Content=" " Style="{StaticResource Button_course}"  />
+                        <Button Foreground="Black" Name="Thursday3" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Thursday4" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Thursday5" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Thursday6" Content=" " Style="{StaticResource Button_course}"   />
+                    </StackPanel>
+                    <StackPanel Grid.Column="5" HorizontalAlignment="Left">
+                        <Button Foreground="Black" Name="Friday1" Content=" " Style="{StaticResource Button_course}"  />
+                        <Button Foreground="Black" Name="Friday2" Content=" " Style="{StaticResource Button_course}"  />
+                        <Button Foreground="Black" Name="Friday3" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Friday4" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Friday5" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Friday6" Content=" " Style="{StaticResource Button_course}"   />
+                    </StackPanel>
+                    <StackPanel Grid.Column="6" HorizontalAlignment="Left">
+                        <Button Foreground="Black" Name="Saturday1" Content=" " Style="{StaticResource Button_course}"  />
+                        <Button Foreground="Black" Name="Saturday2" Content=" " Style="{StaticResource Button_course}"  />
+                        <Button Foreground="Black" Name="Saturday3" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Saturday4" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Saturday5" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Saturday6" Content=" " Style="{StaticResource Button_course}"   />
+                    </StackPanel>
+                    <StackPanel Grid.Column="7" HorizontalAlignment="Left">
+                        <Button Foreground="Black" Name="Sunday1" Content=" " Style="{StaticResource Button_course}"  />
+                        <Button Foreground="Black" Name="Sunday2" Content=" " Style="{StaticResource Button_course}"  />
+                        <Button Foreground="Black" Name="Sunday3" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Sunday4" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Sunday5" Content=" " Style="{StaticResource Button_course}"   />
+                        <Button Foreground="Black" Name="Sunday6" Content=" " Style="{StaticResource Button_course}"   />
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Page>

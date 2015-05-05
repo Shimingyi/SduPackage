@@ -112,15 +112,24 @@ namespace SduPackage.Views
 
         private void ToMyGrade(object sender, TappedRoutedEventArgs e)
         {
-            /*
-             if (_localSettings.Values.ContainsKey("StuUsername"))
+            
+            if (_localSettings.Values.ContainsKey("StuUsername"))
             {
-                Frame.Navigate(typeof(Library));
+                Frame.Navigate(typeof(UserCourse));
             }
             else
                 NotifitionBar.ShowMessage("请先前往“我的账号”设置账号 >O<");
-             */
-            Frame.Navigate(typeof(UserCourse));
+        }
+
+        private void ToMyLession(object sender, TappedRoutedEventArgs e)
+        {            
+            if (_localSettings.Values.ContainsKey("StuUsername"))
+            {
+                Frame.Navigate(typeof(UserLession));
+            }
+            else
+                NotifitionBar.ShowMessage("请先前往“我的账号”设置账号 >O<");
+             
         }
         #endregion
 
@@ -244,6 +253,8 @@ namespace SduPackage.Views
             }
         }
         #endregion        
+
+       
 
         
     }

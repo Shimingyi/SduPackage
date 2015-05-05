@@ -21,4 +21,5 @@
     <Style TargetType="ListBoxItem">
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
+    
 </ResourceDictionary>

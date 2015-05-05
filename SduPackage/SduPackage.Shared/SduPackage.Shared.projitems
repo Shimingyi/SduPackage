@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\BusInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\ID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\LessionGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\MyClass.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\MyInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\MyPoint.cs" />
@@ -31,8 +32,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)SQLiteAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BookViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BusViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ClassViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GradeViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LessionViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\NewsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\UserViewModel.cs" />
   </ItemGroup>

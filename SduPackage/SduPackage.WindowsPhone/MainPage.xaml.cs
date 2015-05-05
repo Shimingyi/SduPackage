@@ -72,8 +72,8 @@ namespace SduPackage
                 System.Diagnostics.Debug.WriteLine(result);
                 string[] stringSeparators = new string[] { "学生在线课程格子" };
                 string[] temp = result.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                SaveFile("TheInformationFile.txt",temp[1]);
-                SaveFile("TheCourseFile.txt", temp[2]);
+                SaveFile("TheInformationFile.txt",temp[0]);
+                SaveFile("TheLessionFile.txt", temp[1]);
                 SaveFile("TheGradeFile.txt", result);
             });
         }

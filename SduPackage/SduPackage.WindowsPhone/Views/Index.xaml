@@ -168,7 +168,7 @@
                                 <Image Grid.Column="2" Width="30" Height="30" Source="ms-appx:///Assets/Image/Icon/next.png"/>
                             </Grid>
                         </Border>
-                        <Border BorderThickness="0,0,0,1" BorderBrush="LightGray" Grid.Row="2">
+                        <Border BorderThickness="0,0,0,1" BorderBrush="LightGray" Grid.Row="2" Tapped="ToMyLession">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*"/>
