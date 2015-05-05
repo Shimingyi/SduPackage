@@ -147,7 +147,7 @@ namespace SduPackage.ViewModel{
 
         private async void SearchPage(int page)
         {
-            System.Diagnostics.Debug.WriteLine("正在搜索" + page + "page");
+            BookGroup.Clear();
             try
             {
                 HttpClient httpclient = new HttpClient();

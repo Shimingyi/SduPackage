@@ -74,11 +74,8 @@ namespace SduPackage.ViewModel
                     {
                         System.Diagnostics.Debug.WriteLine("First USE");
                     }
-                    
                     break;
-                     
             }
-            
         }
 
         private void downNewsList(int index, string result)

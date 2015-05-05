@@ -123,6 +123,9 @@
     <Compile Include="Views\UserCourse.xaml.cs">
       <DependentUpon>UserCourse.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserLession.xaml.cs">
+      <DependentUpon>UserLession.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -191,6 +194,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserCourse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserLession.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
