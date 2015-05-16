@@ -34,7 +34,6 @@ namespace SduPackage.Views
         News _news;
         #endregion
 
-
         public Index()
         {
             this.InitializeComponent();
@@ -44,7 +43,6 @@ namespace SduPackage.Views
             var groups = new System.Collections.ObjectModel.ObservableCollection<Group>();
 
             this.DataContext = _newsViewModel.NewsGroups;
-;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -105,6 +103,16 @@ namespace SduPackage.Views
             if (_localSettings.Values.ContainsKey("CardUsername"))
             {
                 Frame.Navigate(typeof(Library));
+            }
+            else
+                NotifitionBar.ShowMessage("请先前往“我的账号”设置账号 >O<");
+        }
+
+        private void ToMyCard(object sender, TappedRoutedEventArgs e)
+        {
+            if (_localSettings.Values.ContainsKey("CardUsername"))
+            {
+                Frame.Navigate(typeof(UserCardTest));
             }
             else
                 NotifitionBar.ShowMessage("请先前往“我的账号”设置账号 >O<");
@@ -253,6 +261,8 @@ namespace SduPackage.Views
             }
         }
         #endregion        
+
+        
 
        
 
