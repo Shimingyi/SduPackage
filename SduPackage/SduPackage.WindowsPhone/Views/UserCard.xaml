@@ -8,8 +8,210 @@
     mc:Ignorable="d"
     RequestedTheme="Light"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///StyleDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Thickness x:Key="PhoneBorderThickness">2.5</Thickness>
+            <FontFamily x:Key="PhoneFontFamilyNormal">Segoe WP</FontFamily>
+            <FontWeight x:Key="PhoneButtonFontWeight">Semibold</FontWeight>
+            <x:Double x:Key="TextStyleLargeFontSize">18.14</x:Double>
+            <Thickness x:Key="PhoneButtonContentPadding">9.5,0,9.5,3.5</Thickness>
+            <x:Double x:Key="PhoneButtonMinHeight">57.5</x:Double>
+            <x:Double x:Key="PhoneButtonMinWidth">109</x:Double>
+            <Thickness x:Key="PhoneTouchTargetOverhang">0,9.5</Thickness>
+            <SolidColorBrush x:Key="ButtonDisabledBackgroundThemeBrush" Color="Transparent"/>
+            <Style x:Key="NoPressButton" TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="{ThemeResource PhoneForegroundBrush}"/>
+                <Setter Property="Foreground" Value="{ThemeResource PhoneForegroundBrush}"/>
+                <Setter Property="BorderThickness" Value="{ThemeResource PhoneBorderThickness}"/>
+                <Setter Property="FontFamily" Value="{ThemeResource PhoneFontFamilyNormal}"/>
+                <Setter Property="FontWeight" Value="{ThemeResource PhoneButtonFontWeight}"/>
+                <Setter Property="FontSize" Value="{ThemeResource TextStyleLargeFontSize}"/>
+                <Setter Property="Padding" Value="{ThemeResource PhoneButtonContentPadding}"/>
+                <Setter Property="MinHeight" Value="{ThemeResource PhoneButtonMinHeight}"/>
+                <Setter Property="MinWidth" Value="{ThemeResource PhoneButtonMinWidth}"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid x:Name="Grid" Background="Transparent">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition From="Pressed" To="PointerOver">
+                                                <Storyboard>
+                                                    <PointerUpThemeAnimation Storyboard.TargetName="Grid"/>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition From="PointerOver" To="Normal">
+                                                <Storyboard>
+                                                    <PointerUpThemeAnimation Storyboard.TargetName="Grid"/>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition From="Pressed" To="Normal">
+                                                <Storyboard>
+                                                    <PointerUpThemeAnimation Storyboard.TargetName="Grid"/>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="PointerOver"/>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <PointerDownThemeAnimation Storyboard.TargetName="Grid"/>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{TemplateBinding Background}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledForegroundThemeBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="Border">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBorderThemeBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBackgroundThemeBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="{ThemeResource PhoneTouchTargetOverhang}">
+                                    <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Popup x:Name="myPopup" HorizontalAlignment="Stretch">
+            <Popup.Child>
+                <Grid x:Name="test"  Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="400" Height="640">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="绑定银行卡" FontSize="36" Margin="12"/>
+                    <Grid Grid.Row="1">
+                        <TextBox x:Name="BankNumTextBox" Header="请输入银行卡号" Margin="12"/>
+                        <Button Grid.Row="2" Height="60" Width="auto" BorderThickness="0" 
+                    VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                    Margin="12,60" Click="CheckBankNum" 
+                    Content="确定" FontSize="15" 
+                    Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" 
+                    Foreground="{ThemeResource ButtonPressedForegroundThemeBrush}"/>
+                    </Grid>
+                </Grid>
+            </Popup.Child>
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <AddDeleteThemeTransition></AddDeleteThemeTransition>
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+        </Popup>
+        
+        <Grid x:Name="isDowning" Visibility="Collapsed" Grid.RowSpan="99" Canvas.ZIndex="99" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Border Background="Black" Grid.RowSpan="99" Opacity="0.3"/>
+            <ProgressBar IsIndeterminate="True" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+            <TextBlock Grid.Row="1" Text="正在加载" Opacity="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5" Foreground="White" FontSize="10"/>
+            
+        </Grid>
+        
+        
+        <Grid  Grid.Row="0" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
+            <TextBlock x:Name="PageTitle" Text="我的账户" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="0" BorderThickness="0" Height="100"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Margin="20,20,20,0" Background="#FF489755" Foreground="#FF489755" Style="{StaticResource NoPressButton}">
+                <Button.Content>
+                    <Grid Height="80" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Grid.Column="0" Width="45" Height="45" Fill="White" Opacity="0.5" HorizontalAlignment="Left" Margin="10,0,20,0"/>
+                        <TextBlock Grid.Column="0" Text="￥" Foreground="#FF489755" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="18,0,0,0"/>
+                        <TextBlock Grid.Column="1" Text="校园卡" Foreground="White" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0">
+                            <TextBlock Foreground="White" Text="￥" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="CardRestMoneyTextBlock" Text="0.00" Foreground="White" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </Button.Content>
+            </Button>
+
+            <Button Grid.Row="1" BorderThickness="0" Height="180"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Margin="20,0" Background="#FFC64F55" Foreground="#FF489755" Style="{StaticResource NoPressButton}" Click="BindingBankButton">
+                <Button.Content>
+                    <Grid Height="160" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.ColumnSpan="100" Grid.RowSpan="100" HorizontalAlignment="Right" Margin="30,0" Source="ms-appx:///Assets/Image/Icon/chinaBankwhite.png" Width="200" Height="200" Opacity="0.1"/>
+                        <Grid Margin="10,0" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Grid.Column="0" Width="45" Height="45" Fill="White" Opacity="0.5" Margin="0,0,0,0"/>
+                            <Image Source="ms-appx:///Assets/Image/Icon/chinaBank.png" Width="30" Height="30" Margin="0,0,0,0"/>
+                            <Grid Grid.Column="1" Margin="20,0" HorizontalAlignment="Left">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="中国银行" Foreground="White" VerticalAlignment="Bottom"/>
+                                <TextBlock Grid.Row="1" Text="储蓄卡" Foreground="White" FontSize="15"/>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="1" Margin="0,20">
+                            <TextBlock x:Name="NoBankNum" Visibility="Visible" Text="＋ 请绑定银行卡" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Grid x:Name="ShowBankNum" Visibility="Collapsed">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="7*"/>
+                                    <ColumnDefinition Width="4*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="**** **** **** **** " Foreground="White" HorizontalAlignment="Right" FontSize="20"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <TextBlock Margin="2,0"/>
+                                    <TextBlock x:Name="BankCardLastFour" Text="6020" Foreground="White" FontSize="20"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Button.Content>
+            </Button>
+        </Grid>
+        
         
     </Grid>
 </Page>

@@ -112,7 +112,7 @@ namespace SduPackage.Views
         {
             if (_localSettings.Values.ContainsKey("CardUsername"))
             {
-                Frame.Navigate(typeof(UserCardTest));
+                Frame.Navigate(typeof(UserCard));
             }
             else
                 NotifitionBar.ShowMessage("请先前往“我的账号”设置账号 >O<");

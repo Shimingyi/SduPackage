@@ -12,7 +12,6 @@ using Windows.Web.Http;
 namespace SduPackage.Views
 {
 
-
     public sealed partial class UserCardTest : Page
     {
 
@@ -52,6 +51,7 @@ namespace SduPackage.Views
             Uri imageUri = new Uri(("http://card.sdu.edu.cn/Account/GetCheckCodeImg/Flag="+tt.ToString()));
             Windows.UI.Xaml.Media.ImageSource _imgSource = new BitmapImage(imageUri);
             ShowImage.Source = _imgSource;
+            ImageText.Text = SduPackage.Functions.IdentifyCheckCode.Identify(new BitmapImage(imageUri));
         }
 
         private async void LoginButton(object sender, RoutedEventArgs e)

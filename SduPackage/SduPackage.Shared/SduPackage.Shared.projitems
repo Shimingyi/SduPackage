@@ -17,6 +17,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Functions\BusSqlite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Functions\DoPost.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Functions\IdentifyCheckCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Functions\MyException\ErrorAccountException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BookInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BusInformation.cs" />
@@ -51,6 +52,8 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Image\HeadIconDemo\HeadIconBorder_green.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Image\HeadIconDemo\HeadIconDemo1.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\20150408104632868_easyicon_net_512.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\chinaBank.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\chinaBankwhite.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\find_in.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\find_out.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Image\Icon\home_in.png" />
