@@ -113,8 +113,40 @@
                         <TextBox x:Name="BankNumTextBox" Header="请输入银行卡号" Margin="12"/>
                         <Button Grid.Row="2" Height="60" Width="auto" BorderThickness="0" 
                     VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
-                    Margin="12,60" Click="CheckBankNum" 
+                    Margin="12,60" Click="FinishBankNum" 
                     Content="确定" FontSize="15" 
+                    Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" 
+                    Foreground="{ThemeResource ButtonPressedForegroundThemeBrush}"/>
+                    </Grid>
+                </Grid>
+            </Popup.Child>
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <AddDeleteThemeTransition></AddDeleteThemeTransition>
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+        </Popup>
+        
+        <Popup x:Name="checkPop" Canvas.ZIndex="99" HorizontalAlignment="Stretch">
+            <Popup.Child>
+                <Grid x:Name="checkGrid" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="400" Height="640">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="输入验证码" FontSize="36" Margin="12"/>
+                    <Grid Grid.Row="1" Margin="12,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="8*"/>
+                        </Grid.RowDefinitions>
+                        <Image x:Name="ShowCheckImage" Width="60" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBox x:Name="CheckTextBox" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="200"/>
+                        <Button Grid.Row="2" Height="60" Width="auto" BorderThickness="0" 
+                    VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                    Margin="12,60" Click="CheckCheckNum" 
+                    Content="下一步" FontSize="15" 
                     Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" 
                     Foreground="{ThemeResource ButtonPressedForegroundThemeBrush}"/>
                     </Grid>
@@ -135,7 +167,6 @@
             <Border Background="Black" Grid.RowSpan="99" Opacity="0.3"/>
             <ProgressBar IsIndeterminate="True" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
             <TextBlock Grid.Row="1" Text="正在加载" Opacity="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5" Foreground="White" FontSize="10"/>
-            
         </Grid>
         
         
@@ -150,7 +181,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Button Grid.Row="0" BorderThickness="0" Height="100"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Margin="20,20,20,0" Background="#FF489755" Foreground="#FF489755" Style="{StaticResource NoPressButton}">
+            <Button Grid.Row="0" BorderThickness="0" Height="100"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Margin="15,20,15,0" Background="#FF489755" Foreground="#FF489755" Style="{StaticResource NoPressButton}">
                 <Button.Content>
                     <Grid Height="80" >
                         <Grid.ColumnDefinitions>
@@ -169,7 +200,7 @@
                 </Button.Content>
             </Button>
 
-            <Button Grid.Row="1" BorderThickness="0" Height="180"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Margin="20,0" Background="#FFC64F55" Foreground="#FF489755" Style="{StaticResource NoPressButton}" Click="BindingBankButton">
+            <Button Grid.Row="1" BorderThickness="0" Height="180"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Margin="15,0" Background="#FFC64F55" Foreground="#FF489755" Style="{StaticResource NoPressButton}" Click="BindingBankButton">
                 <Button.Content>
                     <Grid Height="160" >
                         <Grid.RowDefinitions>
@@ -211,7 +242,11 @@
                 </Button.Content>
             </Button>
         </Grid>
-        
-        
     </Grid>
+    
+    <Page.BottomAppBar>
+        <CommandBar x:Name="appBar" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Foreground="White">
+            <AppBarButton Icon="Switch" Label="转账"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

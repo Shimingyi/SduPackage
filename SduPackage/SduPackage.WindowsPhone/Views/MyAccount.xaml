@@ -50,4 +50,10 @@
             </Grid>
         </Grid>
     </Grid>
+    
+    <Page.BottomAppBar>
+        <CommandBar Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Foreground="White">
+            <AppBarButton Icon="Next" Label="登录" Click="LogIn"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

@@ -19,76 +19,56 @@ using Windows.UI.Xaml.Navigation;
 
 namespace SduPackage
 {
-   
-
 
     public sealed partial class MainPage : Page
     {
-        private Windows.Storage.StorageFolder _localFolder;
+        Frame rootFrame;
+        Windows.Storage.ApplicationDataContainer _localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         public MainPage()
         {
+            rootFrame = Window.Current.Content as Frame;
+            
             this.InitializeComponent();
-            this._localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-            this.NavigationCacheMode = NavigationCacheMode.Required;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.Frame.Navigate(typeof(Views.Index));
-            downToFile();
-            /*
-            ThreadPoolTimer.CreateTimer(async t =>
-            {
-                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                {
-                    isDowning.IsActive = false;
-                    Frame.Navigate(typeof(Views.Index));
-                });
-
-            }, TimeSpan.FromSeconds(2));
-             */
+            base.OnNavigatedTo(e);
+            CheckStatu();
         }
 
-        private void downToFile()
+        private void CheckStatu()
         {
-            var http = new DoPost();
-            //学线通知
-            http.StartPost("http://www.online.sdu.edu.cn/News2s/servlet/NewestListServlet", "", result =>
+            if (_localSettings.Values.ContainsKey("MySummary"))
             {
-                result = result.Substring(2, result.Length - 2);
-                SaveFile("TheNewsFromSduOnline.txt", result);
-            });
-            //其他通知
-            http.StartPost("http://www.online.sdu.edu.cn/News2s/servlet/OtherListServlet", "id=11&page=1", result =>
-            {
-                result = result.Substring(2, result.Length - 2);
-                SaveFile("TheNewsFromOthers.txt", result);
-            });
-            //个人信息
-            http.StartPost("http://202.194.14.195:8080/CurriculumServer/login", "Re_Type=Import_Course&user_name=201300301197&password=641806", result =>
-            {
-                result = result.Substring(2, result.Length - 2);
-                System.Diagnostics.Debug.WriteLine(result);
-                string[] stringSeparators = new string[] { "学生在线课程格子" };
-                string[] temp = result.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                SaveFile("TheInformationFile.txt",temp[0]);
-                SaveFile("TheLessionFile.txt", temp[1]);
-                SaveFile("TheGradeFile.txt", result);
-            });
-        }
-
-        private async void SaveFile(string FileName, string result)
-        {
-            Windows.Storage.StorageFile tempFile = await _localFolder.CreateFileAsync(FileName, Windows.Storage.CreationCollisionOption.ReplaceExisting);
-            await Windows.Storage.FileIO.WriteTextAsync(tempFile, result);
-            if (FileName == "TheGradeFile.txt")
-            {
-                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                if (_localSettings.Values["MySummary"].ToString() == "0.9.0.0")
                 {
-                    Frame.Navigate(typeof(Views.Index));
-                });
+                    System.Diagnostics.Debug.WriteLine("已经不止一次查看");
+                    if (_localSettings.Values.ContainsKey("StuUsername"))
+                    {
+                        Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            rootFrame.Navigate(typeof(SduPackage.Views.LoadResourcePage));
+                            System.Diagnostics.Debug.WriteLine("已经保存了账号");
+                        });
+                    }
+                    else
+                    {
+                        Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            rootFrame.Navigate(typeof(SduPackage.Views.MyAccount));
+                            System.Diagnostics.Debug.WriteLine("没有设置账号");
+                        });
+                    }
+                }
             }
+        }
+
+        private void ToMyApp(object sender, RoutedEventArgs e)
+        {
+            _localSettings.Values["MySummary"] = "0.9.0.0";
+            rootFrame.Navigate(typeof(SduPackage.Views.MyAccount));
         }
 
     }

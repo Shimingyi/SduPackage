@@ -39,7 +39,12 @@ namespace SduPackage.Views
         {
             Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
             LoadAccount();
-        }        
+        }
+
+        private void LogIn(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(LoadResourcePage));
+        }
 
         #region 事件
         void LoadAccount()
@@ -70,5 +75,7 @@ namespace SduPackage.Views
             }
         }
         #endregion
+
+        
     }
 }

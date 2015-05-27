@@ -31,12 +31,12 @@ namespace SduPackage.Views
             ResetPage();
         }
         #region 页面点击事件
-        private void PlaceButtonTap(object sender, TappedRoutedEventArgs e)
+        private void PlaceButtonTap(object sender, RoutedEventArgs e)
         {
             if (CheckBusDB())
             {
                 count++;
-                var choosePlaceBorder = sender as Border;
+                var choosePlaceBorder = sender as Button;
                 int choosePlaceNum = Int32.Parse((string)choosePlaceBorder.Tag);
                 if ((count % 2) == 1)
                 {

@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,6 +16,7 @@ namespace SduPackage.Views
 
         Windows.Web.Http.Filters.HttpBaseProtocolFilter filter;
         HttpClient httpclient;
+        
 
         public UserCardTest()
         {

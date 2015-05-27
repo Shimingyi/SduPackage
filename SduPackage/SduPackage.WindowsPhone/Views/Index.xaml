@@ -129,9 +129,9 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="史明镒" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,5"/>
+                            <TextBlock x:Name="UserNameShow" Grid.Row="0" Text="史明镒" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,5"/>
                             <StackPanel Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
-                                <TextBlock x:Name="NumVideo" Text="学号：" Foreground="White"/>
+                                <TextBlock x:Name="UserNumShow" Text="学号：" Foreground="White"/>
                                 <TextBlock Text="201300301197" Foreground="White"/>
                             </StackPanel>
                         </Grid>
@@ -144,7 +144,7 @@
                             <RowDefinition Height="60"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border BorderThickness="1,0,0,1" BorderBrush="LightGray" Grid.Row="0" Tapped="ToMyLibrary">
+                        <Border BorderThickness="0,0,0,1" BorderBrush="LightGray" Grid.Row="0" Tapped="ToMyLibrary">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*"/>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -65,24 +66,44 @@ namespace SduPackage.Views
         {
             //isDowning.Visibility = Windows.UI.Xaml.Visibility.Visible;
             //CardLogin();
-            if (_localSettings.Values.ContainsKey("BankCardNum"))
-            {
-                NoBankNum.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                string bankNum = _localSettings.Values["BankCardNum"].ToString();
-                BankCardLastFour.Text = bankNum.Substring((bankNum.Length-4));
-                ShowBankNum.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            }                
+            CheckBankNum();
+            ShowCheckPop();
+            ShowImage();
         }
 
-        private async void CardLogin()
+        #region 页面事件
+        private void CheckCheckNum(object sender, RoutedEventArgs e)
         {
-            //识别验证码
-            TimeSpan ts = DateTime.Now - DateTime.Parse("1970-1-1");
-            long tt = Convert.ToInt64(ts.TotalMilliseconds);
-            Uri imageUri = new Uri(("http://card.sdu.edu.cn/Account/GetCheckCodeImg/Flag=" + tt.ToString()));
-            BitmapImage _image = new BitmapImage(imageUri);
-            string _checkCode = SduPackage.Functions.IdentifyCheckCode.Identify(_image);
+            string checkCode = CheckTextBox.Text;
+            CardLogin(checkCode);
+        }
 
+        private void BindingBankButton(object sender, RoutedEventArgs e)
+        {
+            if (!myPopup.IsOpen)
+            {
+                ShowBankNumPop();
+            }
+        }
+
+        private void FinishBankNum(object sender, RoutedEventArgs e)
+        {
+            string bankNum = BankNumTextBox.Text;
+            if (bankNum.Length == 19)
+            {
+                _localSettings.Values["BankCardNum"] = bankNum;
+                myPopup.IsOpen = false;
+                BankCardLastFour.Text = bankNum.Substring((bankNum.Length - 4));
+                NoBankNum.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                ShowBankNum.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+        }
+
+        #endregion
+       
+
+        private async void CardLogin(string _checkCode)
+        {            
             //开始登录
             string username = _localSettings.Values["CardUsername"].ToString();
             string password = _localSettings.Values["CardPassword"].ToString();
@@ -110,10 +131,15 @@ namespace SduPackage.Views
                 {
                     httpclient = new HttpClient(filter);
                     responseStr = await httpclient.GetStringAsync(new Uri("http://card.sdu.edu.cn/CardManage/CardInfo/BasicInfo"));
+                    responseStr = responseStr.Replace(" ", "");
+                    int index = responseStr.IndexOf("校园卡余额");
+                    System.Diagnostics.Debug.WriteLine(responseStr.Length);
+                    string result = responseStr.Substring(index,index+5);
+                    System.Diagnostics.Debug.WriteLine(result);
                 }
                 else
                 {
-
+                    
                 }
 
             }
@@ -123,34 +149,52 @@ namespace SduPackage.Views
             }
         }
 
-        private void BindingBankButton(object sender, RoutedEventArgs e)
+        
+
+        #region 状态改变
+        private void ShowImage()
         {
-            if (!myPopup.IsOpen)
-            {
-                test.Height = Window.Current.Bounds.Height;
-                test.Width = Window.Current.Bounds.Width;
-                myPopup.IsOpen = true;
-                if (_localSettings.Values.ContainsKey("BankCardNum"))
-                {
-                    BankNumTextBox.Text = _localSettings.Values["BankCardNum"].ToString();
-                }
-            }  
+            TimeSpan ts = DateTime.Now - DateTime.Parse("1970-1-1");
+            long tt = Convert.ToInt64(ts.TotalMilliseconds);
+            Uri imageUri = new Uri(("http://card.sdu.edu.cn/Account/GetCheckCodeImg/Flag=" + tt.ToString()));
+            Windows.UI.Xaml.Media.ImageSource _imgSource = new BitmapImage(imageUri);
+            ShowCheckImage.Source = _imgSource;
         }
 
-        private void CheckBankNum(object sender, RoutedEventArgs e)
+        private void CheckBankNum()
         {
-            string bankNum = BankNumTextBox.Text;
-            if(bankNum.Length == 19 ){
-                _localSettings.Values["BankCardNum"] = bankNum;
-                myPopup.IsOpen = false;
-                BankCardLastFour.Text = bankNum.Substring((bankNum.Length - 4));
+            if (_localSettings.Values.ContainsKey("BankCardNum"))
+            {
                 NoBankNum.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                string bankNum = _localSettings.Values["BankCardNum"].ToString();
+                BankCardLastFour.Text = bankNum.Substring((bankNum.Length - 4));
                 ShowBankNum.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
-            
         }
 
+        private void ShowCheckPop()
+        {
+            checkGrid.Height = Window.Current.Bounds.Height;
+            checkGrid.Width = Window.Current.Bounds.Width;
+            checkPop.IsOpen = true;
+            appBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
 
+        private void ShowBankNumPop()
+        {
+            test.Height = Window.Current.Bounds.Height;
+            test.Width = Window.Current.Bounds.Width;
+            myPopup.IsOpen = true;
+            appBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            if (_localSettings.Values.ContainsKey("BankCardNum"))
+            {
+                BankNumTextBox.Text = _localSettings.Values["BankCardNum"].ToString();
+            }
+        }
+        #endregion
+
+        
+        
 
     }
 }

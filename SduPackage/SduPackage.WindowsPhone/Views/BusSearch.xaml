@@ -9,6 +9,91 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light">
 
+    <Page.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///StyleDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Thickness x:Key="PhoneBorderThickness">2.5</Thickness>
+            <FontFamily x:Key="PhoneFontFamilyNormal">Segoe WP</FontFamily>
+            <FontWeight x:Key="PhoneButtonFontWeight">Semibold</FontWeight>
+            <x:Double x:Key="TextStyleLargeFontSize">18.14</x:Double>
+            <Thickness x:Key="PhoneButtonContentPadding">9.5,0,9.5,3.5</Thickness>
+            <x:Double x:Key="PhoneButtonMinHeight">57.5</x:Double>
+            <x:Double x:Key="PhoneButtonMinWidth">109</x:Double>
+            <Thickness x:Key="PhoneTouchTargetOverhang">0,9.5</Thickness>
+            <SolidColorBrush x:Key="ButtonDisabledBackgroundThemeBrush" Color="Transparent"/>
+            <Style x:Key="NoPressButton" TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="{ThemeResource PhoneForegroundBrush}"/>
+                <Setter Property="Foreground" Value="{ThemeResource PhoneForegroundBrush}"/>
+                <Setter Property="BorderThickness" Value="{ThemeResource PhoneBorderThickness}"/>
+                <Setter Property="FontFamily" Value="{ThemeResource PhoneFontFamilyNormal}"/>
+                <Setter Property="FontWeight" Value="{ThemeResource PhoneButtonFontWeight}"/>
+                <Setter Property="FontSize" Value="{ThemeResource TextStyleLargeFontSize}"/>
+                <Setter Property="Padding" Value="{ThemeResource PhoneButtonContentPadding}"/>
+                <Setter Property="MinHeight" Value="{ThemeResource PhoneButtonMinHeight}"/>
+                <Setter Property="MinWidth" Value="{ThemeResource PhoneButtonMinWidth}"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid x:Name="Grid" Background="Transparent">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition From="Pressed" To="PointerOver">
+                                                <Storyboard>
+                                                    <PointerUpThemeAnimation Storyboard.TargetName="Grid"/>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition From="PointerOver" To="Normal">
+                                                <Storyboard>
+                                                    <PointerUpThemeAnimation Storyboard.TargetName="Grid"/>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition From="Pressed" To="Normal">
+                                                <Storyboard>
+                                                    <PointerUpThemeAnimation Storyboard.TargetName="Grid"/>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="PointerOver"/>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <PointerDownThemeAnimation Storyboard.TargetName="Grid"/>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{TemplateBinding Background}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledForegroundThemeBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="Border">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBorderThemeBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBackgroundThemeBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="{ThemeResource PhoneTouchTargetOverhang}">
+                                    <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
     
     <Grid>
         <Grid.RowDefinitions>
@@ -21,7 +106,9 @@
                 <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/Image/VideoBackground/BusSearchTopImage.jpg"/>
             </Grid.Background>
         </Grid>
+        
         <uc:NotificationBar x:Name="NotifitionBar" Grid.ColumnSpan="99" Canvas.ZIndex="99"/>
+        
         <Grid Grid.Row="1" Margin="0,20,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*"/>
@@ -32,42 +119,71 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="White" Tag="1" Tapped="PlaceButtonTap">
-                <StackPanel Orientation="Vertical">
-                    <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/eastNew.png" />
-                    <TextBlock Foreground="Black" Text="中心校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-                </StackPanel>
-            </Border>
-            <Border Grid.Row="0" Grid.Column="1" BorderThickness="1,0,1,1" BorderBrush="White" Tag="2" Tapped="PlaceButtonTap">
-                <StackPanel Orientation="Vertical">
-                    <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/eastOld.png" />
-                    <TextBlock Foreground="Black" Text="洪家楼校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-                </StackPanel>
-            </Border>
-            <Border Grid.Row="0" Grid.Column="2" BorderThickness="1,0,0,1" BorderBrush="White" Tag="3" Tapped="PlaceButtonTap">
-                <StackPanel Orientation="Vertical">
-                    <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/southOld.png" />
-                    <TextBlock Foreground="Black" Text="千佛山校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-                </StackPanel>
-            </Border>
-            <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,1,1,0" BorderBrush="White" Tag="4" Tapped="PlaceButtonTap">
-                <StackPanel Orientation="Vertical">
-                    <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/southNew.png" />
-                    <TextBlock Foreground="Black" Text="兴隆山校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-                </StackPanel>
-            </Border>
-            <Border Grid.Row="1" Grid.Column="1" BorderThickness="1,1,1,0" BorderBrush="White" Tag="5" Tapped="PlaceButtonTap">
-                <StackPanel Orientation="Vertical">
-                    <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/cs.png" />
-                    <TextBlock Foreground="Black" Text="软件园校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-                </StackPanel>
-            </Border>
-            <Border Grid.Row="1" Grid.Column="2" BorderThickness="1,1,0,0" BorderBrush="White" Tag="6" Tapped="PlaceButtonTap">
-                <StackPanel Orientation="Vertical">
-                    <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/history.png" />
-                    <TextBlock Foreground="Black" Text="趵突泉校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-                </StackPanel>
-            </Border>
+            <Button Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="White" Tag="1" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                    Click="PlaceButtonTap" Style="{StaticResource NoPressButton}">
+                <Button.Content>
+                    <StackPanel Orientation="Vertical">
+                        <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/eastNew.png" />
+                        <TextBlock Foreground="Black" Text="中心校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Button Grid.Row="0" Grid.Column="1" BorderThickness="1,0,1,1" BorderBrush="White" Tag="2"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                    Click="PlaceButtonTap" Style="{StaticResource NoPressButton}">
+                <Button.Content>
+                    <StackPanel Orientation="Vertical">
+                        <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/eastOld.png" />
+                        <TextBlock Foreground="Black" Text="洪家楼校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Button Grid.Row="0" Grid.Column="2" BorderThickness="1,0,0,1" BorderBrush="White" Tag="3" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                    Click="PlaceButtonTap" Style="{StaticResource NoPressButton}">
+                <Button.Content>
+                    <StackPanel Orientation="Vertical">
+                        <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/southOld.png" />
+                        <TextBlock Foreground="Black" Text="千佛山校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Button Grid.Row="1" Grid.Column="0" BorderThickness="0,1,1,0" BorderBrush="White" Tag="4" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                    Click="PlaceButtonTap" Style="{StaticResource NoPressButton}">
+                <Button.Content>
+                    <StackPanel Orientation="Vertical">
+                        <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/southNew.png" />
+                        <TextBlock Foreground="Black" Text="兴隆山校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Button Grid.Row="1" Grid.Column="1" BorderThickness="0,1,1,0" BorderBrush="White" Tag="5" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                    Click="PlaceButtonTap" Style="{StaticResource NoPressButton}">
+                <Button.Content>
+                    <StackPanel Orientation="Vertical">
+                        <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/cs.png" />
+                        <TextBlock Foreground="Black" Text="软件园校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Button Grid.Row="1" Grid.Column="2" BorderThickness="0,1,1,0" BorderBrush="White" Tag="6" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                    Click="PlaceButtonTap" Style="{StaticResource NoPressButton}">
+                <Button.Content>
+                    <StackPanel Orientation="Vertical">
+                        <Image Width="70" Height="70" Source="ms-appx:///Assets/Image/Icon/sixCampus/history.png" />
+                        <TextBlock Foreground="Black" Text="趵突泉校区" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>

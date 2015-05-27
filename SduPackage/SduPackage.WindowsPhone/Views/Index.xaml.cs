@@ -1,4 +1,5 @@
-﻿using SduPackage.Model;
+﻿using Newtonsoft.Json.Linq;
+using SduPackage.Model;
 using SduPackage.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -142,6 +143,16 @@ namespace SduPackage.Views
         #endregion
 
         #region 自定义事件
+        private async void LoadPage()
+        {
+            Windows.Storage.StorageFile informationFile = await _localFolder.GetFileAsync("TheInformationFile.txt");
+            string result = await Windows.Storage.FileIO.ReadTextAsync(informationFile);
+
+            JObject jo = JObject.Parse(result);
+            UserNameShow.Text = jo["myName"].ToString();
+            UserNumShow.Text = jo["myStudentID"].ToString();
+        }
+
         private void InitWatch()
         {
             dt.Interval = TimeSpan.FromSeconds(2);
