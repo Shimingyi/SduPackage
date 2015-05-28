@@ -6,8 +6,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     RequestedTheme="Light">
+    <Page.Background>
+        <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/SplashScreenControl.jpg"/>
+    </Page.Background>
 
     <Grid>
         <Grid>
@@ -15,8 +17,7 @@
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="7*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="口袋山大" FontSize="50" Foreground="{ThemeResource TextBoxForegroundThemeBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ProgressRing x:Name="isDowning" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsActive="True"/>
+            <ProgressRing x:Name="isDowning" Width="40" Height="40" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsActive="True"/>
         </Grid>
     </Grid>
 </Page>

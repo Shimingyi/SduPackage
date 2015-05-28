@@ -5,6 +5,7 @@
     xmlns:local="using:SduPackage.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:SduPackage.Controls"
     mc:Ignorable="d"
     RequestedTheme="Light"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -126,14 +127,15 @@
                 </TransitionCollection>
             </Popup.ChildTransitions>
         </Popup>
-        
-        <Popup x:Name="checkPop" Canvas.ZIndex="99" HorizontalAlignment="Stretch">
+
+        <Popup x:Name="checkPop" Canvas.ZIndex="20" HorizontalAlignment="Stretch">
             <Popup.Child>
                 <Grid x:Name="checkGrid" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="400" Height="640">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="70"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+                    <uc:NotificationBar x:Name="CheckNotifitionBar" Grid.ColumnSpan="99" Canvas.ZIndex="99"/>
                     <TextBlock Text="输入验证码" FontSize="36" Margin="12"/>
                     <Grid Grid.Row="1" Margin="12,0">
                         <Grid.RowDefinitions>
@@ -158,12 +160,17 @@
                 </TransitionCollection>
             </Popup.ChildTransitions>
         </Popup>
-        
+
+
+
         <Grid x:Name="isDowning" Visibility="Collapsed" Grid.RowSpan="99" Canvas.ZIndex="99" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
+            
+            <uc:NotificationBar x:Name="NotifitionBar" Grid.ColumnSpan="99" Canvas.ZIndex="99"/>
+            
             <Border Background="Black" Grid.RowSpan="99" Opacity="0.3"/>
             <ProgressBar IsIndeterminate="True" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
             <TextBlock Grid.Row="1" Text="正在加载" Opacity="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5" Foreground="White" FontSize="10"/>
