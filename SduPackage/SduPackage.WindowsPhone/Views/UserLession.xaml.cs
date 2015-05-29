@@ -107,7 +107,6 @@ namespace SduPackage.Views
         {
             _course.clear();
             str = str.Substring(1, str.Length - 2);
-            System.Diagnostics.Debug.WriteLine(str);
             JArray ja = JArray.Parse(str);
             JObject jo_temp = new JObject();
             for (int i = 0; i < ja.Count; i++)

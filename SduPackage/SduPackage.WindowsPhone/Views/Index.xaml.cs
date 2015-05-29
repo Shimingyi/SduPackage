@@ -30,6 +30,7 @@ namespace SduPackage.Views
         Windows.Storage.StorageFolder _localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 
         NewsViewModel _newsViewModel;
+        LessionViewModel _lessonViewModel;
         DispatcherTimer dt = new DispatcherTimer();
         bool IsExit = false;
         News _news;
@@ -41,9 +42,10 @@ namespace SduPackage.Views
             this.NavigationCacheMode = NavigationCacheMode.Required;
             InitWatch();
             _newsViewModel = new NewsViewModel(1);
+            _lessonViewModel = new LessionViewModel();
             var groups = new System.Collections.ObjectModel.ObservableCollection<Group>();
-
             this.DataContext = _newsViewModel.NewsGroups;
+            
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -220,6 +222,7 @@ namespace SduPackage.Views
                     headerTodolist.IsChecked = false;
                     headerBox.IsChecked = false;
                     headerProfile.IsChecked = false;
+                    //this.DataContext = _newsViewModel.NewsGroups;
                     AppBarChange(0);
                     break;
                 case 1:
@@ -227,6 +230,7 @@ namespace SduPackage.Views
                     headerTodolist.IsChecked = true;
                     headerBox.IsChecked = false;
                     headerProfile.IsChecked = false;
+                    //this.DataContext = _lessonViewModel;
                     AppBarChange(1);
                     break;
                 case 2:

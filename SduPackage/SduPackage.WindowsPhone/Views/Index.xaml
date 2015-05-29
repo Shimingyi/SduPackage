@@ -23,6 +23,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
+        
         <uc:NotificationBar x:Name="NotifitionBar" Grid.ColumnSpan="99" Canvas.ZIndex="99"/>
         <Grid Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Height="70">
             <Grid.ColumnDefinitions>
@@ -36,6 +38,10 @@
             <uc:HeaderButton x:Name="headerBox" Grid.Column="2" Tapped="HeaderTapped" Tag="2" DefaultImage="ms-appx:///Assets/Image/Icon/profile_out.png" SelectedImage="ms-appx:///Assets/Image/Icon/profile_in.png" IsChecked="False"/>
             <uc:HeaderButton x:Name="headerProfile" Grid.Column="3" Tapped="HeaderTapped" Tag="3" DefaultImage="ms-appx:///Assets/Image/Icon/message_out.png" SelectedImage="ms-appx:///Assets/Image/Icon/message_in.png" IsChecked="False"/>
         </Grid>
+        
+        
+        
+        
 
         <Pivot x:Name="pivot" Grid.Row="1" PivotItemLoaded="pivot_PivotItemLoaded" Margin="0,-13,0,0" >
             <Pivot.Resources>
@@ -86,7 +92,37 @@
                     
             </PivotItem>
             <PivotItem Margin="0">
-                
+                <ScrollViewer>
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Margin="20,10" Text="今日课程" FontSize="20"/>
+                        <ListView x:Name="lessionListView" ItemsSource="{Binding LessionGroups}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="10,0" Grid.Row="1" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding className}" Foreground="White" FontSize="20" Margin="15,5,0,0" FontWeight="Bold"/>
+                                        <TextBlock Grid.Row="1" Text="{Binding classPlace}" Foreground="White" Margin="15,5"/>
+                                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,5">
+                                            <TextBlock Grid.Row="2" Text="第" Foreground="White" HorizontalAlignment="Right" Margin="0,0,10,5" FontStyle="Italic"/>
+                                            <TextBlock Grid.Row="2" Text="{Binding classDayOfTime}" Foreground="White" HorizontalAlignment="Right" Margin="0,0,10,5" FontStyle="Italic"/>
+                                            <TextBlock Grid.Row="2" Text="节课" Foreground="White" HorizontalAlignment="Right" Margin="0,0,10,5" FontStyle="Italic"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </ScrollViewer>
             </PivotItem>
             <PivotItem Margin="0">
                 <Grid Margin="0,20,0,0">

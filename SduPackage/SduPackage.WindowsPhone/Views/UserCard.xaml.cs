@@ -189,6 +189,9 @@ namespace SduPackage.Views
             string[] first_sentences = { "校园卡余额" };
             string[] first_split = responseStr.Split(first_sentences, StringSplitOptions.RemoveEmptyEntries);
             result = first_split[1].Substring(12,5);
+            if(result.Substring(4,1)=="<"){
+                result = result.Substring(0, 4);
+            }
             return result;
         }
 

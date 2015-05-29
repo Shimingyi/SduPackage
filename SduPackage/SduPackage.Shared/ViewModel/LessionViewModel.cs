@@ -12,6 +12,7 @@ namespace SduPackage.ViewModel
         #region 字段
         private Windows.Storage.StorageFolder _localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
         private Windows.Storage.ApplicationDataContainer _localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private int nowWeek;
         #endregion
 
         #region 属性
@@ -29,6 +30,7 @@ namespace SduPackage.ViewModel
         #region 构造方法
         public LessionViewModel()
         {
+            LoadViewModel();
             LessionGroups = new System.Collections.ObjectModel.ObservableCollection<MyClass>();
             this.RaisePropertyChanged("LessionGroups");
             LoadFile();
@@ -42,6 +44,18 @@ namespace SduPackage.ViewModel
         #endregion
 
         #region 私有方法
+        private void LoadViewModel()
+        {
+            if (_localSettings.Values.ContainsKey("nowWeek"))
+            {
+                nowWeek = Int32.Parse(_localSettings.Values["nowWeek"].ToString());
+            }
+            else
+            {
+                _localSettings.Values["nowWeek"] = 1;
+            }
+        }
+
         private async void OpenFile(string fileName)
         {
             Windows.Storage.StorageFile onlineNews = await _localFolder.GetFileAsync(fileName);
@@ -49,17 +63,53 @@ namespace SduPackage.ViewModel
             FileTxtToGroup(result);
         }
 
-        private void FileTxtToGroup(string result)
+        private void FileTxtToGroup(string str)
         {
-            //For Test
-            for (var i = 0; i < 49; i++)
+            DateTime dt = DateTime.Now;
+            String data = dt.DayOfWeek.ToString();
+            int count = 0;
+            
+            if (data == "Monday") { count = 1; }
+            if (data == "Tuesday") { count = 2; }
+            if (data == "Wednesday") { count = 3; }
+            if (data == "Thursday") { count = 4; }
+            if (data == "Friday") { count = 5; }
+            if (data == "Saturday") { count = 6; }
+            if (data == "Sunday") { count = 7; }
+
+            str = str.Substring(1, str.Length - 2);
+            JArray ja = JArray.Parse(str);
+            JObject jo_temp = new JObject();
+            for (int i = 0; i < ja.Count; i++)
             {
-                LessionGroups.Add(new MyClass
+                jo_temp = ja[i] as JObject;
+                if ((jo_temp["classDayOfWeek"].ToString() == count.ToString()) && isNowWeek(jo_temp["classDayOfSemester"].ToString()))
                 {
-                    className = "Name " + i.ToString(),
-                    classPlace = "Place " + i.ToString(),
-                });
+                    LessionGroups.Add(JsonToLession(jo_temp));
+                }
             }
+        }
+
+        private bool isNowWeek(string classDay)
+        {
+            bool res = false;
+            if (classDay != "")
+            {
+                string[] shuzu = classDay.Split('-');
+                int startWeek = Int32.Parse(shuzu[0]);
+                int endWeek = Int32.Parse(shuzu[1]);
+                if ((startWeek <= nowWeek) && (endWeek >= nowWeek))
+                {
+                    res = true;
+                }
+                else
+                    res = false;
+            }
+            else
+            {
+                res = true;
+            }
+            return res;
         }
 
         private MyClass JsonToLession(JObject jo)
