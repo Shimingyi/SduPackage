@@ -54,6 +54,7 @@ namespace SduPackage.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             Change_StatuBar("口袋山大", 0);
+            LoadPage();
             Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
         }
 
@@ -147,7 +148,7 @@ namespace SduPackage.Views
         {
             Windows.Storage.StorageFile informationFile = await _localFolder.GetFileAsync("TheInformationFile.txt");
             string result = await Windows.Storage.FileIO.ReadTextAsync(informationFile);
-
+            System.Diagnostics.Debug.WriteLine("MyInformation:"+result);
             JObject jo = JObject.Parse(result);
             UserNameShow.Text = jo["myName"].ToString();
             UserNumShow.Text = jo["myStudentID"].ToString();

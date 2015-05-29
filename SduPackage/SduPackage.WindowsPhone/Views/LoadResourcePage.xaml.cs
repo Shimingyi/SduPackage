@@ -74,7 +74,6 @@ namespace SduPackage.Views
             http.StartPost("http://202.194.14.195:8080/CurriculumServer/login", "Re_Type=Import_Course&user_name=" + StuUsername + "&password="+StuUserPassword, result =>
             {
                 result = result.Substring(2, result.Length - 2);
-                System.Diagnostics.Debug.WriteLine(result);
                 string[] stringSeparators = new string[] { "学生在线课程格子" };
                 string[] temp = result.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                 SaveFile("TheInformationFile.txt", temp[0]);
@@ -89,7 +88,7 @@ namespace SduPackage.Views
             await Windows.Storage.FileIO.WriteTextAsync(tempFile, result);
             if (FileName == "TheGradeFile.txt")
             {
-                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
                     Frame.Navigate(typeof(Views.Index));
                 });

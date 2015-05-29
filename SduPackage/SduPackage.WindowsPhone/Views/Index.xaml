@@ -129,10 +129,10 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="UserNameShow" Grid.Row="0" Text="史明镒" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,5"/>
+                            <TextBlock x:Name="UserNameShow" Grid.Row="0" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,5"/>
                             <StackPanel Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
-                                <TextBlock x:Name="UserNumShow" Text="学号：" Foreground="White"/>
-                                <TextBlock Text="201300301197" Foreground="White"/>
+                                <TextBlock Text="学号：" Foreground="White"/>
+                                <TextBlock x:Name="UserNumShow" Foreground="White"/>
                             </StackPanel>
                         </Grid>
                     </Grid>

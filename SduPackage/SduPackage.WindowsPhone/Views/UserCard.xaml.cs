@@ -198,8 +198,8 @@ namespace SduPackage.Views
             TimeSpan ts = DateTime.Now - DateTime.Parse("1970-1-1");
             long tt = Convert.ToInt64(ts.TotalMilliseconds);
             Uri imageUri = new Uri(("http://card.sdu.edu.cn/Account/GetCheckCodeImg/Flag=" + tt.ToString()));
-            HttpResponseMessage _hh = await httpclient.GetAsync(imageUri);
-            IBuffer _buffer = await _hh.Content.ReadAsBufferAsync();
+            HttpResponseMessage _response = await httpclient.GetAsync(imageUri);
+            IBuffer _buffer = await _response.Content.ReadAsBufferAsync();
             
             //get cookie
             HttpBaseProtocolFilter filter = new HttpBaseProtocolFilter();

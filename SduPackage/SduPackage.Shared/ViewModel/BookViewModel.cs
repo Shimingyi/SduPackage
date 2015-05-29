@@ -13,6 +13,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
 using Windows.Web.Http;
+using Windows.Web.Http.Filters;
 
 namespace SduPackage.ViewModel{
 	public class BookViewModel: INotifyPropertyChanged
@@ -22,6 +23,7 @@ namespace SduPackage.ViewModel{
         Windows.Storage.StorageFolder _localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
         public int pageCount;
         int nowPage=1;
+        HttpClient httpclient;
     	#endregion
 
     	#region 属性
@@ -39,6 +41,7 @@ namespace SduPackage.ViewModel{
     	#region 构造方法
         public BookViewModel()
         {
+            httpclient = new HttpClient();
             this.BookGroup = new ObservableCollection<BookInformation>();
             this.RaisePropertyChanged("BookGroup");
         }
@@ -79,16 +82,36 @@ namespace SduPackage.ViewModel{
         {
             addToGroup(result,4);
         }
+
+        public async System.Threading.Tasks.Task<string> continueBook(BookInformation _book)
+        {
+            string res = string.Empty;
+            string posturl = "http://202.194.14.195:8080/curriculumlib/lib";
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, new Uri(posturl));
+            HttpFormUrlEncodedContent postDate = new HttpFormUrlEncodedContent(
+                new List<KeyValuePair<string, string>>
+                    {
+                        new KeyValuePair<string,string>("requesttype","1"),
+                        new KeyValuePair<string,string>("bookid",("[{\"id\":\""+_book.b_id+"\" }]"))
+                    }
+            );
+            HttpCookie _cookie = new HttpCookie("", "", "");
+            HttpBaseProtocolFilter filter = new HttpBaseProtocolFilter();
+            bool replaced = filter.CookieManager.SetCookie(_cookie, false);
+            HttpResponseMessage response = await httpclient.SendRequestAsync(request);
+            string result = await response.Content.ReadAsStringAsync();
+            return res;
+        }
     	#endregion
 
     	#region 私有方法
-        private async void downToFile()
+        public async System.Threading.Tasks.Task<string> downToFile()
         {
+            string res = string.Empty;
             try
             {
                 string username = _localSettings.Values["CardUsername"].ToString();
                 string password = _localSettings.Values["CardPassword"].ToString();
-                HttpClient httpclient = new HttpClient();
                 string posturl = "http://202.194.14.195:8080/curriculumlib/lib";
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, new Uri(posturl));
                 HttpFormUrlEncodedContent postDate = new HttpFormUrlEncodedContent(
@@ -101,8 +124,13 @@ namespace SduPackage.ViewModel{
                 );
                 request.Content = postDate;
                 HttpResponseMessage response = await httpclient.SendRequestAsync(request);
+                HttpBaseProtocolFilter filter = new HttpBaseProtocolFilter();
+                HttpCookieCollection cookieCollection = filter.CookieManager.GetCookies(new Uri(posturl));
+                foreach (HttpCookie _cookie in cookieCollection)
+                {
+
+                }
                 string result = await response.Content.ReadAsStringAsync();
-                System.Diagnostics.Debug.WriteLine(result);
                 if (result.IndexOf("错误") > 0)
                 {
                     throw new ErrorAccountException();
@@ -110,12 +138,21 @@ namespace SduPackage.ViewModel{
                 else
                 {
                     addToGroup(result, 1);
+                    res = "1";
                 }
             }
-            catch (ErrorAccountException args)
-            {
 
+            catch (Newtonsoft.Json.JsonReaderException e)
+            {
+                res = "2";
+                return res;
             }
+            catch (Exception args)
+            {
+                res = "3";
+                return res;
+            }
+            return res;
         }
 
         private async void SearchByPost(string keyword)
@@ -217,6 +254,7 @@ namespace SduPackage.ViewModel{
             catch (Newtonsoft.Json.JsonReaderException e)
             {
                 System.Diagnostics.Debug.WriteLine("JSON格式错误");
+                throw e;
             }
         }
 

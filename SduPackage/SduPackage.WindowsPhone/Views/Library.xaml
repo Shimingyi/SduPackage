@@ -29,9 +29,9 @@
         </Grid>
         <Grid Grid.Row="1">
             <Grid Height="auto" Margin="10">
-                <ListView                                 
+                <ListView
+                        x:Name="bookListView"
                         SelectionMode="None"
-                        IsItemClickEnabled="True"                       
                         ItemsSource="{Binding BookGroup}"
                         ContinuumNavigationTransitionInfo.ExitElementContainer="True">
                     <ListView.ItemTemplate>
@@ -84,7 +84,8 @@
                     </Flyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
-
+            <AppBarButton Name="choose" Icon="Bullets" Label="续借" Click="ChooseBookAppBarClick"/>
+            <AppBarButton Name="continuebar" Visibility="Collapsed" Icon="Add" Label="续借" Click="ContinueBookAppBarClick"/>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

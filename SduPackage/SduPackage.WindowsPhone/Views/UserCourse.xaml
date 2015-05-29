@@ -71,7 +71,6 @@
                                     </StackPanel>
                                 </Grid>
                             </Grid>
-                               
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

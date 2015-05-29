@@ -34,5 +34,26 @@ namespace SduPackage.Model
                 Sunday[i] = new MyClass();
             }
         }
+
+        public void clear()
+        {
+            Monday = new MyClass[6];
+            Tuesday = new MyClass[6];
+            Wednesday = new MyClass[6];
+            Thursday = new MyClass[6];
+            Friday = new MyClass[6];
+            Saturday = new MyClass[6];
+            Sunday = new MyClass[6];
+            for (int i = 0; i < 6; i++)
+            {
+                Monday[i] = new MyClass();
+                Tuesday[i] = new MyClass();
+                Wednesday[i] = new MyClass();
+                Thursday[i] = new MyClass();
+                Friday[i] = new MyClass();
+                Saturday[i] = new MyClass();
+                Sunday[i] = new MyClass();
+            }
+        }
     }
 }

@@ -25,12 +25,11 @@ namespace SduPackage.Views
 
         BookViewModel _bookViewModel;
         Windows.Storage.ApplicationDataContainer _localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-
         
         public Library()
         {
             this.InitializeComponent();
-            LoadPage();            
+            LoadPage();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -40,6 +39,7 @@ namespace SduPackage.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+
             Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
         }
 
@@ -48,6 +48,27 @@ namespace SduPackage.Views
         {
             this.Frame.Navigate(typeof(Views.LibrarySearch), key_search.Text);
         }
+
+        private void ChooseBookAppBarClick(object sender, RoutedEventArgs e)
+        {
+            bookListView.SelectionMode = ListViewSelectionMode.Multiple;
+            search.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            choose.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            continuebar.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        private void ContinueBookAppBarClick(object sender, RoutedEventArgs e)
+        {
+            foreach (SduPackage.Model.BookInformation _book in bookListView.SelectedItems)
+            {
+                Task<string> task = new Task<string>(() =>
+                {
+                    string res = string.Empty;
+                    res = _bookViewModel.continueBook(_book).Result;
+                    return res;
+                });
+            }
+        }
         #endregion
 
         #region 方法
@@ -55,9 +76,33 @@ namespace SduPackage.Views
         {
             Change_StatuBar("正在登录......",0);
             this._bookViewModel = new BookViewModel();
-            _bookViewModel.LoadViewModel();
+
+            for (int i = 0; i < 10; i++)
+            {
+                _bookViewModel.BookGroup.Add(new SduPackage.Model.BookInformation { b_title = "title1", b_autor = "autor" });
+            }
+
+            Task<string> task = new Task<string>(() =>
+            {
+                string res = string.Empty;
+                res = _bookViewModel.downToFile().Result;
+                return res;
+            });
+
+            task.Start();
+            task.Wait();
             this.DataContext = _bookViewModel;
-            Change_StatuBar("口袋山大", 0);
+            if(task.Result == "1"){
+                Change_StatuBar("口袋山大", 0);
+            }
+            if (task.Result == "2")
+            {
+                Change_StatuBar("书中自有黄金屋，快去借书>0<", 0);
+            }
+            if (task.Result == "3")
+            {
+                Change_StatuBar("连接服务器失败，请检查网络>0<", 0);
+            }
         }
 
         void FinishLoad()
@@ -69,10 +114,20 @@ namespace SduPackage.Views
         void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
         {
             e.Handled = true;
-            if (this.Frame.CanGoBack)
-            {
-                this.Frame.GoBack();
+            if(bookListView.SelectionMode == ListViewSelectionMode.Multiple){
+                bookListView.SelectionMode = ListViewSelectionMode.None;
+                search.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                choose.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                continuebar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }
+            else
+            {
+                if (this.Frame.CanGoBack)
+                {
+                    this.Frame.GoBack();
+                }
+            }
+            
         }
         #endregion
 
@@ -93,5 +148,9 @@ namespace SduPackage.Views
             await statusBar.ProgressIndicator.ShowAsync();
         }
         #endregion
+
+        
+
+        
     }
 }

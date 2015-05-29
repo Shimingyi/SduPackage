@@ -46,6 +46,7 @@ namespace SduPackage.ViewModel
         {
             Windows.Storage.StorageFile onlineNews = await _localFolder.GetFileAsync(filename);
             string result = await Windows.Storage.FileIO.ReadTextAsync(onlineNews);
+            System.Diagnostics.Debug.WriteLine("myGrade:"+result);
             FileTxtToGroup(result);
         }
 

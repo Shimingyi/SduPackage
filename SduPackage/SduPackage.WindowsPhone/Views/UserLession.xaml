@@ -109,7 +109,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
-            <TextBlock x:Name="PageTitle" Text="我的课表" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="PageTitle" Text="我的课表" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0"/>
+                <TextBlock x:Name="PageNum" Text="0" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                <TextBlock Text="周" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </StackPanel>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -218,4 +222,11 @@
             </ScrollViewer>
         </Grid>
     </Grid>
+    
+    <Page.BottomAppBar>
+        <CommandBar Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
+            <AppBarButton x:Name="lastAppbar" Icon="Back" Label="上一周" Click="LastWeek"/>
+            <AppBarButton x:Name="nextAppbar" Icon="Forward" Label="下一周" Click="NextWeek"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

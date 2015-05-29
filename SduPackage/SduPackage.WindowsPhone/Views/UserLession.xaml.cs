@@ -26,22 +26,26 @@ namespace SduPackage.Views
         LessionGroup _course = new LessionGroup();
         private Windows.Storage.StorageFolder _localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
         private Windows.Storage.ApplicationDataContainer _localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private int nowWeek = 1;
+        String timestamp = "";
         #endregion
 
 
         public UserLession()
         {
             this.InitializeComponent();
-            GetCourse();
+            LoadPage();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            checkWeek();
             Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            _localSettings.Values["nowWeek"] = nowWeek;
             Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
         }
 
@@ -54,10 +58,39 @@ namespace SduPackage.Views
             }
         }
 
+        private void LastWeek(object sender, RoutedEventArgs e)
+        {
+            nowWeek--;
+            checkWeek();
+            this.LoadCourse(timestamp);
+        }
+
+        private void NextWeek(object sender, RoutedEventArgs e)
+        {
+            nowWeek++;
+            checkWeek();
+            this.LoadCourse(timestamp);
+        }
+
+        #region 方法
+        public void LoadPage()
+        {
+            if (_localSettings.Values.ContainsKey("nowWeek"))
+            {
+                nowWeek = Int32.Parse(_localSettings.Values["nowWeek"].ToString());
+            }
+            else
+            {
+                _localSettings.Values["nowWeek"] = 1;
+            }
+            PageNum.Text = nowWeek.ToString();
+            GetCourse();
+        }
+        #endregion
+
         #region 私有方法
         private async void GetCourse()
         {
-            String timestamp = "";
             try
             {
                 Windows.Storage.StorageFile sampleFile = await _localFolder.GetFileAsync("TheLessionFile.txt");
@@ -72,7 +105,7 @@ namespace SduPackage.Views
 
         private void LoadCourse(string str)
         {
-
+            _course.clear();
             str = str.Substring(1, str.Length - 2);
             System.Diagnostics.Debug.WriteLine(str);
             JArray ja = JArray.Parse(str);
@@ -81,36 +114,57 @@ namespace SduPackage.Views
             {
                 jo_temp = ja[i] as JObject;
                 int time = System.Int32.Parse(jo_temp["classDayOfTime"].ToString());
-                if (jo_temp["classDayOfWeek"].ToString() == "1")
+                if ((jo_temp["classDayOfWeek"].ToString() == "1") && isNowWeek(jo_temp["classDayOfSemester"].ToString()))
                 {
                     this._course.Monday[time - 1] = JsonToClass(jo_temp);
                 }
-                if (jo_temp["classDayOfWeek"].ToString() == "2")
+                if ((jo_temp["classDayOfWeek"].ToString() == "2") && isNowWeek(jo_temp["classDayOfSemester"].ToString()))
                 {
                     this._course.Tuesday[time - 1] = JsonToClass(jo_temp);
                 }
-                if (jo_temp["classDayOfWeek"].ToString() == "3")
+                if ((jo_temp["classDayOfWeek"].ToString() == "3") && isNowWeek(jo_temp["classDayOfSemester"].ToString()))
                 {
                     this._course.Wednesday[time - 1] = JsonToClass(jo_temp);
                 }
-                if (jo_temp["classDayOfWeek"].ToString() == "4")
+                if ((jo_temp["classDayOfWeek"].ToString() == "4") && isNowWeek(jo_temp["classDayOfSemester"].ToString()))
                 {
                     this._course.Thursday[time - 1] = JsonToClass(jo_temp);
                 }
-                if (jo_temp["classDayOfWeek"].ToString() == "5")
+                if ((jo_temp["classDayOfWeek"].ToString() == "5") && isNowWeek(jo_temp["classDayOfSemester"].ToString()))
                 {
                     this._course.Friday[time - 1] = JsonToClass(jo_temp);
                 }
-                if (jo_temp["classDayOfWeek"].ToString() == "6")
+                if ((jo_temp["classDayOfWeek"].ToString() == "6") && isNowWeek(jo_temp["classDayOfSemester"].ToString()))
                 {
                     this._course.Saturday[time - 1] = JsonToClass(jo_temp);
                 }
-                if (jo_temp["classDayOfWeek"].ToString() == "7")
+                if ((jo_temp["classDayOfWeek"].ToString() == "7") && isNowWeek(jo_temp["classDayOfSemester"].ToString()))
                 {
                     this._course.Sunday[time - 1] = JsonToClass(jo_temp);
                 }
             }
             update();
+        }
+
+        private bool isNowWeek(string classDay)
+        {
+            bool res = false;
+            if(classDay!=""){
+                string[] shuzu = classDay.Split('-');
+                int startWeek = Int32.Parse(shuzu[0]);
+                int endWeek = Int32.Parse(shuzu[1]);
+                if ((startWeek <= nowWeek) && (endWeek >= nowWeek))
+                {
+                    res = true;
+                }
+                else
+                    res = false;
+            }
+            else
+            {
+                res = true;
+            }
+            return res;
         }
 
         private MyClass JsonToClass(JObject jo)
@@ -123,11 +177,23 @@ namespace SduPackage.Views
             _myClass.classDayOfSemester = jo["classDayOfSemester"].ToString();
             return _myClass;
         }
-
-        
         #endregion
 
         #region 状态提醒
+        private void checkWeek()
+        {
+            PageNum.Text = nowWeek.ToString();
+            lastAppbar.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            nextAppbar.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            if((nowWeek <=1) ){
+                lastAppbar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
+            if((nowWeek >= 20)){
+                nextAppbar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
+        }
+
+
         private void update()
         {
             Monday1.Content = _course.Monday[0].className + " " + _course.Monday[0].classPlace;
@@ -180,5 +246,7 @@ namespace SduPackage.Views
             Sunday6.Content = _course.Sunday[5].className + " " + _course.Sunday[5].classPlace;
         }
         #endregion
+
+        
     }
 }
