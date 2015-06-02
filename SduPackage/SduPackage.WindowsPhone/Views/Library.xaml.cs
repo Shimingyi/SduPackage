@@ -77,11 +77,6 @@ namespace SduPackage.Views
             Change_StatuBar("正在登录......",0);
             this._bookViewModel = new BookViewModel();
 
-            for (int i = 0; i < 10; i++)
-            {
-                _bookViewModel.BookGroup.Add(new SduPackage.Model.BookInformation { b_title = "title1", b_autor = "autor" });
-            }
-
             Task<string> task = new Task<string>(() =>
             {
                 string res = string.Empty;

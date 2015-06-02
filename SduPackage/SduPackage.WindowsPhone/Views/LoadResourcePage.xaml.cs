@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -45,7 +46,6 @@ namespace SduPackage.Views
                     isDowning.IsActive = false;
                     Frame.Navigate(typeof(Views.Index));
                 });
-
             }, TimeSpan.FromSeconds(2));
              */
         }
@@ -61,24 +61,46 @@ namespace SduPackage.Views
             //学线通知
             http.StartPost("http://www.online.sdu.edu.cn/News2s/servlet/NewestListServlet", "", result =>
             {
-                result = result.Substring(2, result.Length - 2);
-                SaveFile("TheNewsFromSduOnline.txt", result);
+                if (CheckResult(result))
+                {
+                    result = result.Substring(2, result.Length - 2);
+                    SaveFile("TheNewsFromSduOnline.txt", result);
+                }
             });
             //其他通知
             http.StartPost("http://www.online.sdu.edu.cn/News2s/servlet/OtherListServlet", "id=11&page=1", result =>
             {
-                result = result.Substring(2, result.Length - 2);
-                SaveFile("TheNewsFromOthers.txt", result);
+
+                if (CheckResult(result))
+                {
+                    result = result.Substring(2, result.Length - 2);
+                    SaveFile("TheNewsFromOthers.txt", result);
+                }
             });
             //个人信息
-            http.StartPost("http://202.194.14.195:8080/CurriculumServer/login", "Re_Type=Import_Course&user_name=" + StuUsername + "&password="+StuUserPassword, result =>
+            http.StartPost("http://202.194.14.195:8080/CurriculumServer/login", "Re_Type=Import_Course&user_name=" + StuUsername + "&password=" + StuUserPassword, result =>
             {
-                result = result.Substring(2, result.Length - 2);
-                string[] stringSeparators = new string[] { "学生在线课程格子" };
-                string[] temp = result.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                SaveFile("TheInformationFile.txt", temp[0]);
-                SaveFile("TheLessionFile.txt", temp[1]);
-                SaveFile("TheGradeFile.txt", result);
+                if (CheckResult(result))
+                {
+                    result = result.Substring(2, result.Length - 2);
+                    string[] stringSeparators = new string[] { "学生在线课程格子" };
+                    string[] temp = result.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                    try
+                    {
+                        SaveFile("TheInformationFile.txt", temp[0]);
+                        SaveFile("TheLessionFile.txt", temp[1]);
+                        SaveFile("TheGradeFile.txt", result);
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            NotifitionBar.ShowMessage("网络状况不好");
+                        });
+
+                    }
+                }
+                
             });
         }
 
@@ -94,6 +116,62 @@ namespace SduPackage.Views
                 });
             }
         }
+
+        private bool CheckResult(string _result)
+        {
+            bool res = false;
+            if (_result == "Error1")
+            {
+                //NotifitionBar.ShowMessage("请检查网络");
+                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    isDownBlock.Text = "网络状况不好，加载失败";
+                    isDowningBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    againButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                });
+            }
+            if (_result == "Error2")
+            {
+                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    isDownBlock.Text = "加载失败";
+                    isDowningBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    againButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                });
+            }
+            else{
+                res = true;
+            }
+            return res;
+        }
+
+        private void DownAgain(object sender, RoutedEventArgs e)
+        {
+            isDownBlock.Text = "Loading";
+            isDowning();
+            downToFile();
+        }
+
+        private void notDowning()
+        {
+            Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                isDowningBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                againButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            });
+        }
+
+        private void isDowning()
+        {
+            Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                isDowningBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                isDownBlock.Text = "Loading";
+                againButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            });
+        }
+
+
 
     }
 }

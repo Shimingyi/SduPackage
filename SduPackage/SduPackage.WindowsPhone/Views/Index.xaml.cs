@@ -3,9 +3,11 @@ using SduPackage.Model;
 using SduPackage.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -42,8 +44,6 @@ namespace SduPackage.Views
             this.NavigationCacheMode = NavigationCacheMode.Required;
             InitWatch();
             _newsViewModel = new NewsViewModel(1);
-            _lessonViewModel = new LessionViewModel();
-            var groups = new System.Collections.ObjectModel.ObservableCollection<Group>();
             this.DataContext = _newsViewModel.NewsGroups;
             
         }
@@ -57,6 +57,7 @@ namespace SduPackage.Views
         {
             Change_StatuBar("口袋山大", 0);
             LoadPage();
+            LoadLession();
             Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
         }
 
@@ -69,11 +70,9 @@ namespace SduPackage.Views
 
         private void ViewNewsBody(object sender, TappedRoutedEventArgs e)
         {
-            
             Grid grid = sender as Grid;
             _news = grid.DataContext as News;
             Frame.Navigate(typeof(Views.NewsBody), _news);
-            //System.Diagnostics.Debug.WriteLine(_news.title);
         }
 
         private void ToBusSearchView(object sender, TappedRoutedEventArgs e)
@@ -89,7 +88,7 @@ namespace SduPackage.Views
             OnHeaderChanged(index);
         }
 
-        private void pivot_PivotItemLoaded(Pivot sender, PivotItemEventArgs args)
+        private void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pivot.SelectedIndex >= 0)
             {
@@ -146,6 +145,13 @@ namespace SduPackage.Views
         #endregion
 
         #region 自定义事件
+        private void LoadLession()
+        {
+            _lessonViewModel = new LessionViewModel(lessionListView);
+            
+            
+        }
+
         private async void LoadPage()
         {
             Windows.Storage.StorageFile informationFile = await _localFolder.GetFileAsync("TheInformationFile.txt");
@@ -195,8 +201,6 @@ namespace SduPackage.Views
                 btn.IsChecked = true;
 
         }
-
-        
         #endregion
 
         #region 状态改变
@@ -222,7 +226,6 @@ namespace SduPackage.Views
                     headerTodolist.IsChecked = false;
                     headerBox.IsChecked = false;
                     headerProfile.IsChecked = false;
-                    //this.DataContext = _newsViewModel.NewsGroups;
                     AppBarChange(0);
                     break;
                 case 1:
@@ -230,7 +233,6 @@ namespace SduPackage.Views
                     headerTodolist.IsChecked = true;
                     headerBox.IsChecked = false;
                     headerProfile.IsChecked = false;
-                    //this.DataContext = _lessonViewModel;
                     AppBarChange(1);
                     break;
                 case 2:
@@ -255,33 +257,28 @@ namespace SduPackage.Views
             switch (index)
             {
                 case 0:
-                    IndexAppBar.CompositeMode = ElementCompositeMode.Inherit;
+                    IndexAppBar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;
                     refreshAppBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     myAccountAppBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     break;
                 case 1:
-                    IndexAppBar.CompositeMode = ElementCompositeMode.MinBlend;
+                    IndexAppBar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
                     refreshAppBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     myAccountAppBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     break;
                 case 2:
-                    IndexAppBar.CompositeMode = ElementCompositeMode.MinBlend;
+                    IndexAppBar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal;
                     refreshAppBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     myAccountAppBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     break;
                 case 3:
-                    IndexAppBar.CompositeMode = ElementCompositeMode.Inherit;
+                    IndexAppBar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;
                     refreshAppBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     myAccountAppBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     break;
             }
         }
         #endregion        
-
-        
-
-       
-
-        
+    
     }
 }

@@ -20,7 +20,7 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
@@ -40,59 +40,64 @@
         </Grid>
         
         
-        
-        
 
-        <Pivot x:Name="pivot" Grid.Row="1" PivotItemLoaded="pivot_PivotItemLoaded" Margin="0,-13,0,0" >
+
+
+
+
+
+
+        <Pivot x:Name="pivot" Grid.Row="1" SelectionChanged="pivot_SelectionChanged" Margin="0,-13,0,0" >
             <Pivot.Resources>
                 <Style TargetType="PivotItem">
                     <Setter Property="Margin" Value="0"/>
                 </Style>
             </Pivot.Resources>
             <PivotItem Margin="10">
-                <ListView x:Name="newsListView" ItemsSource="{Binding Source={StaticResource cv_items}}">
-                    <ListView.GroupStyle>
-                        <GroupStyle >
-                            <!--分组的头部显示的模板，这里我们用背景色来高亮，文字绑定到Group.Name-->
-                            <GroupStyle.HeaderTemplate>
-                                <DataTemplate>
-                                    <Grid Background="LightGray" Width="300">
-                                        <TextBlock Text="{Binding Path=Name}" FontSize="20" HorizontalAlignment="Left"></TextBlock>
-                                    </Grid>
-                                </DataTemplate>
-                            </GroupStyle.HeaderTemplate>
-                        </GroupStyle>
-                    </ListView.GroupStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Tapped="ViewNewsBody">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Border BorderThickness="0,0,0,1" BorderBrush="Gray">
-                                    <Grid Margin="0,15,15,5">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="auto"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock  Text="{Binding Path=title}" FontSize="18" TextWrapping="Wrap"/>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,10,0,0">
-                                            <TextBlock Text="来源：" Foreground="Gray"/>
-                                            <TextBlock Text="{Binding Path=reporter}" Foreground="Gray"/>
-                                        </StackPanel>
-                                        <TextBlock Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Right" Text="{Binding Path=editTime}" Foreground="Gray"/>
-                                    </Grid>
-                                </Border>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                    
+                <Grid x:Name="newsListView">
+                    <ListView   ItemsSource="{Binding Source={StaticResource cv_items}}">
+                        <ListView.GroupStyle>
+                            <GroupStyle >
+                                <!--分组的头部显示的模板，这里我们用背景色来高亮，文字绑定到Group.Name-->
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Grid Background="LightGray" Width="300">
+                                            <TextBlock Text="{Binding Path=Name}" FontSize="20" HorizontalAlignment="Left"></TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ListView.GroupStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Tapped="ViewNewsBody">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border BorderThickness="0,0,0,1" BorderBrush="Gray">
+                                        <Grid Margin="0,15,15,5">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock  Text="{Binding Path=title}" FontSize="18" TextWrapping="Wrap"/>
+                                            <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,10,0,0">
+                                                <TextBlock Text="来源：" Foreground="Gray"/>
+                                                <TextBlock Text="{Binding Path=reporter}" Foreground="Gray"/>
+                                            </StackPanel>
+                                            <TextBlock Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Right" Text="{Binding Path=editTime}" Foreground="Gray"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>                    
             </PivotItem>
             <PivotItem Margin="0">
-                <ScrollViewer>
+                <ScrollViewer >
                     <Grid >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
@@ -100,23 +105,25 @@
                             <RowDefinition Height="50"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Margin="20,10" Text="今日课程" FontSize="20"/>
-                        <ListView x:Name="lessionListView" ItemsSource="{Binding LessionGroups}">
+                        <TextBlock Margin="20,10,20,10" Text="今日课程" FontSize="20"/>
+                        <ListView x:Name="lessionListView"  Grid.Row="1">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Margin="10,0" Grid.Row="1" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="auto"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Grid.Row="0" Text="{Binding className}" Foreground="White" FontSize="20" Margin="15,5,0,0" FontWeight="Bold"/>
-                                        <TextBlock Grid.Row="1" Text="{Binding classPlace}" Foreground="White" Margin="15,5"/>
-                                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,5">
-                                            <TextBlock Grid.Row="2" Text="第" Foreground="White" HorizontalAlignment="Right" Margin="0,0,10,5" FontStyle="Italic"/>
-                                            <TextBlock Grid.Row="2" Text="{Binding classDayOfTime}" Foreground="White" HorizontalAlignment="Right" Margin="0,0,10,5" FontStyle="Italic"/>
-                                            <TextBlock Grid.Row="2" Text="节课" Foreground="White" HorizontalAlignment="Right" Margin="0,0,10,5" FontStyle="Italic"/>
-                                        </StackPanel>
+                                    <Grid Margin="10,0" Grid.Row="1" >
+                                        <Grid Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Margin="0,0,0,10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" Text="{Binding className}" Foreground="White" FontSize="20" Margin="15,5,0,0" FontWeight="Bold"/>
+                                            <TextBlock Grid.Row="1" Text="{Binding classPlace}" Foreground="White" Margin="15,5"/>
+                                            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,5">
+                                                <TextBlock Grid.Row="2" Text="第" Foreground="White" HorizontalAlignment="Right" Margin="0,0,10,5" FontStyle="Italic"/>
+                                                <TextBlock Grid.Row="2" Text="{Binding classDayOfTime}" Foreground="White" HorizontalAlignment="Right" Margin="0,0,10,5" FontStyle="Italic"/>
+                                                <TextBlock Grid.Row="2" Text="节课" Foreground="White" HorizontalAlignment="Right" Margin="0,0,10,5" FontStyle="Italic"/>
+                                            </StackPanel>
+                                        </Grid>
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
@@ -235,7 +242,7 @@
     </Grid>
     
     <Page.BottomAppBar>
-        <CommandBar x:Name="IndexAppBar" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Foreground="White">
+        <CommandBar x:Name="IndexAppBar"  Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Foreground="White">
             <AppBarButton x:Name="refreshAppBar" Icon="Refresh" Click="refreshNews"/>
             <AppBarButton x:Name="myAccountAppBar" Icon="Account" Click="ToMyAccount"/>
         </CommandBar>

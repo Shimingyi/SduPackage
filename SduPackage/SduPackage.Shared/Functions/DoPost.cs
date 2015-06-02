@@ -68,6 +68,11 @@ namespace SduPackage.Funcitons
                         result = "Error1";
                         handle(result);
                     }
+                    catch (System.NullReferenceException e)
+                    {
+                        result = "Error2";
+                        handle(result);
+                    }
                 }, webRequest);
             }, httpWebRequest);
         }

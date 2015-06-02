@@ -57,7 +57,7 @@ namespace SduPackage.Views
 
 
 
-        private async void LoadNewsBody(int block,int pid)
+        private void LoadNewsBody(int block,int pid)
         {
             if(block == 11){
                 var http = new DoPost();
@@ -65,10 +65,8 @@ namespace SduPackage.Views
                 {
                     Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
-                        //NewsBodyTextBlock.Visibility = Windows.UI.Xaml.Visibility.Visible;
                         isDowning.IsActive = false;
-                        NewsBodyWebView.NavigateToString("<html><body>"+result+"</body></html>");
-                        //NewsBodyTextBlock.Text = result;
+                        NewsBodyWebView.NavigateToString("<html><body>"+result.Substring(2,result.Length-2)+"</body></html>");
                     });
                 });
             }
@@ -82,7 +80,7 @@ namespace SduPackage.Views
                     {
                         //NewsBodyTextBlock.Visibility = Windows.UI.Xaml.Visibility.Visible;
                         isDowning.IsActive = false;
-                        NewsBodyWebView.NavigateToString("<html><body>" + result + "</body></html>");
+                        NewsBodyWebView.NavigateToString("<html><body>" + result.Substring(2, result.Length - 2) + "</body></html>");
                         //NewsBodyTextBlock.Text = result;
                     });
                 });

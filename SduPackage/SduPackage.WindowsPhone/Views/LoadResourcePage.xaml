@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SduPackage.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:uc="using:SduPackage.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     RequestedTheme="Light">
@@ -12,13 +13,18 @@
     </Page.Background>
 
     <Grid>
+        <uc:NotificationBar x:Name="NotifitionBar" Grid.ColumnSpan="99" Canvas.ZIndex="99"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="7*"/>
             </Grid.RowDefinitions>
-            <ProgressBar x:Name="isDowning" Grid.Row="1" Background="White" BorderBrush="White" Foreground="White" IsIndeterminate="True" />
-            <TextBlock Text="Loading" FontSize="14" Foreground="White" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,-30"/>
+            <ProgressBar x:Name="isDowningBar" Grid.Row="1" Background="White" BorderBrush="White" Foreground="White" IsIndeterminate="True" />
+            <TextBlock x:Name="isDownBlock" Text="Loading" FontSize="14" Foreground="White" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,-30"/>
+            <Button Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,40" 
+                    Background="#FF5ABFBF" BorderBrush="White" Foreground="White" 
+                    Content="重试" BorderThickness="1" Width="150"
+                    Click="DownAgain" x:Name="againButton" Visibility="Collapsed"/>
         </Grid>
     </Grid>
 </Page>
