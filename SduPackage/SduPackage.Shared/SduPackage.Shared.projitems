@@ -23,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Functions\PlugInFilter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BookInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BusInformation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\CardRecord.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\ID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\LessionGroup.cs" />
@@ -35,6 +36,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)SQLiteAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BookViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BusViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\CardViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GradeViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LessionViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\NewsViewModel.cs" />

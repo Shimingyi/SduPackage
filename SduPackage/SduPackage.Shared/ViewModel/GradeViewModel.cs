@@ -46,7 +46,7 @@ namespace SduPackage.ViewModel
         {
             Windows.Storage.StorageFile onlineNews = await _localFolder.GetFileAsync(filename);
             string result = await Windows.Storage.FileIO.ReadTextAsync(onlineNews);
-            System.Diagnostics.Debug.WriteLine("myGrade:"+result);
+            //System.Diagnostics.Debug.WriteLine("myGrade:"+result);
             FileTxtToGroup(result);
         }
 
@@ -54,7 +54,7 @@ namespace SduPackage.ViewModel
         {
             string[] stringSeparators = new string[] { "学生在线课程格子" };
             string[] temp = result.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 2; i < 12; i++)
+            for (int i = 2; i < temp.Length; i++)
             {
                 result = temp[i];
                 result = result.Substring(1, result.Length - 2);
@@ -62,9 +62,15 @@ namespace SduPackage.ViewModel
                 {
                     JArray ja = JArray.Parse(result);
                     JObject jo = ja[0] as JObject;
+                    string semester = string.Empty;
+                    if (jo["semester"].ToString() == "0")
+                        semester = "上";
+                    else
+                        semester = "下";
                     Group tempGroup = new Group
                     {
-                        Name = (jo["classYear"] + "学年" + jo["semester"] + "学期")
+
+                        Name = (jo["classYear"] + "学年" + semester + "学期")
                     };
                     for (int j = 0; j < ja.Count; j++)
                     {

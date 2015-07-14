@@ -27,6 +27,7 @@ namespace SduPackage.Views
 
         private Windows.Storage.StorageFolder _localFolder;
         Windows.Storage.ApplicationDataContainer _localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        int mutex1, mutex2 = 0;
 
         public LoadResourcePage()
         {
@@ -77,42 +78,24 @@ namespace SduPackage.Views
                     SaveFile("TheNewsFromOthers.txt", result);
                 }
             });
-            //个人信息
-            http.StartPost("http://202.194.14.195:8080/CurriculumServer/login", "Re_Type=Import_Course&user_name=" + StuUsername + "&password=" + StuUserPassword, result =>
-            {
-                if (CheckResult(result))
-                {
-                    result = result.Substring(2, result.Length - 2);
-                    string[] stringSeparators = new string[] { "学生在线课程格子" };
-                    string[] temp = result.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-                    try
-                    {
-                        SaveFile("TheInformationFile.txt", temp[0]);
-                        SaveFile("TheLessionFile.txt", temp[1]);
-                        SaveFile("TheGradeFile.txt", result);
-                    }
-                    catch (IndexOutOfRangeException e)
-                    {
-                        Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                        {
-                            NotifitionBar.ShowMessage("网络状况不好");
-                        });
-
-                    }
-                }
-                
-            });
         }
 
         private async void SaveFile(string FileName, string result)
         {
             Windows.Storage.StorageFile tempFile = await _localFolder.CreateFileAsync(FileName, Windows.Storage.CreationCollisionOption.ReplaceExisting);
             await Windows.Storage.FileIO.WriteTextAsync(tempFile, result);
-            if (FileName == "TheGradeFile.txt")
+            if (FileName == "TheNewsFromSduOnline.txt")
             {
+                mutex1 = 1;
+            }
+            if (FileName == "TheNewsFromOthers.txt")
+            {
+                mutex2 = 1;
+            }
+            if((mutex1==1) && (mutex2==1) ){
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
-                    Frame.Navigate(typeof(Views.Index));
+                    this.Frame.Navigate(typeof(Views.Index));
                 });
             }
         }

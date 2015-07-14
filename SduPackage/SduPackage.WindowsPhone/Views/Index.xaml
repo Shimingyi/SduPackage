@@ -23,8 +23,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        
+
         <uc:NotificationBar x:Name="NotifitionBar" Grid.ColumnSpan="99" Canvas.ZIndex="99"/>
         <Grid Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Height="70">
             <Grid.ColumnDefinitions>
@@ -38,13 +37,6 @@
             <uc:HeaderButton x:Name="headerBox" Grid.Column="2" Tapped="HeaderTapped" Tag="2" DefaultImage="ms-appx:///Assets/Image/Icon/profile_out.png" SelectedImage="ms-appx:///Assets/Image/Icon/profile_in.png" IsChecked="False"/>
             <uc:HeaderButton x:Name="headerProfile" Grid.Column="3" Tapped="HeaderTapped" Tag="3" DefaultImage="ms-appx:///Assets/Image/Icon/message_out.png" SelectedImage="ms-appx:///Assets/Image/Icon/message_in.png" IsChecked="False"/>
         </Grid>
-        
-        
-
-
-
-
-
 
 
         <Pivot x:Name="pivot" Grid.Row="1" SelectionChanged="pivot_SelectionChanged" Margin="0,-13,0,0" >
@@ -160,6 +152,7 @@
                     <Grid Grid.Row="0" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Ellipse Width="100" Height="100">
@@ -167,13 +160,13 @@
                                 <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/Image/HeadIconDemo/HeadIconDemo1.png"/>
                             </Ellipse.Fill>
                         </Ellipse>
-                        <Grid Grid.Column="1">
+                        <Grid Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="UserNameShow" Grid.Row="0" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,5"/>
-                            <StackPanel Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock x:Name="UserNameShow" Grid.Row="0" FontSize="20" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                            <StackPanel Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,5,0,0">
                                 <TextBlock Text="学号：" Foreground="White"/>
                                 <TextBlock x:Name="UserNumShow" Foreground="White"/>
                             </StackPanel>
@@ -243,8 +236,13 @@
     
     <Page.BottomAppBar>
         <CommandBar x:Name="IndexAppBar"  Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Foreground="White">
-            <AppBarButton x:Name="refreshAppBar" Icon="Refresh" Click="refreshNews"/>
-            <AppBarButton x:Name="myAccountAppBar" Icon="Account" Click="ToMyAccount"/>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton x:Name="refreshAppBar" Label="刷新" Icon="Refresh" Click="refreshNews"/>
+                <AppBarButton x:Name="myAccountAppBar" Label="账户" Icon="Account" Click="ToMyAccount"/>
+            </CommandBar.PrimaryCommands>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="关于我们" Click="ToAbout"/>
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

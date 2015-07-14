@@ -1,0 +1,48 @@
+﻿<Page
+    x:Class="SduPackage.Views.AboutUs"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SduPackage.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    RequestedTheme="Light"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <SlideNavigationTransitionInfo  />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+    
+    <Grid >
+        <Grid VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="6*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Border Background="{ThemeResource ButtonPressedBackgroundThemeBrush}"/>
+                <StackPanel VerticalAlignment="Bottom" Margin="12">
+                    <TextBlock Text="ABOUT" FontSize="48" Foreground="{ThemeResource ButtonPressedForegroundThemeBrush}" FontWeight="Bold"/>
+                    <TextBlock Text="口袋山大 0.9.0" FontSize="24" Foreground="{ThemeResource ButtonPressedForegroundThemeBrush}" />
+                    <TextBlock Text="♥ 只为山大WPer" FontSize="18" Foreground="{ThemeResource ButtonPressedForegroundThemeBrush}" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <StackPanel Margin="12,24">
+                    <TextBlock Text="团队" FontSize="36" Foreground="{ThemeResource ButtonPressedBackgroundThemeBrush}"/>
+                    <TextBlock Text="学生在线WP技术组" FontSize="18" Foreground="{ThemeResource ButtonPressedBackgroundThemeBrush}"/>
+                    <Border Height="30"/>
+                    <TextBlock Text="反馈" FontSize="36" Foreground="{ThemeResource ButtonPressedBackgroundThemeBrush}"/>
+                    <Button Content="邮件反馈" Foreground="White" BorderBrush="{ThemeResource ButtonPressedBackgroundThemeBrush}" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" FontSize="12" Click="ToEmail"/>
+                    <Button Content="评价反馈" Foreground="White" BorderBrush="{ThemeResource ButtonPressedBackgroundThemeBrush}" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" FontSize="12" Click="ToRate"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

@@ -39,6 +39,8 @@ namespace SduPackage.Views
             httpclient = new HttpClient();
             _loadCookie = new HttpCookie("ASP.NET_SessionId", "card.sdu.edu.cn", "/");
             _loginCookie = new HttpCookie("iPlanetDirectoryPro", ".sdu.edu.cn", "/");
+            ShowCheckPop();
+            ShowImage();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -65,14 +67,13 @@ namespace SduPackage.Views
             else
             {
                 myPopup.IsOpen = false;
+                appBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
         }
 
         private void LoadPage()
         {
             CheckBankNum();
-            ShowCheckPop();
-            ShowImage();
         }
 
         #region 页面事件
@@ -102,7 +103,30 @@ namespace SduPackage.Views
                 ShowBankNum.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
         }
+
+
+        private void ToMyCardRecord(object sender, RoutedEventArgs e)
+        {
+            HttpCookie[] myCookies = new HttpCookie[2];
+            myCookies[0] = _loadCookie;
+            myCookies[1] = _loginCookie;
+            this.Frame.Navigate(typeof(MyCardHistory), myCookies);
+        }
+
+        private void ToRecharge(object sender, RoutedEventArgs e)
+        {
+            NotifitionBar.ShowMessage("调试中，下个版本推出，敬请期待 0.0");
+        }
+
+        private void ToRefresh(object sender, RoutedEventArgs e)
+        {
+            ShowImage();
+            appBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            checkPop.IsOpen = true;
+        }
         #endregion
+
+        
 
         private async void CardLogin(string _checkCode)
         {
@@ -259,8 +283,7 @@ namespace SduPackage.Views
         }
         #endregion
 
-        
-        
+       
 
     }
 }

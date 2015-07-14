@@ -24,6 +24,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <uc:NotificationBar x:Name="myNotifitionBar" Grid.ColumnSpan="99" Canvas.ZIndex="99"/>
+
         <Grid Grid.Row="0" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}">
             <TextBlock x:Name="PageTitle" Text="我的图书馆" Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0"/>
         </Grid>

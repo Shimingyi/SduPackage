@@ -22,7 +22,9 @@ namespace SduPackage.Views
     /// </summary>
     public sealed partial class MyAccount : Page
     {
-        Windows.Storage.ApplicationDataContainer _localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        private Windows.Storage.StorageFolder _localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+        private Windows.Storage.ApplicationDataContainer _localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        int informationMutex, lessionMutex, gradeMutex = 0;
 
         public MyAccount()
         {
@@ -37,13 +39,88 @@ namespace SduPackage.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            isLogging.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
             LoadAccount();
         }
 
         private void LogIn(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(LoadResourcePage));
+            isLogging.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            var http = new SduPackage.Funcitons.DoPost();
+            http.StartPost("http://202.194.14.195:8080/CurriculumServer/login", "Re_Type=Import_Course&user_name=" + LibraryUsername.Text + "&password=" + LibraryPassword.Password, result =>
+            {
+                if (CheckResult(result))
+                {
+                    result = result.Substring(2, result.Length - 2);
+                    string[] stringSeparators = new string[] { "学生在线课程格子" };
+                    string[] temp = result.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                    try
+                    {
+                        SaveFile("TheInformationFile.txt", temp[0]);
+                        SaveFile("TheLessionFile.txt", temp[1]);
+                        SaveFile("TheGradeFile.txt", result);
+                    }
+                    catch (IndexOutOfRangeException error)
+                    {
+                        Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            myNotifitionBar.ShowMessage("账号密码错误");
+                            isLogging.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+
+                        });
+
+                    }
+                }
+
+            });
+            
+        }
+
+        private bool CheckResult(string _result)
+        {
+            bool res = false;
+            if (_result == "Error1")
+            {
+                //NotifitionBar.ShowMessage("请检查网络");
+                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    myNotifitionBar.ShowMessage("服务器忙，请稍后再试");
+                    isLogging.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                });
+            }
+            if (_result == "Error2")
+            {
+                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    myNotifitionBar.ShowMessage("未知错误");
+                    isLogging.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                });
+            }
+            else
+            {
+                res = true;
+            }
+            return res;
+        }
+
+        private async void SaveFile(string FileName, string result)
+        {
+            Windows.Storage.StorageFile tempFile = await _localFolder.CreateFileAsync(FileName, Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            await Windows.Storage.FileIO.WriteTextAsync(tempFile, result);
+            if (FileName == "TheInformationFile.txt")
+                informationMutex = 1;
+            if (FileName == "TheLessionFile.txt")
+                lessionMutex = 1;
+            if (FileName == "TheGradeFile.txt")
+                gradeMutex = 1;
+            if((informationMutex == 1)&&(lessionMutex == 1)&&(gradeMutex==1)){
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    isLogging.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    this.Frame.Navigate(typeof(LoadResourcePage));
+                });
+            }
         }
 
         #region 事件
@@ -75,6 +152,14 @@ namespace SduPackage.Views
             }
         }
         #endregion
+
+        private async void SkipLog(object sender, RoutedEventArgs e)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                this.Frame.Navigate(typeof(LoadResourcePage));
+            });
+        }
 
         
     }

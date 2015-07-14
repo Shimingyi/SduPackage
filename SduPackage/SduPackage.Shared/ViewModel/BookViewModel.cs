@@ -11,6 +11,7 @@ using System.Text;
 using System.Xml.Linq;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
@@ -49,10 +50,6 @@ namespace SduPackage.ViewModel{
 
     	#region 方法
 
-        public void LoadViewModel()
-        {
-            downToFile();
-        }
 
         public void SearchBook(string keywords)
         {
@@ -83,9 +80,9 @@ namespace SduPackage.ViewModel{
             addToGroup(result,4);
         }
 
-        public async System.Threading.Tasks.Task<string> continueBook(BookInformation _book)
+        public async void continueBook(BookInformation _book,StatusBar _statusBar,SduPackage.Controls.NotificationBar _notificationBar)
         {
-            string res = string.Empty;
+            Change_StatuBar(_statusBar, "正在续借...", 0);
             string posturl = "http://202.194.14.195:8080/curriculumlib/lib";
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, new Uri(posturl));
             HttpFormUrlEncodedContent postDate = new HttpFormUrlEncodedContent(
@@ -100,13 +97,18 @@ namespace SduPackage.ViewModel{
             bool replaced = filter.CookieManager.SetCookie(_cookie, false);
             HttpResponseMessage response = await httpclient.SendRequestAsync(request);
             string result = await response.Content.ReadAsStringAsync();
-            return res;
+            if(result == ""){
+                _notificationBar.ShowMessage(_book.b_title+"续借成功");
+            }
+            
         }
     	#endregion
 
-    	#region 私有方法
-        public async System.Threading.Tasks.Task<string> downToFile()
+    	#region 方法
+        public async void downToFile(StatusBar statusBar)
         {
+            BookGroup.Clear();
+            Change_StatuBar(statusBar, "正在登录...", 0);
             string res = string.Empty;
             try
             {
@@ -133,11 +135,13 @@ namespace SduPackage.ViewModel{
                 string result = await response.Content.ReadAsStringAsync();
                 if (result.IndexOf("错误") > 0)
                 {
+                    Change_StatuBar(statusBar, "账号密码错误", 0);
                     throw new ErrorAccountException();
                 }
                 else
                 {
                     addToGroup(result, 1);
+                    Change_StatuBar(statusBar,"我的图书馆",0);
                     res = "1";
                 }
             }
@@ -145,14 +149,13 @@ namespace SduPackage.ViewModel{
             catch (Newtonsoft.Json.JsonReaderException e)
             {
                 res = "2";
-                return res;
+                Change_StatuBar(statusBar, "书中自有黄金屋，你怎么不借书呢", 0);
             }
             catch (Exception args)
             {
                 res = "3";
-                return res;
+                Change_StatuBar(statusBar, "连接服务器失败，请检查网络>0<", 0);
             }
-            return res;
         }
 
         private async void SearchByPost(string keyword)
@@ -173,7 +176,7 @@ namespace SduPackage.ViewModel{
                 request.Content = postDate;
                 HttpResponseMessage response = await httpclient.SendRequestAsync(request);
                 string result = await response.Content.ReadAsStringAsync();
-                System.Diagnostics.Debug.WriteLine(result);
+                //System.Diagnostics.Debug.WriteLine(result);
                 addToGroup(result,2);
             }
             catch (ErrorAccountException args)
@@ -200,7 +203,7 @@ namespace SduPackage.ViewModel{
                 request.Content = postDate;
                 HttpResponseMessage response = await httpclient.SendRequestAsync(request);
                 string result = await response.Content.ReadAsStringAsync();
-                System.Diagnostics.Debug.WriteLine(result);
+                //System.Diagnostics.Debug.WriteLine(result);
                 addToGroup(result, 3);
             }
             catch (ErrorAccountException args)
@@ -254,7 +257,6 @@ namespace SduPackage.ViewModel{
             catch (Newtonsoft.Json.JsonReaderException e)
             {
                 System.Diagnostics.Debug.WriteLine("JSON格式错误");
-                throw e;
             }
         }
 
@@ -303,6 +305,15 @@ namespace SduPackage.ViewModel{
             {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        private async void Change_StatuBar(StatusBar statusBar,string str, double process)
+        {
+            statusBar.ForegroundColor = Windows.UI.Colors.White;
+            statusBar.BackgroundOpacity = 1;
+            statusBar.ProgressIndicator.Text = str;
+            statusBar.ProgressIndicator.ProgressValue = process;
+            await statusBar.ProgressIndicator.ShowAsync();
         }
     	#endregion
     }

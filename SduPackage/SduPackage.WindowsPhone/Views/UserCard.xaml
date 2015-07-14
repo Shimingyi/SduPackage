@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:SduPackage.Controls"
     mc:Ignorable="d"
+    NavigationCacheMode="Required"
     RequestedTheme="Light"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
@@ -95,12 +96,13 @@
         </ResourceDictionary>
     </Page.Resources>
 
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <uc:NotificationBar x:Name="NotifitionBar" Grid.ColumnSpan="99" Canvas.ZIndex="99"/>
 
         <Popup x:Name="myPopup" HorizontalAlignment="Stretch">
             <Popup.Child>
@@ -135,23 +137,21 @@
                         <RowDefinition Height="70"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+
                     <uc:NotificationBar x:Name="CheckNotifitionBar" Grid.ColumnSpan="99" Canvas.ZIndex="99"/>
+                    
                     <TextBlock Text="输入验证码" FontSize="36" Margin="12"/>
-                    <Grid Grid.Row="1" Margin="12,0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="8*"/>
-                        </Grid.RowDefinitions>
-                        <Image x:Name="ShowCheckImage" Width="60" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <TextBox x:Name="CheckTextBox" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="200"/>
-                        <Button Grid.Row="2" Height="60" Width="auto" BorderThickness="0" 
-                    VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
-                    Margin="12,60" Click="CheckCheckNum" 
-                    Content="下一步" FontSize="15" 
-                    Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" 
-                    Foreground="{ThemeResource ButtonPressedForegroundThemeBrush}"/>
-                    </Grid>
+                    <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="12,0">
+                        <Image x:Name="ShowCheckImage" Width="60" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,20,0,20"/>
+                        <TextBox x:Name="CheckTextBox" InputScope="Number" VerticalAlignment="Center" HorizontalAlignment="Left" Width="200"/>
+                        <Button Height="60" Width="auto" BorderThickness="0" 
+                            VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                            Margin="0,0" Click="CheckCheckNum" 
+                            Content="下一步" FontSize="15" 
+                            Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" 
+                            Foreground="{ThemeResource ButtonPressedForegroundThemeBrush}"/>
+                    </StackPanel>
+                    
                 </Grid>
             </Popup.Child>
             <Popup.ChildTransitions>
@@ -168,9 +168,7 @@
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            
-            <uc:NotificationBar x:Name="NotifitionBar" Grid.ColumnSpan="99" Canvas.ZIndex="99"/>
-            
+                        
             <Border Background="Black" Grid.RowSpan="99" Opacity="0.3"/>
             <ProgressBar IsIndeterminate="True" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
             <TextBlock Grid.Row="1" Text="正在加载" Opacity="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5" Foreground="White" FontSize="10"/>
@@ -188,7 +186,11 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Button Grid.Row="0" BorderThickness="0" Height="100"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Margin="15,20,15,0" Background="#FF489755" Foreground="#FF489755" Style="{StaticResource NoPressButton}">
+            <Button Grid.Row="0" BorderThickness="0" Height="100"  
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Center" Margin="15,20,15,0" 
+                    Click="ToMyCardRecord"
+                    Background="#FF489755" Foreground="#FF489755" Style="{StaticResource NoPressButton}">
                 <Button.Content>
                     <Grid Height="80" >
                         <Grid.ColumnDefinitions>
@@ -253,7 +255,10 @@
     
     <Page.BottomAppBar>
         <CommandBar x:Name="appBar" Background="{ThemeResource ButtonPressedBackgroundThemeBrush}" Foreground="White">
-            <AppBarButton Icon="Switch" Label="转账"/>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Icon="Switch" Label="转账" Click="ToRecharge"/>
+                <AppBarButton Icon="Refresh" Label="刷新" Click="ToRefresh"/>
+            </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

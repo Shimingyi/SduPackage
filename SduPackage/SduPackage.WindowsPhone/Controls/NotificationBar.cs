@@ -16,7 +16,7 @@ namespace SduPackage.Controls
 {
     public sealed class NotificationBar : Control
     {
-         private TextBlock notifyBlock;
+        private TextBlock notifyBlock;
         private Grid mainGrid;
         private Storyboard storyBoard;
 

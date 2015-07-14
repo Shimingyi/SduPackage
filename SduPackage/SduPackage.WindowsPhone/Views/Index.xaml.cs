@@ -103,7 +103,7 @@ namespace SduPackage.Views
 
         private void ToMyLibrary(object sender, TappedRoutedEventArgs e)
         {
-            if (_localSettings.Values.ContainsKey("CardUsername"))
+            if (_localSettings.Values["CardUsername"].ToString().Length > 5)
             {
                 Frame.Navigate(typeof(Library));
             }
@@ -113,7 +113,7 @@ namespace SduPackage.Views
 
         private void ToMyCard(object sender, TappedRoutedEventArgs e)
         {
-            if (_localSettings.Values.ContainsKey("CardUsername"))
+            if (_localSettings.Values["CardUsername"].ToString().Length > 5)
             {
                 Frame.Navigate(typeof(UserCard));
             }
@@ -124,7 +124,7 @@ namespace SduPackage.Views
         private void ToMyGrade(object sender, TappedRoutedEventArgs e)
         {
             
-            if (_localSettings.Values.ContainsKey("StuUsername"))
+            if (_localSettings.Values["StuUsername"].ToString().Length > 5 )
             {
                 Frame.Navigate(typeof(UserCourse));
             }
@@ -133,14 +133,18 @@ namespace SduPackage.Views
         }
 
         private void ToMyLession(object sender, TappedRoutedEventArgs e)
-        {            
-            if (_localSettings.Values.ContainsKey("StuUsername"))
+        {
+            if (_localSettings.Values["StuUsername"].ToString().Length > 5)
             {
                 Frame.Navigate(typeof(UserLession));
             }
             else
                 NotifitionBar.ShowMessage("请先前往“我的账号”设置账号 >O<");
-             
+        }
+
+        private void ToAbout(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(AboutUs));
         }
         #endregion
 
@@ -154,12 +158,20 @@ namespace SduPackage.Views
 
         private async void LoadPage()
         {
-            Windows.Storage.StorageFile informationFile = await _localFolder.GetFileAsync("TheInformationFile.txt");
-            string result = await Windows.Storage.FileIO.ReadTextAsync(informationFile);
-            System.Diagnostics.Debug.WriteLine("MyInformation:"+result);
-            JObject jo = JObject.Parse(result);
-            UserNameShow.Text = jo["myName"].ToString();
-            UserNumShow.Text = jo["myStudentID"].ToString();
+            try
+            {
+                Windows.Storage.StorageFile informationFile = await _localFolder.GetFileAsync("TheInformationFile.txt");
+                string result = await Windows.Storage.FileIO.ReadTextAsync(informationFile);
+                //System.Diagnostics.Debug.WriteLine("MyInformation:"+result);
+                JObject jo = JObject.Parse(result);
+                UserNameShow.Text = jo["myName"].ToString();
+                UserNumShow.Text = jo["myStudentID"].ToString();
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                UserNameShow.Text = "未登录";
+                UserNumShow.Text = "未知";
+            }
         }
 
         private void InitWatch()
@@ -279,6 +291,8 @@ namespace SduPackage.Views
             }
         }
         #endregion        
+
+        
     
     }
 }

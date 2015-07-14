@@ -29,6 +29,9 @@ namespace SduPackage.Views
         public Library()
         {
             this.InitializeComponent();
+            this._bookViewModel = new BookViewModel();
+            this.DataContext = _bookViewModel;
+
             LoadPage();
         }
 
@@ -51,60 +54,34 @@ namespace SduPackage.Views
 
         private void ChooseBookAppBarClick(object sender, RoutedEventArgs e)
         {
-            bookListView.SelectionMode = ListViewSelectionMode.Multiple;
+            myNotifitionBar.ShowMessage("调试中，下个版本推出，敬请期待 0.0");
+            /*
+             bookListView.SelectionMode = ListViewSelectionMode.Multiple;
             search.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             choose.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             continuebar.Visibility = Windows.UI.Xaml.Visibility.Visible;
+             */
+
         }
 
         private void ContinueBookAppBarClick(object sender, RoutedEventArgs e)
         {
             foreach (SduPackage.Model.BookInformation _book in bookListView.SelectedItems)
             {
-                Task<string> task = new Task<string>(() =>
-                {
-                    string res = string.Empty;
-                    res = _bookViewModel.continueBook(_book).Result;
-                    return res;
-                });
+                _bookViewModel.continueBook(_book, Windows.UI.ViewManagement.StatusBar.GetForCurrentView(), myNotifitionBar);                
             }
+            _bookViewModel.downToFile(Windows.UI.ViewManagement.StatusBar.GetForCurrentView());
         }
         #endregion
 
         #region 方法
         private void LoadPage()
         {
-            Change_StatuBar("正在登录......",0);
-            this._bookViewModel = new BookViewModel();
-
-            Task<string> task = new Task<string>(() =>
-            {
-                string res = string.Empty;
-                res = _bookViewModel.downToFile().Result;
-                return res;
-            });
-
-            task.Start();
-            task.Wait();
-            this.DataContext = _bookViewModel;
-            if(task.Result == "1"){
-                Change_StatuBar("口袋山大", 0);
-            }
-            if (task.Result == "2")
-            {
-                Change_StatuBar("书中自有黄金屋，快去借书>0<", 0);
-            }
-            if (task.Result == "3")
-            {
-                Change_StatuBar("连接服务器失败，请检查网络>0<", 0);
-            }
+            _bookViewModel.downToFile(Windows.UI.ViewManagement.StatusBar.GetForCurrentView());
+            
         }
 
-        void FinishLoad()
-        {
-            Change_StatuBar("口袋山大", 0);
-            this.DataContext = _bookViewModel;
-        }
+        
 
         void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
         {
