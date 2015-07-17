@@ -25,21 +25,18 @@ namespace SduPackage.Views
     /// </summary>
     public sealed partial class MyCardHistory : Page
     {
-        CardViewModel _cardViewmodel;
 
         public MyCardHistory()
         {
             this.InitializeComponent();
-            _cardViewmodel = new CardViewModel();
-            this.DataContext = _cardViewmodel;
+            
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            HttpCookie[] _myCookies = e.Parameter as HttpCookie[];
-            if(_myCookies.Length == 2){
-                LoadPage(_myCookies);
-            }
+            CardViewModel _cardViewModel = e.Parameter as CardViewModel;
+            this.DataContext = _cardViewModel;
+            _cardViewModel.LoadRecord(isDowning);
             Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
         }
 
@@ -57,9 +54,5 @@ namespace SduPackage.Views
             }            
         }
 
-        public void LoadPage(HttpCookie[] _myCookies)
-        {
-            _cardViewmodel.LoadRecord(_myCookies[0], _myCookies[1],isDowning);
-        }
     }
 }
