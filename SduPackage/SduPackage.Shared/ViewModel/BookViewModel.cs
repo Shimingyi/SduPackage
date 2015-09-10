@@ -92,6 +92,7 @@ namespace SduPackage.ViewModel{
                         new KeyValuePair<string,string>("bookid",("[{\"id\":\""+_book.b_id+"\" }]"))
                     }
             );
+            request.Content = postDate;
             HttpCookie _cookie = new HttpCookie("", "", "");
             HttpBaseProtocolFilter filter = new HttpBaseProtocolFilter();
             bool replaced = filter.CookieManager.SetCookie(_cookie, false);

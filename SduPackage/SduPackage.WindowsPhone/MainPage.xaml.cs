@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System.Threading;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,7 +29,7 @@ namespace SduPackage
         public MainPage()
         {
             rootFrame = Window.Current.Content as Frame;
-            
+            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
             this.InitializeComponent();
         }
 
@@ -44,13 +45,11 @@ namespace SduPackage
             {
                 if (_localSettings.Values["MySummary"].ToString() == "0.9.0.0")
                 {
-                    System.Diagnostics.Debug.WriteLine("已经不止一次查看");
-                    if (_localSettings.Values.ContainsKey("StuUsername"))
+                    if (_localSettings.Values.ContainsKey("hasDownFile"))
                     {
                         Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                         {
                             rootFrame.Navigate(typeof(SduPackage.Views.LoadResourcePage));
-                            System.Diagnostics.Debug.WriteLine("已经保存了账号");
                         });
                     }
                     else
@@ -58,7 +57,6 @@ namespace SduPackage
                         Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                         {
                             rootFrame.Navigate(typeof(SduPackage.Views.MyAccount));
-                            System.Diagnostics.Debug.WriteLine("没有设置账号");
                         });
                     }
                 }

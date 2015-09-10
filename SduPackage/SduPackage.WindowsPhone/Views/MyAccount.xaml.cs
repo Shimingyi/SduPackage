@@ -33,8 +33,8 @@ namespace SduPackage.Views
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
             SaveAccount();
+            Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -46,6 +46,7 @@ namespace SduPackage.Views
 
         private void LogIn(object sender, RoutedEventArgs e)
         {
+
             isLogging.Visibility = Windows.UI.Xaml.Visibility.Visible;
             var http = new SduPackage.Funcitons.DoPost();
             http.StartPost("http://202.194.14.195:8080/CurriculumServer/login", "Re_Type=Import_Course&user_name=" + LibraryUsername.Text + "&password=" + LibraryPassword.Password, result =>
@@ -115,6 +116,7 @@ namespace SduPackage.Views
             if (FileName == "TheGradeFile.txt")
                 gradeMutex = 1;
             if((informationMutex == 1)&&(lessionMutex == 1)&&(gradeMutex==1)){
+                _localSettings.Values["hasDownFile"] = "true";
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
                     isLogging.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
@@ -152,15 +154,6 @@ namespace SduPackage.Views
             }
         }
         #endregion
-
-        private async void SkipLog(object sender, RoutedEventArgs e)
-        {
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                this.Frame.Navigate(typeof(LoadResourcePage));
-            });
-        }
-
         
     }
 }

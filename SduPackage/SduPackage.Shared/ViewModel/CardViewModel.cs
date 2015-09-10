@@ -24,7 +24,7 @@ namespace SduPackage.ViewModel
         Windows.Storage.StorageFolder _localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
         string checkCode;
         HttpClient httpClient;
-        public HttpCookie _loadCookie, _loginCookie;
+        private HttpCookie _loadCookie, _loginCookie;
         public string accountRest;
         #endregion
 

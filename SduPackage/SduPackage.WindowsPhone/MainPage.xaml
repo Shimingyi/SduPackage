@@ -12,13 +12,33 @@
     <Grid>
         <FlipView>
             <FlipViewItem>
-                
+                <Grid>
+                    <Grid.Background>
+                        <ImageBrush Stretch="Fill" ImageSource="Assets/introduce page/background1.jpg"/>
+                    </Grid.Background>
+                </Grid>
             </FlipViewItem>
             <FlipViewItem>
-                
+                <Grid>
+                    <Grid.Background>
+                        <ImageBrush Stretch="Fill" ImageSource="Assets/introduce page/background2.jpg"/>
+                    </Grid.Background>
+                </Grid>
             </FlipViewItem>
             <FlipViewItem>
-                <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50,0" Width="80" Click="ToMyApp"/>
+                <Grid>
+                    <Grid.Background>
+                        <ImageBrush Stretch="Fill" ImageSource="Assets/introduce page/background3.jpg"/>
+                    </Grid.Background>
+                </Grid>
+            </FlipViewItem>
+            <FlipViewItem>
+                <Grid>
+                    <Grid.Background>
+                        <ImageBrush Stretch="Fill" ImageSource="Assets/introduce page/background4.jpg"/>
+                    </Grid.Background>
+                    <Button HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="50,20" Height="80" Background="LightGray" BorderBrush="#FF948E8E" BorderThickness="3" Content="进入应用" Click="ToMyApp" Foreground="#FF948E8E"/>
+                </Grid>
             </FlipViewItem>
         </FlipView>
     </Grid>
